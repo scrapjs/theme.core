@@ -1,5 +1,5 @@
 // set default or saved colors
-import { setStyleRule } from "./$service$/StyleRules.ts";
+import { setStyleRule } from "./$service$/StyleRules";
 setStyleRule(":host, :root, :scope, :where(*)", {
     "--theme-base-color": localStorage.getItem("--theme-base-color") || "oklch(50% 0.3 0)",
     "--theme-wallpaper-is-dark": parseInt(localStorage.getItem("--theme-wallpaper-is-dark") || "0") || 0,
