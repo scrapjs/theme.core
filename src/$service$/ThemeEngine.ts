@@ -70,16 +70,22 @@ export const switchTheme = (isDark = false) => {
 };
 
 //
-window
-    .matchMedia("(prefers-color-scheme: dark)")
-    .addEventListener("change", ({matches}) => { switchTheme(matches); });
+const initialize = ()=>{
+    //
+    window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", ({matches}) => { switchTheme(matches); });
+
+    //
+    setInterval(()=>{
+        switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    }, 500);
+
+    //
+    document.addEventListener("u2-theme-change", ()=>{
+        switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    });
+}
 
 //
-setInterval(()=>{
-    switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
-}, 500);
-
-//
-document.addEventListener("u2-theme-change", ()=>{
-    switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
-});
+export default initialize;
