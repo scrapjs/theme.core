@@ -1,0 +1,33 @@
+{
+    "include": ["./src/**/*"],
+    "exclude": ["./test/**/*"],
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "lib": ["ESNext", "DOM", "WebWorker"],
+        "esModuleInterop": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowJs": true,
+        "allowArbitraryExtensions": true,
+        "allowSyntheticDefaultImports": true,
+        "allowUmdGlobalAccess": true,
+        "allowUnreachableCode": true,
+        "allowUnusedLabels": true,
+        "noImplicitAny": false,
+        "declaration": false,
+        "noImplicitThis": false,
+        "inlineSources": true,
+        "inlineSourceMap": true,
+        "sourceMap": false,
+        //"allowImportingTsExtensions": true,
+        //"emitDeclarationOnly": true,
+        //"noEmit": true,
+        "typeRoots": ["plugins/global.d.ts"],
+        "paths": {
+            "@node_modules/*": ["./node_modules/*"],
+            "@culori/*": ["./node_modules/culori"],
+            "@material/*": ["./node_modules/@material"]
+        },
+    },
+}
