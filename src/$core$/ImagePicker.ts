@@ -3,8 +3,8 @@ import { setStyleRule } from "../$service$/StyleRules";
 
 //
 let baseColorI: any = {};
-let baseColor: string = localStorage.getItem("--theme-base-color") || "oklch(50% 0.3 0)";
-let cssIsDark = parseInt(localStorage.getItem("--theme-wallpaper-is-dark") || "0") || 0;
+export let baseColor: string = localStorage.getItem("--theme-base-color") || "oklch(50% 0.3 0)";
+export let cssIsDark = parseInt(localStorage.getItem("--theme-wallpaper-is-dark") || "0") || 0;
 
 //
 export const updateStyleRule = ($baseColor: string|null = null, $cssIsDark: boolean|null = null)=>{
@@ -47,4 +47,4 @@ export const colorScheme = async (blob) => {
 };
 
 //
-updateStyleRule();
+updateStyleRule(baseColor, !!cssIsDark);

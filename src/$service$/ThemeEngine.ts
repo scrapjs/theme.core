@@ -71,6 +71,7 @@ export const switchTheme = (isDark = false) => {
 
 // @ts-ignore
 import styles from "../$scss$/_ColorTheme.scss?inline";
+import { baseColor, cssIsDark } from "../$core$/ImagePicker.ts";
 
 //
 const loadInlineStyle = (inline: string)=>{
