@@ -69,8 +69,31 @@ export const switchTheme = (isDark = false) => {
     });
 };
 
+// @ts-ignore
+import styles from "../$scss$/_ColorTheme.scss?inline";
+
+//
+const loadInlineStyle = (inline: string)=>{
+    const style = document.createElement("style");
+    //style.innerHTML = inline;
+    style.innerHTML = `@import(${URL.createObjectURL(new Blob([inline], {type: "text/css"}))})`;
+    document.head.appendChild(style);
+}
+
+//
+const loadBlobStyle = (inline: string)=>{
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.type = "text/css";
+    style.href = URL.createObjectURL(new Blob([inline], {type: "text/css"}));
+    document.head.appendChild(style);
+    return style;
+}
+
 //
 const initialize = ()=>{
+    loadBlobStyle(styles);
+
     //
     window
         .matchMedia("(prefers-color-scheme: dark)")
