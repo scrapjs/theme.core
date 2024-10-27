@@ -3,8 +3,12 @@
  */
 
 //
-@use "./core/LogicFb" as flg;
-@use "./core/LogicSign" as slg;
+@use "sass:string";
+@use "sass:meta";
+
+//
+@use "./LogicFb" as flg;
+@use "./LogicSign" as slg;
 
 //
 $upMod: var(--theme-up-mod);
@@ -58,16 +62,16 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
 
 //
 @mixin contrast($name, $from, $alpha: 1) {
-    //#{$name}: unquote("oklch(from #{$from} calc(#{slg.sign(calc(l - 0.6))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})");
-    @supports     (opacity: sign(0.5)) { #{$name}: unquote("oklch(from #{$from} calc(#{slg.sign(calc(l - 0.6))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
-    @supports not (opacity: sign(0.5)) { #{$name}: unquote("oklch(from #{$from} calc(#{flg.sign(calc(l - 0.6))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+    //#{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(l - 0.6))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})");
+    @supports     (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(l - 0.6))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+    @supports not (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{flg.sign(calc(l - 0.6))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
 }
 
 //
 @mixin contrast-inverse($name, $from, $alpha: 1) {
-    //#{$name}: unquote("oklch(from #{$from} calc(#{slg.sign(calc(0.6 - l))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})");
-    @supports     (opacity: sign(0.5)) { #{$name}: unquote("oklch(from #{$from} calc(#{slg.sign(calc(0.6 - l))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
-    @supports not (opacity: sign(0.5)) { #{$name}: unquote("oklch(from #{$from} calc(#{flg.sign(calc(0.6 - l))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+    //#{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(0.6 - l))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})");
+    @supports     (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(0.6 - l))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+    @supports not (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{flg.sign(calc(0.6 - l))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
 }
 
 //
@@ -161,7 +165,7 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
     //
     @supports (#{$test}: attr(#{$attr} #{$type}, #{$default})) {
         $value    : attr(#{$attr} #{$type}, #{$default});
-        $withLogic: if($logic != null, call($logic, $value), $value);
+        $withLogic: if($logic != null, meta.call($logic, $value), $value);
 
         //
         #{$selector} { #{$property}: #{$withLogic}; };
@@ -173,7 +177,7 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
 
         //
         $value    : var(--#{$attr}-attr, #{$default});
-        $withLogic: if($logic != null, call($logic, $value), $value);
+        $withLogic: if($logic != null, meta.call($logic, $value), $value);
 
         //
         #{$selector} { #{$property}: #{$withLogic}; };
@@ -373,13 +377,13 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
     @function hl-logic($value) { @return "calc(#{$value} * 3)"; };
 
     //
-    @include attr-based("*[data-highlight]", "--highlight-coefficient", "data-highlight", "number", get-function("hl-logic"), 0);
+    @include attr-based("*[data-highlight]", "--highlight-coefficient", "data-highlight", "number", meta.get-function("hl-logic"), 0);
     @include attr-based("*[data-chroma]", "--theme-accent-chroma", "data-chroma", "number", null, 0);
     @include attr-based("*[data-alpha]", "--theme-surface-alpha", "data-alpha", "number", null, 0);
 
     //
     @include hover("*[data-highlight-hover]") {
-        @include attr-based("&", "--highlight-coefficient", "data-highlight-hover", "number", get-function("hl-logic"), 0);
+        @include attr-based("&", "--highlight-coefficient", "data-highlight-hover", "number", meta.get-function("hl-logic"), 0);
     }
 
     //
