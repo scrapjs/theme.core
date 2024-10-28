@@ -10,8 +10,7 @@
         "worker": "vite build",
         "build": "vite build --config vite.config.js",
         "build-wp": "webpack build --mode=production",
-        "preview": "vite preview",
-        "test": "deno run --allow-all ./test/Host.ts"
+        "preview": "vite preview"
     },
     "browserslist": [
         "last 1 chrome version",
@@ -19,21 +18,16 @@
     ],
     "dependencies": {
         "@material/material-color-utilities": "^0.3.0",
-        "@types/node": "*",
-        "cbor-x": "^1.5.9",
-        "culori": "^4.0.1",
-        "jsox": "^1.2.119"
+        "culori": "^4.0.1"
     },
     "devDependencies": {
         "@effective/eslint-config": "^5.4.7",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.0",
+        "@sass-fairy/list": "^1.2.4",
+        "@types/node": "^22.8.1",
         "autoprefixer": "^10.4.16",
-        "clean-webpack-plugin": "^4.0.0",
         "eslint-config-prettier": "^9.1.0",
-        "fflate": "^0.8.2",
-        "glob": "^10.4.2",
-        "rimraf": "^5.0.7",
         "sass": "^1.77.6",
         "terser": "^5.34.1",
         "terser-webpack-plugin": "^5.3.10",
