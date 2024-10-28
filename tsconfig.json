@@ -26,8 +26,8 @@
         "typeRoots": ["plugins/global.d.ts"],
         "paths": {
             "@node_modules/*": ["./node_modules/*"],
-            "@culori/*": ["./node_modules/culori"],
-            "@material/*": ["./node_modules/@material"]
+            //"@culori/*": ["./node_modules/culori"],
+            //"@material/*": ["./node_modules/@material"]
         },
     },
 }

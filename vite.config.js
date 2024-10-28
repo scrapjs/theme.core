@@ -13,8 +13,8 @@ export default {
     resolve: {
         alias: {
             "@node_modules": resolve("./node_modules"),
-            "@culori": resolve("./node_modules/culori"),
-            "@material": resolve("./node_modules/@material")
+            //"@culori": resolve("./node_modules/culori"),
+            //"@material": resolve("./node_modules/@material")
         },
     },
     build: {

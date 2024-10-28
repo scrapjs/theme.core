@@ -1,3 +1,3 @@
 // @ts-ignore
-export * from "@culori/bundled/culori.mjs";
+export * from "culori"; //"@culori/bundled/culori.mjs";
 export * from "./ColorMod";

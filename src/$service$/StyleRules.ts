@@ -1,4 +1,3 @@
-//
 export type StyleTuple = [selector: string, sheet: object];
 
 //
@@ -27,3 +26,18 @@ export const setStyleRule = (selector: string, sheet: object) => {
 export const setStyleRules = (classes: StyleTuple[]) => {
     return classes?.map?.((args) => setStyleRule(...args));
 };
+
+//
+export const updateThemeBase = ($baseColor: string|null = null, $cssIsDark: boolean|null = null)=>{
+    if ($baseColor != null) localStorage.setItem("--theme-base-color", $baseColor);
+    if ($cssIsDark != null) localStorage.setItem("--theme-wallpaper-is-dark", $cssIsDark as unknown as string);
+
+    //
+    setStyleRule(":host, :root, :scope, :where(*)", {
+        "--theme-base-color"       : localStorage.getItem("--theme-base-color") || "oklch(50% 0.25 20)",
+        "--theme-wallpaper-is-dark": localStorage.getItem("--theme-wallpaper-is-dark") || 0
+    });
+}
+
+//
+updateThemeBase();
