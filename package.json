@@ -1,5 +1,5 @@
 {
-    "name": "theme-core",
+    "name": "@unite-2/theme-core",
     "description": "Image wallpaper library",
     "version": "1.0.0alpha",
     "private": false,
