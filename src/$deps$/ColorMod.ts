@@ -34,8 +34,7 @@ export const sourceColorFromImage = async (bitmap) => {
         alpha: false,
         opaque: true,
         colorSpace: "srgb",
-        desynchronized: true,
-        willReadFrequently: true
+        desynchronized: true
     });
 
     //
