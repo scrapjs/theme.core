@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <base href="./" />
+    <title>Test Page</title>
+
+    <!-- -->
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover, interactive-widget=overlays-content, shrink-to-fit=no">
+
+    <!-- -->
+    <link rel="icon" type="image/png" href="./favicon.png">
+
+    <!-- -->
+    <script data-owner="runtime" data-type="interact">
+        // avoid any dragging when no-needed...
+        document.documentElement.addEventListener("dragstart", (ev) => {
+            if (ev?.target?.matches?.("div, img, picture, canvas, video, svg")) {
+                ev.preventDefault();
+            }
+        }, {passive: false, capture: true});
+
+        // comment to enable native context menu
+        document.documentElement.addEventListener("contextmenu", (ev)=>{
+            ev.stopPropagation();
+            ev.preventDefault();
+        }, {capture: true});
+
+        //
+        if ("virtualKeyboard" in navigator && navigator?.virtualKeyboard) {
+            // @ts-ignore
+            navigator.virtualKeyboard.overlaysContent = true;
+        }
+    </script>
 </head>
 <body>
 

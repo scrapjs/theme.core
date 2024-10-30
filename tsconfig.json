@@ -1,6 +1,6 @@
 {
     "include": ["./src/**/*"],
-    "exclude": ["./test/**/*"],
+    "exclude": ["./test/**/*", "./dist/**/*", "./externals/**/*", "./src/$polyfill$/*"],
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
