@@ -2,6 +2,12 @@ import rollupOptions, {plugins, NAME} from "./rollup/rollup.config";
 import {resolve} from "node:path";
 
 //
+import cssnano from "cssnano";
+import deduplicate from "postcss-discard-duplicates";
+import postcssPresetEnv from 'postcss-preset-env';
+import autoprefixer from "autoprefixer";
+
+//
 export const __dirname = resolve(import.meta.dirname, "./");
 export default {
     plugins,
@@ -49,5 +55,17 @@ export default {
         ],
         entries: [resolve(__dirname, './src/index.ts'),],
         force: true
-    }
+    },
+    css: {
+        postcss: {
+            plugins: [autoprefixer(), deduplicate(), cssnano({
+                preset: ['advanced', {
+                    calc: false,
+                    discardComments: {
+                        removeAll: true
+                    }
+                }],
+            }), postcssPresetEnv({ stage: 0 })],
+        },
+    },
 };
