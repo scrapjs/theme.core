@@ -4,5 +4,5 @@ export * from "./$service$/DynamicEngine";
 export * from "./$service$/ThemeEngine";
 
 //
-import run from "./$service$/DynamicEngine";
-export default run;
+import initialize from "./$service$/ThemeEngine";
+export default initialize;

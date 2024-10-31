@@ -52,16 +52,36 @@ export const observeAttributeBySelector = (element, selector, attribute, cb) => 
 };
 
 //
-export const makeAttrSupport = (selector, attr, type = "number", def = "0")=>{
+export const makeAttrSupport = (selector, attr, type = "number", def = "0", rootElement = document.documentElement)=>{
     if (!CSS.supports("opacity", `attr(${attr} ${type}, 1)`)) {
-        observeAttributeBySelector(document.documentElement, selector, attr, (mutation)=>{
+        observeAttributeBySelector(rootElement, selector, attr, (mutation)=>{
             mutation?.target?.style?.setProperty?.(`--${attr}-attr`, mutation.target.getAttribute(attr) ?? def, "");
         });
     }
 }
 
+// @ts-ignore
+import styles from "../$scss$/_ColorTheme.scss?inline";
+
 //
-makeAttrSupport("*[data-highlight-hover]", "data-highlight-hover");
-makeAttrSupport("*[data-highlight]", "data-highlight");
-makeAttrSupport("*[data-chroma]", "data-chroma");
-makeAttrSupport("*[data-alpha]", "data-alpha");
+const loadInlineStyle = (inline: string, rootElement = document.head)=>{
+    const style = document.createElement("style");
+    style.dataset.owner = "theme";
+    //style.innerHTML = inline;
+    style.innerHTML = `@import url("${URL.createObjectURL(new Blob([inline], {type: "text/css"}))}");`;
+
+    //
+    (rootElement.querySelector("head") ?? rootElement).appendChild(style);
+}
+
+//
+export const initialize = (rootElement = document.documentElement)=>{
+    makeAttrSupport("*[data-highlight-hover]", "data-highlight-hover", "number", "0", rootElement);
+    makeAttrSupport("*[data-highlight]", "data-highlight", "number", "0", rootElement);
+    makeAttrSupport("*[data-chroma]", "data-chroma", "number", "0", rootElement);
+    makeAttrSupport("*[data-alpha]", "data-alpha", "number", "0", rootElement)
+    loadInlineStyle(styles, rootElement);
+};
+
+//
+export default initialize;

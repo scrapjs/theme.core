@@ -204,13 +204,11 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
     }
 }
 
-
-
 //
 @layer u2-colors {
 
     //
-    :root {
+    :root, :where(html) {
         --range-slider:          #{theme-mod-up($baseColor, 90%)};; /* slider main background color */
         --range-handle-inactive: #{theme-mod-up($baseColor, 80%)};; /* inactive handle color */
         --range-handle:          #{theme-mod-up($baseColor, 20%)};; /* non-focussed handle color */
@@ -223,8 +221,10 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
         --range-float-text:      #{theme-mod-up($baseColor, 100%)};; /* text color on floating label */
     }
 
+    //, :host, :scope
+
     //
-    :root, :host, :scope, :where(html) {
+    :root, :where(html) {
         //
         & {
             --theme-is-dark: 0; color-scheme: light;
@@ -255,9 +255,10 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
 
     //
     :root, :host, :scope, :where(html, body, *) {
-
-        //
-        &, &::before, &::after, &::selection {
+        &,
+        &::before, &::after, &::selection, &::slotted(*),
+        & :where(*)
+        {
             //
             --current-surface-color: color-mix(in oklch, var(--theme-highlight-color, white) calc(var(--highlight-coefficient, 0) * 1%), var(--theme-surface-color, white));
             //--current-surface-color: var(--theme-surface-color, white);
