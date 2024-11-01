@@ -112,7 +112,7 @@ const loadBlobStyle = (inline: string, integrity?: string|Promise<string>)=>{
 }
 
 //
-const loadInlineStyle = (inline: string, rootElement = document.head, $integrity = integrity)=>{
+const loadInlineStyle = (inline: string, rootElement: HTMLElement|null = document.head, $integrity = integrity)=>{
     const PLACE = (rootElement?.querySelector?.("head") ?? rootElement) as HTMLElement;
     if (PLACE instanceof HTMLHeadElement) { return loadBlobStyle(inline); }
 
@@ -125,12 +125,12 @@ const loadInlineStyle = (inline: string, rootElement = document.head, $integrity
 }
 
 //
-export const initialize = (rootElement = document.documentElement)=>{
+export const initialize = (rootElement = document.documentElement, injectCSS = true)=>{
     makeAttrSupport("*[data-highlight-hover]", "data-highlight-hover", "number", "0", rootElement);
     makeAttrSupport("*[data-highlight]", "data-highlight", "number", "0", rootElement);
     makeAttrSupport("*[data-chroma]", "data-chroma", "number", "0", rootElement);
     makeAttrSupport("*[data-alpha]", "data-alpha", "number", "0", rootElement)
-    return loadInlineStyle(preInit, rootElement, integrity);
+    return loadInlineStyle(preInit, injectCSS ? rootElement : null, integrity);
 };
 
 //
