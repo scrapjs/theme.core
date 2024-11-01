@@ -88,6 +88,9 @@ const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const integrity = hash(styles);
 
 //
+export const styleCode = {preInit, integrity, styles};
+
+//
 const loadStyleSheet = async (inline: string, base?: [any, any], integrity?: string|Promise<string>)=>{
     const url = URL.canParse(inline) ? inline : URL.createObjectURL(new Blob([inline], {type: "text/css"}));
     if (base?.[0] && (!URL.canParse(inline) || integrity) && base?.[0] instanceof HTMLLinkElement) {
