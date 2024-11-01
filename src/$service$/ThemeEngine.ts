@@ -77,17 +77,19 @@ const setStyleURL = (base: [any, any], url: string)=>{
 }
 
 //
-const loadStyleSheet = (inline: string, base?: [any, any])=>{
-    const url = URL.canParse(inline) ? inline : URL.createObjectURL(new Blob([inline], {type: "text/css"}));
-    if (base) setStyleURL(base, url);
+const hash = async (string) => {
+    const utf8 = new TextEncoder().encode(string);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+    return "sha256-" + btoa(String.fromCharCode.apply(null, new Uint8Array(hashBuffer) as unknown as number[]));
 }
 
 //
-const loadInlineStyle = (inline: string, rootElement = document.head)=>{
-    const style = document.createElement("style");
-    style.dataset.owner = OWNER;
-    loadStyleSheet(inline, [style, "innerHTML"]);
-    (rootElement.querySelector("head") ?? rootElement).appendChild(style);
+const loadStyleSheet = async (inline: string, base?: [any, any])=>{
+    const url = URL.canParse(inline) ? inline : URL.createObjectURL(new Blob([inline], {type: "text/css"}));
+    if (base?.[0] && !URL.canParse(inline) && base?.[0] instanceof HTMLLinkElement) {
+        base[0].setAttribute("integrity", await hash(inline));
+    }
+    if (base) setStyleURL(base, url);
 }
 
 //
@@ -100,6 +102,18 @@ const loadBlobStyle = (inline: string)=>{
     loadStyleSheet(inline, [style, "href"]);
     document.head.appendChild(style);
     return style;
+}
+
+//
+const loadInlineStyle = (inline: string, rootElement = document.head)=>{
+    const PLACE = (rootElement.querySelector("head") ?? rootElement);
+    if (PLACE instanceof HTMLHeadElement) { loadBlobStyle(inline); }
+
+    //
+    const style = document.createElement("style");
+    style.dataset.owner = OWNER;
+    loadStyleSheet(inline, [style, "innerHTML"]);
+    PLACE.appendChild(style);
 }
 
 //
