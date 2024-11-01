@@ -1,0 +1,89 @@
+
+//
+@use "ColorUtils" as cu;
+
+//
+@mixin highlight-color {
+    @include cu.contrast-inverse("--theme-highlight-color", "var(--theme-surface-color, transparent)", 1);
+}
+
+//
+@mixin bg-dep {
+    @include cu.contrast-inverse("--contrast-glyph-color", "var(--theme-surface-color, transparent)");
+    & { --theme-glyph-color: var(--contrast-glyph-color); }
+}
+
+//
+@mixin solid {
+    & { --theme-solid-color      : #{cu.theme-mod-up(cu.$baseColor, 96%)}; }
+    & { --accent-surface-color   : #{cu.$baseColor}; };
+    & { --theme-chroma-mixed     : color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color)); }
+    & { --theme-surface-color    : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
+    & { --adaptive-surface-color : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
+
+    //
+    @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-light)", "var(--theme-accent-dark)");
+    @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
+
+    //
+    @include bg-dep;
+}
+
+//
+@mixin accent {
+    @include solid;
+
+    //
+    & { --theme-accent-base-color: var(--theme-base-color); };
+}
+
+//
+@mixin inverse {
+    & { --theme-solid-color      : #{cu.theme-mod-down(cu.$baseColor, 80%)}; }
+    & { --accent-surface-color   : #{cu.$baseColor}; };
+    & { --theme-chroma-mixed     : color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color)); }
+    & { --theme-surface-color    : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
+    & { --adaptive-surface-color : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
+
+    //
+    @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-dark)", "var(--theme-accent-light)");
+    @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
+
+    //
+    @include bg-dep;
+}
+
+//
+@mixin accent-inverse {
+    & { --theme-accent-base-color: var(--theme-base-color); };
+    & { --theme-solid-color      : #{theme-mod-up(cu.$baseColor, 96%)}; }
+    & { --accent-surface-color   : #{cu.$baseColor}; };
+    & { --adaptive-surface-color : var(--accent-surface-color); }
+
+    //
+    @include cu.contrast-inverse("--theme-surface-color", "var(--adaptive-surface-color)", "var(--theme-surface-alpha)");
+
+    //
+    @include bg-dep;
+}
+
+//
+@mixin dynamic {
+    & { --theme-surface-color: oklch(from var(--theme-dynamic-color, transparent) l c h / var(--theme-surface-alpha)); }
+
+    //
+    @include bg-dep;
+}
+
+//
+@mixin transparent-mode {
+    $color: "oklch(from var(--theme-surface-color) l c h / var(--theme-surface-alpha))";
+
+    //
+    & { --theme-surface-alpha  : 0; }
+    & { --current-surface-color: color-mix(in oklch, var(--theme-highlight-color) calc(var(--highlight-coefficient) * 1%), #{$color}); }
+
+    //
+    @include highlight-color;
+    @include bg-dep;
+}
