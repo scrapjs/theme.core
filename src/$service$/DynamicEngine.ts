@@ -28,11 +28,13 @@ export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
         }
         return color;
     }
+
+    //
     return "transparent";
 };
 
 //
-const makeContrast = (color)=>{
+export const makeContrast = (color)=>{
     const cl = oklch(color);
     cl.l = Math.sign(0.5 - cl.l);
     cl.c *= 0.1;
@@ -44,7 +46,7 @@ export const pickFromCenter = (holder)=>{
     const box = holder?.getBoundingClientRect?.(); //* zoomOf()
     if (box) {
         const xy: [number, number] = [(box.left + box.right) / 2 * fixedClientZoom(), (box.top + box.bottom) / 2 * fixedClientZoom()];
-        pickBgColor(...xy, holder);
+        return pickBgColor(...xy, holder);
     }
 }
 
