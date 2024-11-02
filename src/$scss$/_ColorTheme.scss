@@ -178,6 +178,11 @@
             background-color: var(--current-glyph-color, black);
             color: oklch(from var(--current-glyph-color, black) calc(1 - l) c h / 1.0);
         }
+
+        //
+        &:where(slot), :where(slot) {
+            background-color: transparent !important;
+        }
     }
 
     //
