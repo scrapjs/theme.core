@@ -153,10 +153,14 @@
 
             //
             transition: var(--highlight-transition-property) var(--highlight-transition-duration) var(--highlight-transition-mode);
-            accent-color: var(--current-glyph-color);
+            accent-color: var(--current-glyph-color); //--theme-accent-base-color
             color: var(--current-glyph-color);
             background-color: var(--current-surface-color);
             stroke: var(--current-glyph-color);
+
+            // scrollbar styling
+            scrollbar-color: var(--current-surface-color); //--theme-accent-base-color
+            scrollbar-width: thin;
 
             //
             @include cm.highlight-color;
@@ -254,7 +258,7 @@
     }
 
     //
-    :where(u-scrollbox) {
-        --sb-color: #{cu.theme-mod-down(cu.theme-mod-up(cu.$baseColor, 80%), 20%)};
+    :where(u-scrollbox, ui-scrollbox) {
+        --scrollbar-color: #{cu.theme-mod-down(cu.theme-mod-up(cu.$baseColor, 80%), 20%)};
     }
 }
