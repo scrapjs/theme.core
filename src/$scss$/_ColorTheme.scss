@@ -47,6 +47,8 @@
     @property --current-chroma-color { syntax: "<color>"; initial-value: white; inherits: true; };
     @property --current-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
     @property --highlight-coefficient { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --highlight-coefficient-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --highlight-coefficient-state { syntax: "<number>"; initial-value: 0; inherits: true; };
     @property --accent-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
     @property --accent-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
     @property --contrast-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
@@ -82,6 +84,14 @@
     }
 
     //
+    :root, :scope, :host {
+        --theme-surface-alpha: 0;
+        --theme-accent-chroma: 0;
+        --highlight-coefficient-state: 0.0;
+        --highlight-coefficient-hover: 0.0;
+    }
+
+    //
     :root, :where(html) {
         //
         & {
@@ -90,7 +100,9 @@
             --theme-accent-chroma: 0;
             --theme-accent-color: var(--theme-accent-base-color);
             --theme-chroma-color: var(--theme-accent-color);
-            --highlight-coefficient: 0.0;
+            --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+            --highlight-coefficient-state: 0.0;
+            --highlight-coefficient-hover: 0.0;
             --accent-surface-color: var(--theme-accent-color);
             --theme-dynamic-color: var(--theme-accent-color, transparent);
         };
@@ -129,6 +141,7 @@
             --theme-black-mod: oklch(from #{cu.$baseColor} 0.01 0.01 h);
             --theme-white-mod: oklch(from #{cu.$baseColor} 0.99 0.01 h);
             --theme-accent-color: var(--theme-accent-base-color);
+            --theme-surface-color: oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha));
 
             //
             --theme-dark-down-mod: color-mix(in oklch, var(--theme-white-mod) 90%, #{cu.$baseColor});
@@ -146,7 +159,9 @@
             --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color));
 
             //
-            --highlight-coefficient: 0.0;
+            --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+            --highlight-coefficient-hover: 0.0;
+            --highlight-coefficient-state: 0.0;
             --highlight-transition-duration: 0.2s;
             --highlight-transition-mode: linear;
             --highlight-transition-property: --highlight-coefficient;
@@ -191,7 +206,13 @@
 
     //
     :where([data-highlight-hover], [data-highlight]) *:not([data-highlight], [data-highlight-hover]) {
-        --highlight-coefficient: 0;
+        @include cm.highlight-color;
+
+        & {
+            --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+            --highlight-coefficient-state: 0;
+            --highlight-coefficient-hover: 0;
+        }
     }
 
     //
@@ -248,13 +269,13 @@
     @function hl-logic($value) { @return "calc(#{$value} * 3)"; };
 
     //
-    @include cu.attr-based("*[data-highlight]", "--highlight-coefficient", "data-highlight", "number", meta.get-function("hl-logic"), 0);
+    @include cu.attr-based("*[data-highlight]", "--highlight-coefficient-state", "data-highlight", "number", meta.get-function("hl-logic"), 0);
     @include cu.attr-based("*[data-chroma]", "--theme-accent-chroma", "data-chroma", "number", null, 0);
     @include cu.attr-based("*[data-alpha]", "--theme-surface-alpha", "data-alpha", "number", null, 0);
 
     //
     @include cu.hover("*[data-highlight-hover]") {
-        @include cu.attr-based("&", "--highlight-coefficient", "data-highlight-hover", "number", meta.get-function("hl-logic"), 0);
+        @include cu.attr-based("&", "--highlight-coefficient-hover", "data-highlight-hover", "number", meta.get-function("hl-logic"), 0);
     }
 
     //
