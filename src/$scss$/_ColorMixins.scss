@@ -17,6 +17,7 @@
 @mixin solid {
     & { --theme-solid-color      : #{cu.theme-mod-up(cu.$baseColor, 96%)}; }
     & { --accent-surface-color   : #{cu.$baseColor}; };
+    & { --theme-dynamic-color    : #{cu.$baseColor}; };
     & { --theme-chroma-mixed     : color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color)); }
     & { --theme-surface-color    : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
     & { --adaptive-surface-color : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
@@ -35,6 +36,7 @@
 
     //
     & { --theme-accent-base-color: var(--theme-base-color); };
+    & { --theme-dynamic-color    : #{cu.$baseColor}; };
 }
 
 //
@@ -44,6 +46,7 @@
     & { --theme-chroma-mixed     : color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color)); }
     & { --theme-surface-color    : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
     & { --adaptive-surface-color : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
+    & { --theme-dynamic-color    : #{cu.$baseColor}; };
 
     //
     @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-dark)", "var(--theme-accent-light)");
@@ -59,6 +62,7 @@
     & { --theme-solid-color      : #{theme-mod-up(cu.$baseColor, 96%)}; }
     & { --accent-surface-color   : #{cu.$baseColor}; };
     & { --adaptive-surface-color : var(--accent-surface-color); }
+    & { --theme-dynamic-color    : #{cu.$baseColor}; };
 
     //
     @include cu.contrast-inverse("--theme-surface-color", "var(--adaptive-surface-color)", "var(--theme-surface-alpha)");
@@ -70,6 +74,7 @@
 //
 @mixin dynamic {
     & { --theme-surface-color: oklch(from var(--theme-dynamic-color, transparent) l c h / var(--theme-surface-alpha)); }
+    & { --theme-dynamic-color: #{cu.$baseColor}; };
 
     //
     @include bg-dep;
@@ -80,7 +85,8 @@
     $color: "oklch(from var(--theme-surface-color) l c h / var(--theme-surface-alpha))";
 
     //
-    & { --theme-surface-alpha  : 0; }
+    & { --theme-surface-alpha  : 0; };
+    & { --theme-dynamic-color  : #{cu.$baseColor}; };
     & { --current-surface-color: color-mix(in oklch, var(--theme-highlight-color) calc(var(--highlight-coefficient) * 1%), #{$color}); }
 
     //

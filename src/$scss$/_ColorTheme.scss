@@ -104,7 +104,7 @@
             --highlight-coefficient-state: 0.0;
             --highlight-coefficient-hover: 0.0;
             --accent-surface-color: var(--theme-accent-color);
-            --theme-dynamic-color: var(--theme-accent-color, transparent);
+            --theme-dynamic-color: #{cu.$baseColor};//var(--theme-accent-color, transparent);
         };
 
         //
