@@ -30,8 +30,8 @@ export const setStyleRules = (classes: StyleTuple[]) => {
 
 //
 export const updateThemeBase = ($baseColor: string|null = null, $cssIsDark: boolean|null = null)=>{
-    if ($baseColor != null) localStorage.setItem("--theme-base-color", $baseColor);
-    if ($cssIsDark != null) localStorage.setItem("--theme-wallpaper-is-dark", $cssIsDark as unknown as string);
+    if ($baseColor != null && localStorage.getItem("--theme-base-color") != $baseColor) localStorage.setItem("--theme-base-color", $baseColor);
+    if ($cssIsDark != null && (!!localStorage.getItem("--theme-wallpaper-is-dark") != $cssIsDark)) localStorage.setItem("--theme-wallpaper-is-dark", $cssIsDark as unknown as string);
 
     //
     setStyleRule(":host, :root, :scope, :where(*)", {
@@ -39,6 +39,13 @@ export const updateThemeBase = ($baseColor: string|null = null, $cssIsDark: bool
         "--theme-wallpaper-is-dark": localStorage.getItem("--theme-wallpaper-is-dark") || 0
     });
 }
+
+//
+addEventListener("storage", (event) => {
+    if (event.key == "--theme-base-color" || event.key == "--theme-wallpaper-is-dark") {
+        updateThemeBase();
+    }
+});
 
 //
 updateThemeBase();
