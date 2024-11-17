@@ -174,7 +174,7 @@
             stroke: var(--current-glyph-color);
 
             // scrollbar styling
-            scrollbar-color: var(--current-surface-color); //--theme-accent-base-color
+            scrollbar-color: var(--current-glyph-color);
             scrollbar-width: thin;
 
             //
@@ -280,6 +280,6 @@
 
     //
     :where(u-scrollbox, ui-scrollbox) {
-        --scrollbar-color: #{cu.theme-mod-down(cu.theme-mod-up(cu.$baseColor, 80%), 20%)};
+        --scrollbar-color: var(--current-glyph-color);
     }
 }
