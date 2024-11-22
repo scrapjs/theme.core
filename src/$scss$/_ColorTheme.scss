@@ -108,6 +108,11 @@
         };
 
         //
+        &[data-highlight-op="min"] {
+            --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+        }
+
+        //
         &, :where(body) {
             @include cm.solid;
             @include cm.highlight-color;
@@ -184,6 +189,11 @@
         }
 
         //
+        &[data-highlight-op="min"] {
+            --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+        }
+
+        //
         &:where(a, span, svg), :where(a, span, svg) {
             background-color: transparent;
             stroke: var(--current-glyph-color);
@@ -212,6 +222,11 @@
             --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
             --highlight-coefficient-state: 0;
             --highlight-coefficient-hover: 0;
+        }
+
+        //
+        &[data-highlight-op="min"] {
+            --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
         }
     }
 
