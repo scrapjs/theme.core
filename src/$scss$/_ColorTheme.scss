@@ -88,7 +88,7 @@
         --theme-surface-alpha: 0;
         --theme-accent-chroma: 0;
         --highlight-coefficient-state: 0.0;
-        --highlight-coefficient-hover: 0.0;
+        --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
     }
 
     //
@@ -102,13 +102,15 @@
             --theme-chroma-color: var(--theme-accent-color);
             --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
             --highlight-coefficient-state: 0.0;
-            --highlight-coefficient-hover: 0.0;
+            --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
             --accent-surface-color: var(--theme-accent-color);
             --theme-dynamic-color: #{cu.$baseColor};//var(--theme-accent-color, transparent);
         };
 
         //
         &[data-highlight-op="min"] {
+            //--highlight-coefficient-hover: 0.0;
+            //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
             --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
         }
 
@@ -165,8 +167,8 @@
 
             //
             --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-            --highlight-coefficient-hover: 0.0;
             --highlight-coefficient-state: 0.0;
+            --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
             --highlight-transition-duration: 0.2s;
             --highlight-transition-mode: linear;
             --highlight-transition-property: --highlight-coefficient;
@@ -190,6 +192,8 @@
 
         //
         &[data-highlight-op="min"] {
+            //--highlight-coefficient-hover: 0.0;
+            //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
             --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
         }
 
@@ -218,15 +222,18 @@
     :where([data-highlight-hover], [data-highlight]) *:not([data-highlight], [data-highlight-hover]) {
         @include cm.highlight-color;
 
+        //
         & {
             --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
             --highlight-coefficient-state: 0;
-            --highlight-coefficient-hover: 0;
+            --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
         }
 
         //
         &[data-highlight-op="min"] {
             --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+            //--highlight-coefficient-hover: 0.0;
+            //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
         }
     }
 
