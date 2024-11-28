@@ -77,10 +77,23 @@ const setStyleURL = (base: [any, any], url: string)=>{
 }
 
 //
-const hash = async (string) => {
-    const utf8 = new TextEncoder().encode(string);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+const hash = async (string: string) => {
+    const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(string));
     return "sha256-" + btoa(String.fromCharCode.apply(null, new Uint8Array(hashBuffer) as unknown as number[]));
+}
+
+//
+const loadStyleSheet = async (inline: string, base?: [any, any], integrity?: string|Promise<string>)=>{
+    const url = URL.canParse(inline) ? inline : URL.createObjectURL(new Blob([inline], {type: "text/css"}));
+    if (base?.[0] && (!URL.canParse(inline) || integrity) && base?.[0] instanceof HTMLLinkElement) {
+        const I: any = (integrity ?? hash(inline));
+        if (typeof I?.then == "function") {
+            I?.then?.((H)=>base?.[0]?.setAttribute?.("integrity", H));
+        } else {
+            base?.[0]?.setAttribute?.("integrity", I as string);
+        }
+    }
+    if (base) setStyleURL(base, url);
 }
 
 //
@@ -89,15 +102,6 @@ const integrity = hash(styles);
 
 //
 export const styleCode = {preInit, integrity, styles};
-
-//
-const loadStyleSheet = async (inline: string, base?: [any, any], integrity?: string|Promise<string>)=>{
-    const url = URL.canParse(inline) ? inline : URL.createObjectURL(new Blob([inline], {type: "text/css"}));
-    if (base?.[0] && (!URL.canParse(inline) || integrity) && base?.[0] instanceof HTMLLinkElement) {
-        base[0].setAttribute("integrity", await (integrity || hash(inline)));
-    }
-    if (base) setStyleURL(base, url);
-}
 
 //
 const loadBlobStyle = (inline: string, integrity?: string|Promise<string>)=>{
