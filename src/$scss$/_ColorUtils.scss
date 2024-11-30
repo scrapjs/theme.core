@@ -80,26 +80,14 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
     $default: 1,
     $test: "opacity"
 ) {
-    //
+    @property --#{$attr}-attr { initial-value: #{$default}; inherits: true; syntax: "<#{$type}>"; };
     @supports (#{$test}: attr(#{$attr} #{$type}, #{$default})) {
-        $value    : attr(#{$attr} #{$type}, #{$default});
-        $withLogic: if($logic != null, meta.call($logic, $value), $value);
-
-        //
-        #{$selector} { #{$property}: #{$withLogic}; };
+        --#{$attr}-attr: attr(#{$attr} #{$type}, #{$default});
     }
 
-    // fallback support
-    @supports not (#{$test}: attr(#{$attr} #{$type}, #{$default})) {
-        @property --#{$attr}-attr { initial-value: #{$default}; inherits: true; syntax: "<#{$type}>"; };
-
-        //
-        $value    : var(--#{$attr}-attr, #{$default});
-        $withLogic: if($logic != null, meta.call($logic, $value), $value);
-
-        //
-        #{$selector} { #{$property}: #{$withLogic}; };
-    }
+    //
+    $value: var(--#{$attr}-attr, #{$default});
+    #{$selector} { #{$property}: #{ if($logic != null, meta.call($logic, $value), $value) }; };
 }
 
 //
