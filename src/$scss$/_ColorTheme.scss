@@ -87,8 +87,11 @@
     :root, :scope, :host {
         --theme-surface-alpha: 0;
         --theme-accent-chroma: 0;
+        --theme-dynamic-color: var(--theme-surface-color, currentColor);
+        --theme-dynamic-color: var(--adaptive-surface-color, currentColor);
         --highlight-coefficient-state: 0.0;
         --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
+        @include cm.bg-dep;
     }
 
     //
@@ -104,7 +107,8 @@
             --highlight-coefficient-state: 0.0;
             --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
             --accent-surface-color: var(--theme-accent-color);
-            --theme-dynamic-color: #{cu.$baseColor};//var(--theme-accent-color, transparent);
+            --theme-dynamic-color: var(--theme-base-color, currentColor);//var(--theme-accent-color, transparent);
+            --theme-dynamic-color: var(--adaptive-surface-color, currentColor);
         };
 
         //
@@ -137,8 +141,8 @@
         & :where(*)
         {
             //
-            --current-surface-color: color-mix(in oklch, var(--theme-highlight-color, white) calc(var(--highlight-coefficient, 0) * 1%), var(--theme-surface-color, white));
-            //--current-surface-color: var(--theme-surface-color, white);
+            --current-surface-color: color-mix(in oklch, var(--theme-highlight-color, black) calc(var(--highlight-coefficient, 0) * 1%), var(--theme-surface-color, white));
+            //--current-surface-color: var(--theme-surface-color, inherit);
             --current-glyph-color: var(--theme-glyph-color, black);
             --current-accent-color: var(--theme-accent-color, white);
             --current-chroma-color: var(--theme-chroma-color, white);
@@ -161,8 +165,6 @@
             //
             --theme-accent-dark : oklch(from var(--theme-base-color) min(min(calc(1.0 - l), l), 0.4) min(c, 0.8) h);
             --theme-accent-light: oklch(from var(--theme-base-color) max(max(calc(1.0 - l), l), 0.6) min(c, 0.8) h);
-
-            //
             --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color));
 
             //
@@ -175,9 +177,9 @@
 
             //
             transition: var(--highlight-transition-property) var(--highlight-transition-duration) var(--highlight-transition-mode);
+            background-color: var(--current-surface-color, currentColor);
             accent-color: var(--current-glyph-color); //--theme-accent-base-color
             color: var(--current-glyph-color);
-            background-color: var(--current-surface-color);
             stroke: var(--current-glyph-color);
 
             // scrollbar styling
@@ -188,6 +190,7 @@
             @include cm.highlight-color;
             @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
             @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
+            @include cm.bg-dep;
         }
 
         //
@@ -198,9 +201,11 @@
         }
 
         //
-        &:where(a, span, svg), :where(a, span, svg) {
+        &:where(a, span, svg, ui-icon, ui-shaped, ui-task), & :where(a, span, svg, ui-icon, ui-shaped, ui-task) {
             background-color: transparent;
             stroke: var(--current-glyph-color);
+            color: var(--current-glyph-color);
+            @include cm.bg-dep;
         }
 
         //
