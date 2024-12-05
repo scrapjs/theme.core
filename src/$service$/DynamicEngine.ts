@@ -90,7 +90,7 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
                 const icon = self.shadowRoot?.querySelector?.("svg");
                 const computed = getComputedStyle(self);
                 const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "currentColor";
-                icon?.querySelectorAll?.("path").forEach((p)=>{
+                icon?.querySelectorAll?.("path, rect, line, circle, ellipse").forEach((p: any)=>{
                     if (p.style.getPropertyValue("stroke") != color) p.style.setProperty("stroke", color, "");
                     if (p.style.getPropertyValue("color") != color) p.style.setProperty("color", color, "");
                     if (p.style.getPropertyValue("accent-color") != color) p.style.setProperty("accent-color", color, "");
