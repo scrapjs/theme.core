@@ -135,7 +135,7 @@
     }
 
     //
-    :root, :host, :scope, :where(html, body, *) {
+    :root, :host, :scope, :where(html, body, *), :host(*) {
         &,
         &::before, &::after, &::selection, &::slotted(*),
         & :where(*)
@@ -201,7 +201,8 @@
         }
 
         //
-        &:where(a, span, svg, svg path, ui-icon, ui-shaped, ui-task), & :where(a, span, svg, svg path, ui-icon, ui-shaped, ui-task) {
+        &:where(a, span, svg, svg path, ui-icon, ui-shaped, ui-task),
+        & :where(a, span, svg, svg path, ui-icon, ui-shaped, ui-task) {
             background-color: transparent;
             stroke: var(--current-glyph-color, currentColor);
             color: var(--current-glyph-color, currentColor);
@@ -243,19 +244,25 @@
     }
 
     //
+    :host([data-transparent]:not([data-transparent="false"])) {
+        @include cm.transparent-mode;
+    }
+
+    //
     *[data-transparent]:not([data-transparent="false"]) {
         @include cm.transparent-mode;
     }
 
     //
-    :where([data-scheme]) *:not([data-scheme]) {
+    :where([data-scheme]) *:not([data-scheme]),
+    :host([data-scheme]) *:not([data-scheme]) {
         //@include cm.solid;
         @include cm.transparent-mode;
     }
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
-    *[data-theme="dark"]  {
+    *[data-theme="dark"], :host([data-theme="dark"]) {
         & { --theme-is-dark: 1; color-scheme: dark; };
         @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
         @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
@@ -263,7 +270,7 @@
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
-    *[data-theme="light"] {
+    *[data-theme="light"], :host([data-theme="light"]) {
         & { --theme-is-dark: 0; color-scheme: light; };
         @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
         @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
@@ -271,7 +278,8 @@
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
-    *[data-theme="native"] {
+    *[data-theme="native"], :host([data-theme="native"]),
+    *[data-theme="default"], :host([data-theme="default"]) {
         //
         & { color-scheme: normal; };
         @media (prefers-color-scheme: light) { --theme-is-dark: 0; color-scheme: light; };
@@ -283,24 +291,22 @@
     }
 
     //
-    *[data-scheme="dynamic"]             { @include cm.dynamic;        & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; }
-    *[data-scheme="accent"]              { @include cm.accent;         & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; } // deprecated...
-    *[data-scheme="solid"]               { @include cm.solid;          & { --theme-accent-chroma: 0; --theme-surface-alpha: 1; }; }
-    *[data-scheme="inverse"]             { @include cm.inverse;        & { --theme-accent-chroma: 0; --theme-surface-alpha: 1; }; }
-    *[data-scheme="accent-inverse"]      { @include cm.accent-inverse; & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; }
-    *[data-scheme="transparent"]         { @include cm.accent;         & { --theme-accent-chroma: 1; --theme-surface-alpha: 0; }; }
-    *[data-scheme="solid-transparent"]   { @include cm.solid;          & { --theme-accent-chroma: 0; --theme-surface-alpha: 0; }; }
-    *[data-scheme="dynamic-transparent"] { @include cm.dynamic;        & { --theme-accent-chroma: 1; --theme-surface-alpha: 0; }; }
+    :host([data-scheme="dynamic"]), *[data-scheme="dynamic"]                            { @include cm.dynamic;        & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; }
+    :host([data-scheme="accent"]), *[data-scheme="accent"]                              { @include cm.accent;         & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; } // deprecated...
+    :host([data-scheme="solid"]), *[data-scheme="solid"]                                { @include cm.solid;          & { --theme-accent-chroma: 0; --theme-surface-alpha: 1; }; }
+    :host([data-scheme="inverse"]), *[data-scheme="inverse"]                            { @include cm.inverse;        & { --theme-accent-chroma: 0; --theme-surface-alpha: 1; }; }
+    :host([data-scheme="accent-inverse"]), *[data-scheme="accent-inverse"]              { @include cm.accent-inverse; & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; }
+    :host([data-scheme="transparent"]), *[data-scheme="transparent"]                    { @include cm.accent;         & { --theme-accent-chroma: 1; --theme-surface-alpha: 0; }; }
+    :host([data-scheme="solid-transparent"]), *[data-scheme="solid-transparent"]        { @include cm.solid;          & { --theme-accent-chroma: 0; --theme-surface-alpha: 0; }; }
+    :host([data-scheme="dynamic-transparent"]), *[data-scheme="dynamic-transparent"]    { @include cm.dynamic;        & { --theme-accent-chroma: 1; --theme-surface-alpha: 0; }; }
 
     //
     @function hl-logic($value) { @return "calc(#{$value} * 3)"; };
+    @include cu.attr-based(":host([data-highlight]), *[data-highlight]", "--highlight-coefficient-state", "data-highlight", "number", meta.get-function("hl-logic"), 0);
+    @include cu.attr-based(":host([data-chroma]), *[data-chroma]", "--theme-accent-chroma", "data-chroma", "number", null, 0);
+    @include cu.attr-based(":host([data-alpha]), *[data-alpha]", "--theme-surface-alpha", "data-alpha", "number", null, 0);
 
-    //
-    @include cu.attr-based("*[data-highlight]", "--highlight-coefficient-state", "data-highlight", "number", meta.get-function("hl-logic"), 0);
-    @include cu.attr-based("*[data-chroma]", "--theme-accent-chroma", "data-chroma", "number", null, 0);
-    @include cu.attr-based("*[data-alpha]", "--theme-surface-alpha", "data-alpha", "number", null, 0);
-
-    //
+    // :host() unsupported
     @include cu.hover("*[data-highlight-hover]") {
         @include cu.attr-based("&", "--highlight-coefficient-hover", "data-highlight-hover", "number", meta.get-function("hl-logic"), 0);
     }

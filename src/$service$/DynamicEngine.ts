@@ -83,6 +83,22 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
         switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
     }, 500);
 
+    // vacuum issue
+    setInterval(()=>{
+        ROOT?.querySelectorAll?.("ui-icon").forEach((self: any)=>{
+            if ((self.dataset.scheme == "dynamic" || self.dataset.scheme == "dynamic-transparent") && !self?.closest?.("body")) {
+                const icon = self.shadowRoot?.querySelector?.("svg");
+                const computed = getComputedStyle(self);
+                const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "currentColor";
+                icon?.querySelectorAll?.("path").forEach((p)=>{
+                    if (p.style.getPropertyValue("stroke") != color) p.style.setProperty("stroke", color, "");
+                    if (p.style.getPropertyValue("color") != color) p.style.setProperty("color", color, "");
+                    if (p.style.getPropertyValue("accent-color") != color) p.style.setProperty("accent-color", color, "");
+                });
+            }
+        });
+    }, 100);
+
     //
     document.addEventListener("u2-theme-change", ()=>{
         switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
