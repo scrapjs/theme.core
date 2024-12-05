@@ -201,10 +201,10 @@
         }
 
         //
-        &:where(a, span, svg, ui-icon, ui-shaped, ui-task), & :where(a, span, svg, ui-icon, ui-shaped, ui-task) {
+        &:where(a, span, svg, svg path, ui-icon, ui-shaped, ui-task), & :where(a, span, svg, svg path, ui-icon, ui-shaped, ui-task) {
             background-color: transparent;
-            stroke: var(--current-glyph-color);
-            color: var(--current-glyph-color);
+            stroke: var(--current-glyph-color, currentColor);
+            color: var(--current-glyph-color, currentColor);
             @include cm.bg-dep;
         }
 
