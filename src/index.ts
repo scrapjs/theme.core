@@ -4,5 +4,14 @@ export * from "./$service$/DynamicEngine";
 export * from "./$service$/ThemeEngine";
 
 //
-import initialize from "./$service$/ThemeEngine";
+import theme from "./$service$/ThemeEngine";
+import dynamic from "./$service$/DynamicEngine";
+
+//
+const initialize = (ROOT = document.documentElement)=>{
+    theme(ROOT);
+    dynamic(ROOT);
+}
+
+//
 export default initialize;

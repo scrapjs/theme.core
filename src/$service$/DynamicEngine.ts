@@ -72,7 +72,7 @@ export const switchTheme = (isDark = false) => {
 };
 
 //
-export const dynamicTheme = ()=>{
+export const dynamicTheme = (ROOT = document.documentElement)=>{
     //
     window
         .matchMedia("(prefers-color-scheme: dark)")
