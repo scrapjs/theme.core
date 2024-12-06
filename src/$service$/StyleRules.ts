@@ -35,7 +35,7 @@ export const updateThemeBase = ($baseColor: string|null = null, $cssIsDark: bool
 
     //
     setStyleRule(":host, :root, :scope, :where(*)", {
-        "--theme-base-color"       : localStorage.getItem("--theme-base-color") || "oklch(50% 0.25 20)",
+        "--theme-base-color"       : localStorage.getItem("--theme-base-color") || "oklch(25% 0.1 20)",
         "--theme-wallpaper-is-dark": localStorage.getItem("--theme-wallpaper-is-dark") || 0
     });
 }
