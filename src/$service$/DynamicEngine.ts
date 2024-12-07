@@ -84,7 +84,7 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
     }, 500);
 
     // vacuum issue
-    setInterval(()=>{
+    /*setInterval(()=>{
         ROOT?.querySelectorAll?.("ui-icon").forEach((self: any)=>{
             if ((self.dataset.scheme == "dynamic" || self.dataset.scheme == "dynamic-transparent") && !self?.closest?.("body")) {
                 const icon = self.shadowRoot?.querySelector?.("svg");
@@ -97,7 +97,7 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
                 });
             }
         });
-    }, 100);
+    }, 100);*/
 
     //
     document.addEventListener("u2-theme-change", ()=>{

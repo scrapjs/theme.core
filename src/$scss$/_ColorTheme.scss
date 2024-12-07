@@ -201,12 +201,34 @@
         }
 
         //
-        &:where(a, span, svg, svg path, ui-icon, ui-shaped, ui-task),
-        & :where(a, span, svg, svg path, ui-icon, ui-shaped, ui-task) {
+        &:where(a, span, svg, svg path, ui-shaped, ui-task),
+        & :where(a, span, svg, svg path, ui-shaped, ui-task) {
             background-color: transparent;
             stroke: var(--current-glyph-color, currentColor);
             color: var(--current-glyph-color, currentColor);
             @include cm.bg-dep;
+        }
+
+        //
+        &:where(ui-icon),
+        & :where(ui-icon)
+        {
+            //
+            background-size: contain;
+            background-attachment: local;
+            background-repeat: no-repeat;
+            background-clip: content-box;
+            background-origin: content-box;
+            background-color: var(--current-glyph-color, currentColor);
+
+            //
+            mask-image: var(--mask-image);
+            mask-origin: content-box;
+            mask-clip: content-box;
+            mask-mode: alpha;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            mask-size: contain;
         }
 
         //
