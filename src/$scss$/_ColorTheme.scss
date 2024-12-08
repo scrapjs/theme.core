@@ -213,6 +213,8 @@
         &:where(ui-icon),
         & :where(ui-icon)
         {
+            --mask-image: linear-gradient(#0000, #0000);
+
             //
             background-size: contain;
             background-attachment: local;
@@ -229,6 +231,9 @@
             mask-position: center;
             mask-repeat: no-repeat;
             mask-size: contain;
+
+            //
+            opacity: 0;
         }
 
         //
