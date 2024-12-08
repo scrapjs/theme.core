@@ -53,13 +53,14 @@ export const pickFromCenter = (holder)=>{
 //
 export const switchTheme = (isDark = false, root = document.documentElement) => {
     const media = root?.querySelector?.('meta[data-theme-color]');
-    const color = pickBgColor(window.innerWidth - 64, 30);
+    if (media) {
+        const color = pickBgColor(window.innerWidth - 64, 30);
+        media.setAttribute("content", color);
+    }
 
     //
-    if (media) { media.setAttribute("content", color); }
-
-    //
-    if (window?.[electronAPI]) {
+    if (window?.[electronAPI] && root == document.documentElement) {
+        const color = pickBgColor(window.innerWidth - 64, 30);
         window?.[electronAPI]?.setThemeColor?.(formatHex(color), formatHex(makeContrast(color)));
     }
 
@@ -79,9 +80,19 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
         .addEventListener("change", ({matches}) => { switchTheme(matches, ROOT); });
 
     //
+    ROOT.addEventListener("u2-appear", ()=>{
+        switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
+    });
+
+    //
+    ROOT.addEventListener("u2-hidden", ()=>{
+        switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
+    });
+
+    //
     setInterval(()=>{
         switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
-    }, 500);
+    }, 2000);
 
     // vacuum issue
     /*setInterval(()=>{
@@ -100,7 +111,7 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
     }, 100);*/
 
     //
-    document.addEventListener("u2-theme-change", ()=>{
+    ROOT.addEventListener("u2-theme-change", ()=>{
         switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
     });
 }
