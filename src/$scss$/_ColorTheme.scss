@@ -14,7 +14,7 @@
 @layer u2-colors {
 
     //
-    @scope(:root)
+    @scope(:root, :host, :scope)
     {
 
         //
@@ -47,7 +47,7 @@
         @property --theme-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
         @property --theme-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
         @property --current-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --current-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --current-surface-color { syntax: "<color>"; initial-value: currentColor; inherits: true; };
         @property --current-chroma-color { syntax: "<color>"; initial-value: white; inherits: true; };
         @property --current-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
         @property --highlight-coefficient { syntax: "<number>"; initial-value: 0; inherits: true; };
@@ -93,11 +93,16 @@
     :root, :scope, :host {
         --theme-surface-alpha: 0;
         --theme-accent-chroma: 0;
-        //--theme-dynamic-color: var(--adaptive-surface-color, var(--theme-surface-color, currentColor));
-        --highlight-coefficient-state: 0.0;
-        --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
 
         //
+        --highlight-coefficient-state: 0.0;
+        --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
+        --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+        --accent-surface-color: #{cu.$baseColor}; //var(--theme-accent-color);
+
+        //
+        @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
+        @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
         @include cu.theme-dependent-components;
         @include cm.bg-dep;
     }
@@ -111,10 +116,6 @@
             --theme-accent-chroma: 0;
             --theme-accent-color: var(--theme-accent-base-color);
             --theme-chroma-color: var(--theme-accent-color);
-            --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-            --highlight-coefficient-state: 0.0;
-            --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
-            --accent-surface-color: var(--theme-accent-color);
             --theme-dynamic-color: var(--adaptive-surface-color, var(--theme-base-color, currentColor));
         };
 
@@ -127,13 +128,11 @@
 
         //
         &, :where(body) {
-            @include cm.solid;
+            @include cm.accent;
             @include cm.highlight-color;
-
-            //
             @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
-            @include cu.contrast-inverse("--contrast-surface-color", "var(--theme-glyph-color, transparent)");
-            @include cu.contrast-inverse("--contrast-glyph-color", "var(--theme-surface-color, transparent)");
+            @include cu.contrast-inverse("--contrast-surface-color", "var(--theme-glyph-color, currentColor)");
+            @include cu.contrast-inverse("--contrast-glyph-color", "var(--theme-surface-color, currentColor)");
         }
 
         //
@@ -156,7 +155,19 @@
 
             //
             --accent-surface-color: #{cu.$baseColor}; // theme-accent-color
-            --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color));
+            --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color, currentColor) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color, currentColor));
+
+            //
+            //--theme-surface-color: var(--theme-surface-color);
+            //--theme-glyph-color: var(--theme-glyph-color);
+
+            //
+            --theme-dynamic-mixed: inherit;
+            --theme-highlight-color: inherit;
+            --theme-solid-color: inherit;
+            --theme-accent-base-color: inherit;
+            --accent-glyph-color: inherit;
+            --contrast-glyph-color: inherit;
 
             //
             --theme-chroma-mod: oklch(from #{cu.$baseColor} l 0.99 h);
@@ -189,7 +200,6 @@
 
         //
         @include cm.highlight-color;
-        @include cm.color-properties;
         @include cm.bg-dep;
 
         //

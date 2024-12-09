@@ -10,7 +10,7 @@
 $upMod: var(--theme-up-mod);
 $downMod: var(--theme-down-mod);
 $chromaMod: var(--theme-chroma-mod);
-$baseColor: var(--theme-accent-color);
+$baseColor: var(--theme-accent-color, currentColor);
 
 //
 @function inv-mul($a, $b) {
@@ -65,14 +65,6 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
 }
 
 
-
-//
-@mixin accent-mod($effect: 1) {
-    & {
-        --effect: $effect;
-        --current-surface-color: #{theme-mod-down(var(--theme-surface-color), calc(1% * var(--effect, 1)))};
-    }
-}
 
 //
 @mixin contrast($name, $from, $alpha: 1) {

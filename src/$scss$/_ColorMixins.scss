@@ -4,67 +4,58 @@
 
 //
 @mixin highlight-color {
-    @include cu.contrast-inverse("--theme-highlight-color", "var(--theme-surface-color, currentColor)", 1);
+    &, &::before, &::after, &::selection, & :where(*), &::slotted(*) {
+        @include cu.contrast-inverse("--theme-highlight-color", "var(--theme-surface-color, currentColor)", 1);
+    }
 }
 
 //
 @mixin bg-dep {
-    @include cu.contrast-inverse("--contrast-glyph-color", "var(--theme-surface-color, currentColor)");
-    & { --theme-glyph-color: var(--contrast-glyph-color); }
-}
-
-
-
-//
-@mixin color-properties() {
-    //& { --accent-surface-color   : #{cu.$baseColor}; };
-    //& { --theme-chroma-mixed     : color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color)); }
-    //& { --theme-surface-color    : oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha)); }
+    &, &::before, &::after, &::selection, & :where(*), &::slotted(*) {
+        @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
+        @include cu.contrast-inverse("--contrast-glyph-color", "var(--theme-surface-color, var(--current-surface-color, currentColor))");
+        & { --theme-glyph-color: var(--contrast-glyph-color); }
+    }
 }
 
 
 //
 @mixin solid {
     @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-light)", "var(--theme-accent-dark)");
-    @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
-    & { --theme-solid-color      : #{cu.theme-mod-up(cu.$baseColor, 96%)}; }
+    & { --theme-solid-color: #{cu.theme-mod-up(cu.$baseColor, 96%)}; }
 }
 
 //
 @mixin inverse {
     @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-dark)", "var(--theme-accent-light)");
-    @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
-    & { --theme-solid-color      : #{cu.theme-mod-down(cu.$baseColor, 80%)}; }
+    & { --theme-solid-color: #{cu.theme-mod-down(cu.$baseColor, 80%)}; }
 }
 
 
 //
 @mixin accent {
     & { --theme-accent-base-color: var(--theme-base-color); };
-    & { --theme-solid-color      : var(--theme-base-color); };
+    & { --theme-solid-color: #{cu.$baseColor}; }
 }
 
 //
 @mixin accent-inverse {
-    & { --theme-accent-base-color: var(--theme-base-color); };
-    & { --theme-solid-color      : var(--theme-base-color); };
-    &, &::before, &::after, &::selection, & :where(*), &::slotted(*) {
-        @include cu.contrast-inverse("--theme-chroma-mixed", "var(--theme-accent-color)", "var(--theme-surface-alpha, 0)");
-    }
+    @include accent;
+    @include cu.contrast-inverse("--theme-chroma-mixed", cu.$baseColor, "var(--theme-surface-alpha, 0)");
 }
 
 
 //
 @mixin dynamic {
-    & { --theme-dynamic-color: var(--accent-surface-color, currentColor); };
+    & { --theme-dynamic-color: #{cu.$baseColor}; };
     &, &::before, &::after, &::selection, & :where(*), &::slotted(*) {
-        --theme-chroma-mixed: var(--theme-dynamic-color, color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color)));
+        --theme-chroma-mixed: var(--theme-dynamic-color, color-mix(in oklch, #{cu.$baseColor} calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color)));
     }
 }
 
 //
 @mixin transparent-mode {
-    $color: "oklch(from var(--theme-surface-color) l c h / var(--theme-surface-alpha))";
+    //$color: "oklch(from var(--theme-surface-color) l c h / var(--theme-surface-alpha))";
     & { --theme-surface-alpha  : 0; };
-    & { --current-surface-color: color-mix(in oklch, var(--theme-highlight-color) calc(var(--highlight-coefficient) * 1%), #{$color}); }
+    //& { --current-surface-color: color-mix(in oklch, var(--theme-highlight-color) calc(var(--highlight-coefficient) * 1%), #{$color}); }
 }
