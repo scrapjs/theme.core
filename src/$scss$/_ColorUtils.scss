@@ -69,15 +69,19 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
 //
 @mixin contrast($name, $from, $alpha: 1) {
     //#{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(l - 0.6))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})");
-    @supports     (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(l - 0.6))} * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
-    @supports not (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{flg.sign(calc(l - 0.6))} * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+    //@supports     (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(l - 0.6))} * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+    //@supports not (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{flg.sign(calc(l - 0.6))} * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
 }
 
 //
 @mixin contrast-inverse($name, $from, $alpha: 1) {
     //#{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(0.6 - l))} * 0.8 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})");
-    @supports     (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(0.6 - l))} * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
-    @supports not (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{flg.sign(calc(0.6 - l))} * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+    //@supports     (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{slg.sign(calc(0.6 - l))} * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+    //@supports not (opacity: sign(0.5)) { #{$name}: string.unquote("oklch(from #{$from} calc(#{flg.sign(calc(0.6 - l))} * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); }
+
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 10000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
 }
 
 //
