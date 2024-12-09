@@ -11,69 +11,74 @@
 @use "ColorMixins" as cm;
 
 //
-@layer u2-colors {
+@scope(:root, :host, :scope)
+{
 
     //
-    @scope(:root, :host, :scope)
-    {
-
-        //
-        @property --theme-wallpaper-is-dark {
-            syntax: "<number>"; initial-value: 0; inherits: true;
-        }
-
-        //
-        @property --theme-chroma-mixed { syntax: "<color>"; initial-value: white; inherits: true; };
-
-        //
-        @property --theme-black-mod { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --theme-white-mod { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --theme-is-dark { syntax: "<number>"; inherits: true; initial-value: 0; }
-        @property --theme-dark-up-mod   { syntax: "<color>"; inherits: true; initial-value: black; }
-        @property --theme-dark-down-mod { syntax: "<color>"; inherits: true; initial-value: white; }
-        @property --theme-light-up-mod   { syntax: "<color>"; inherits: true; initial-value: white; }
-        @property --theme-light-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
-        @property --theme-chroma-mod { syntax: "<color>"; inherits: true; initial-value: red; }
-        @property --theme-up-mod { syntax: "<color>"; inherits: true; initial-value: white; }
-        @property --theme-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
-        @property --theme-accent-dark { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --theme-accent-light { syntax: "<color>"; initial-value: white; inherits: true; };
-
-        //
-        @property --theme-highlight-color { syntax: "<color>"; inherits: true; initial-value: transparent; }
-        @property --theme-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --theme-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --theme-dynamic-color { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --theme-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --theme-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --current-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --current-surface-color { syntax: "<color>"; initial-value: currentColor; inherits: true; };
-        @property --current-chroma-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --current-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --highlight-coefficient { syntax: "<number>"; initial-value: 0; inherits: true; };
-        @property --highlight-coefficient-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
-        @property --highlight-coefficient-state { syntax: "<number>"; initial-value: 0; inherits: true; };
-        @property --accent-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --accent-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --contrast-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --contrast-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --adaptive-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --theme-base-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --theme-accent-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
-
-        //
-        @property --theme-solid-color { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --theme-accent-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
-        @property --theme-surface-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
-
-        //
-        @property --icon-size {
-            syntax: "<length-percentage>";
-            initial-value: 100%;
-            inherits: true;
-        }
-
+    @property --theme-wallpaper-is-dark {
+        syntax: "<number>"; initial-value: 0; inherits: true;
     }
+
+    //
+    @property --theme-chroma-mixed { syntax: "<color>"; initial-value: white; inherits: true; };
+
+    //
+    @property --theme-black-mod { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --theme-white-mod { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --theme-is-dark { syntax: "<number>"; inherits: true; initial-value: 0; }
+    @property --theme-dark-up-mod   { syntax: "<color>"; inherits: true; initial-value: black; }
+    @property --theme-dark-down-mod { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --theme-light-up-mod   { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --theme-light-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
+    @property --theme-chroma-mod { syntax: "<color>"; inherits: true; initial-value: red; }
+    @property --theme-up-mod { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --theme-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
+    @property --theme-accent-dark { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --theme-accent-light { syntax: "<color>"; initial-value: white; inherits: true; };
+
+    //
+    @property --theme-highlight-color { syntax: "<color>"; inherits: true; initial-value: transparent; }
+    @property --theme-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --theme-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --theme-dynamic-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --theme-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --theme-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --current-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --current-surface-color { syntax: "<color>"; initial-value: currentColor; inherits: true; };
+    @property --current-chroma-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --current-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --highlight-coefficient { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --highlight-coefficient-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --highlight-coefficient-state { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --accent-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --accent-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --contrast-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --contrast-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --adaptive-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --theme-base-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --theme-accent-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
+
+    //
+    @property --theme-solid-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --theme-accent-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --theme-surface-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
+
+    //
+    @property --icon-size {
+        syntax: "<length-percentage>";
+        initial-value: 100%;
+        inherits: true;
+    }
+
+};
+
+//
+@layer u2-colors {
+    @layer u2-color-base, u2-color-theme, u2-color-mod, u2-color-transparent, u2-color-hl, u2-color-attr;
+}
+
+//
+@layer u2-color-base {
 
     //
     :root, :where(html) {
@@ -141,14 +146,22 @@
     }
 
     //
-    :root, :host, :scope, :where(html, body, *), :host(*) {
+    :where([data-scheme]) *:not([data-scheme]),
+    :host([data-scheme]) *:not([data-scheme]) {
+        //@include cm.solid;
+        @include cm.transparent-mode;
+    }
+
+    //
+    :where(*[data-scheme]), :host([data-scheme]), :scope, :host, :host :where(*[data-scheme])
+    //:root, :host, :scope, :where(*)
+    {
+        //
         &,
-        &::before, &::after, &::selection
-        //&::slotted(*), & :where(*)
+        &::before, &::after, &::selection,
+        *::before, *::after, *::selection, :where(*), &::slotted(*)
         {
-            //
             --current-surface-color: color-mix(in oklch, var(--theme-highlight-color, black) calc(var(--highlight-coefficient, 0) * 1%), var(--theme-surface-color, white));
-            //--current-surface-color: var(--theme-surface-color, inherit);
             --current-glyph-color: var(--theme-glyph-color, black);
             --current-accent-color: var(--theme-accent-color, white);
             --current-chroma-color: var(--theme-chroma-color, white);
@@ -156,10 +169,6 @@
             //
             --accent-surface-color: #{cu.$baseColor}; // theme-accent-color
             --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color, currentColor) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color, currentColor));
-
-            //
-            //--theme-surface-color: var(--theme-surface-color);
-            //--theme-glyph-color: var(--theme-glyph-color);
 
             //
             --theme-dynamic-mixed: inherit;
@@ -185,8 +194,13 @@
             --highlight-transition-duration: 0.2s;
             --highlight-transition-mode: linear;
             --highlight-transition-property: --highlight-coefficient;
+        }
 
-            //
+        //
+        &,
+        &::before, &::after, &::selection,
+        *::before, *::after, *::selection, :where(*), &::slotted(*)
+        {   //
             transition: var(--highlight-transition-property) var(--highlight-transition-duration) var(--highlight-transition-mode);
             background-color: var(--current-surface-color, currentColor);
             accent-color: var(--current-glyph-color, currentColor); //--theme-accent-base-color
@@ -199,19 +213,30 @@
         }
 
         //
-        @include cm.highlight-color;
-        @include cm.bg-dep;
+        &,
+        &::before, &::after, &::selection,
+        *::before, *::after, *::selection, :where(*), &::slotted(*)
+        {
+            @include cm.highlight-color;
+            @include cm.bg-dep;
+        }
 
         //
-        &[data-highlight-op="min"] {
+        &[data-highlight-op="min"],
+        & [data-highlight-op="min"] {
             //--highlight-coefficient-hover: 0.0;
             //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
             --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
         }
 
         //
-        &:where(a, span, svg, svg path) { background-color: transparent; }
-        &:where(ui-icon)
+        &:where(a, span, svg, svg path),
+        & :where(a, span, svg, svg path)
+            { background-color: transparent; }
+
+        //
+        &:where(ui-icon),
+        & :where(ui-icon)
         {
             --mask-image: linear-gradient(#0000, #0000);
 
@@ -235,8 +260,8 @@
         }
 
         //
-        ui-icon:not([icon]),
-        ui-icon[icon=""]
+        ui-icon:not([icon]), ui-icon[icon=""],
+        &:is(ui-icon:not([icon]), ui-icon[icon=""])
         {
             visibility: hidden !important;
             content-visibility: hidden !important;
@@ -245,38 +270,25 @@
 
         //
         &::selection, ::selection {
-            //color: white;
-            //color: var(--current-surface-color, white);
-            //background-color: black;
             background-color: var(--current-glyph-color, black);
             color: oklch(from var(--current-glyph-color, black) calc(1 - l) c h / 1.0);
         }
 
         //
-        &:where(slot), :where(slot) {
+        &:where(slot),
+        & :where(slot) {
             background-color: transparent !important;
         }
     }
 
     //
-    :where([data-highlight-hover], [data-highlight]) *:not([data-highlight], [data-highlight-hover]) {
-        @include cm.highlight-color;
-
-        //
-        & {
-            --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-            --highlight-coefficient-state: 0;
-            --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
-        }
-
-        //
-        &[data-highlight-op="min"] {
-            --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-            //--highlight-coefficient-hover: 0.0;
-            //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
-        }
+    :where(u2-scrollbox, ui-scrollbox) {
+        --scrollbar-color: var(--current-glyph-color);
     }
+};
 
+//
+@layer u2-color-transparent {
     //
     :host([data-transparent]:not([data-transparent="false"])) {
         @include cm.transparent-mode;
@@ -286,13 +298,10 @@
     *[data-transparent]:not([data-transparent="false"]) {
         @include cm.transparent-mode;
     }
+}
 
-    //
-    :where([data-scheme]) *:not([data-scheme]),
-    :host([data-scheme]) *:not([data-scheme]) {
-        //@include cm.solid;
-        @include cm.transparent-mode;
-    }
+//
+@layer u2-color-theme {
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
@@ -326,8 +335,32 @@
         @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
         @include cu.theme-dependent-components;
     }
+}
 
+//
+@layer u2-color-hl {
     //
+    :where([data-highlight-hover], [data-highlight]) *:not([data-highlight], [data-highlight-hover]) {
+        @include cm.highlight-color;
+
+        //
+        & {
+            --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+            --highlight-coefficient-state: 0;
+            --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
+        }
+
+        //
+        &[data-highlight-op="min"] {
+            --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+            //--highlight-coefficient-hover: 0.0;
+            //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
+        }
+    }
+}
+
+//
+@layer u2-color-mod {
     :host([data-scheme="dynamic"]), *[data-scheme="dynamic"]                            { @include cm.dynamic;        & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; }
     :host([data-scheme="accent"]), *[data-scheme="accent"]                              { @include cm.accent;         & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; } // deprecated...
     :host([data-scheme="solid"]), *[data-scheme="solid"]                                { @include cm.solid;          & { --theme-accent-chroma: 0; --theme-surface-alpha: 1; }; }
@@ -336,7 +369,10 @@
     :host([data-scheme="transparent"]), *[data-scheme="transparent"]                    { @include cm.accent;         & { --theme-accent-chroma: 1; --theme-surface-alpha: 0; }; }
     :host([data-scheme="solid-transparent"]), *[data-scheme="solid-transparent"]        { @include cm.solid;          & { --theme-accent-chroma: 0; --theme-surface-alpha: 0; }; }
     :host([data-scheme="dynamic-transparent"]), *[data-scheme="dynamic-transparent"]    { @include cm.dynamic;        & { --theme-accent-chroma: 1; --theme-surface-alpha: 0; }; }
+};
 
+//
+@layer u2-color-attr {
     //
     @function hl-logic($value) { @return "calc(#{$value} * 3)"; };
     @include cu.attr-based(":host([data-highlight]), *[data-highlight]", "--highlight-coefficient-state", "data-highlight", "number", meta.get-function("hl-logic"), 0);
@@ -347,9 +383,4 @@
     @include cu.hover("*[data-highlight-hover]") {
         @include cu.attr-based("&", "--highlight-coefficient-hover", "data-highlight-hover", "number", meta.get-function("hl-logic"), 0);
     }
-
-    //
-    :where(u2-scrollbox, ui-scrollbox) {
-        --scrollbar-color: var(--current-glyph-color);
-    }
-}
+};

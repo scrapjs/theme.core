@@ -4,14 +4,14 @@
 
 //
 @mixin highlight-color {
-    &, &::before, &::after, &::selection, & :where(*), &::slotted(*) {
+    & {
         @include cu.contrast-inverse("--theme-highlight-color", "var(--theme-surface-color, currentColor)", 1);
     }
 }
 
 //
 @mixin bg-dep {
-    &, &::before, &::after, &::selection, & :where(*), &::slotted(*) {
+    & {
         @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
         @include cu.contrast-inverse("--contrast-glyph-color", "var(--theme-surface-color, var(--current-surface-color, currentColor))");
         & { --theme-glyph-color: var(--contrast-glyph-color); }
