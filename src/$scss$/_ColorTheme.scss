@@ -14,59 +14,65 @@
 @layer u2-colors {
 
     //
-    @property --theme-wallpaper-is-dark {
-        syntax: "<number>"; initial-value: 0; inherits: true;
-    }
+    @scope(:root)
+    {
 
-    //
-    @property --theme-chroma-mixed { syntax: "<color>"; initial-value: white; inherits: true; };
+        //
+        @property --theme-wallpaper-is-dark {
+            syntax: "<number>"; initial-value: 0; inherits: true;
+        }
 
-    //
-    @property --theme-black-mod { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-white-mod { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-is-dark { syntax: "<number>"; inherits: true; initial-value: 0; }
-    @property --theme-dark-up-mod   { syntax: "<color>"; inherits: true; initial-value: black; }
-    @property --theme-dark-down-mod { syntax: "<color>"; inherits: true; initial-value: white; }
-    @property --theme-light-up-mod   { syntax: "<color>"; inherits: true; initial-value: white; }
-    @property --theme-light-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
-    @property --theme-chroma-mod { syntax: "<color>"; inherits: true; initial-value: red; }
-    @property --theme-up-mod { syntax: "<color>"; inherits: true; initial-value: white; }
-    @property --theme-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
-    @property --theme-accent-dark { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-accent-light { syntax: "<color>"; initial-value: white; inherits: true; };
+        //
+        @property --theme-chroma-mixed { syntax: "<color>"; initial-value: white; inherits: true; };
 
-    //
-    @property --theme-highlight-color { syntax: "<color>"; inherits: true; initial-value: transparent; }
-    @property --theme-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-dynamic-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --current-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --current-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --current-chroma-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --current-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --highlight-coefficient { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --highlight-coefficient-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --highlight-coefficient-state { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --accent-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --accent-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --contrast-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --contrast-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --adaptive-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-base-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-accent-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        //
+        @property --theme-black-mod { syntax: "<color>"; initial-value: black; inherits: true; };
+        @property --theme-white-mod { syntax: "<color>"; initial-value: black; inherits: true; };
+        @property --theme-is-dark { syntax: "<number>"; inherits: true; initial-value: 0; }
+        @property --theme-dark-up-mod   { syntax: "<color>"; inherits: true; initial-value: black; }
+        @property --theme-dark-down-mod { syntax: "<color>"; inherits: true; initial-value: white; }
+        @property --theme-light-up-mod   { syntax: "<color>"; inherits: true; initial-value: white; }
+        @property --theme-light-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
+        @property --theme-chroma-mod { syntax: "<color>"; inherits: true; initial-value: red; }
+        @property --theme-up-mod { syntax: "<color>"; inherits: true; initial-value: white; }
+        @property --theme-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
+        @property --theme-accent-dark { syntax: "<color>"; initial-value: black; inherits: true; };
+        @property --theme-accent-light { syntax: "<color>"; initial-value: white; inherits: true; };
 
-    //
-    @property --theme-solid-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-accent-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --theme-surface-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
+        //
+        @property --theme-highlight-color { syntax: "<color>"; inherits: true; initial-value: transparent; }
+        @property --theme-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --theme-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --theme-dynamic-color { syntax: "<color>"; initial-value: black; inherits: true; };
+        @property --theme-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
+        @property --theme-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --current-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
+        @property --current-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --current-chroma-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --current-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --highlight-coefficient { syntax: "<number>"; initial-value: 0; inherits: true; };
+        @property --highlight-coefficient-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
+        @property --highlight-coefficient-state { syntax: "<number>"; initial-value: 0; inherits: true; };
+        @property --accent-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
+        @property --accent-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --contrast-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
+        @property --contrast-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --adaptive-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --theme-base-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --theme-accent-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
 
-    //
-    @property --icon-size {
-        syntax: "<length-percentage>";
-        initial-value: 100%;
-        inherits: true;
+        //
+        @property --theme-solid-color { syntax: "<color>"; initial-value: white; inherits: true; };
+        @property --theme-accent-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
+        @property --theme-surface-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
+
+        //
+        @property --icon-size {
+            syntax: "<length-percentage>";
+            initial-value: 100%;
+            inherits: true;
+        }
+
     }
 
     //
@@ -87,10 +93,12 @@
     :root, :scope, :host {
         --theme-surface-alpha: 0;
         --theme-accent-chroma: 0;
-        --theme-dynamic-color: var(--theme-surface-color, currentColor);
-        --theme-dynamic-color: var(--adaptive-surface-color, currentColor);
+        //--theme-dynamic-color: var(--adaptive-surface-color, var(--theme-surface-color, currentColor));
         --highlight-coefficient-state: 0.0;
         --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
+
+        //
+        @include cu.theme-dependent-components;
         @include cm.bg-dep;
     }
 
@@ -107,8 +115,7 @@
             --highlight-coefficient-state: 0.0;
             --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
             --accent-surface-color: var(--theme-accent-color);
-            --theme-dynamic-color: var(--theme-base-color, currentColor);//var(--theme-accent-color, transparent);
-            --theme-dynamic-color: var(--adaptive-surface-color, currentColor);
+            --theme-dynamic-color: var(--adaptive-surface-color, var(--theme-base-color, currentColor));
         };
 
         //
@@ -137,8 +144,8 @@
     //
     :root, :host, :scope, :where(html, body, *), :host(*) {
         &,
-        &::before, &::after, &::selection, &::slotted(*),
-        & :where(*)
+        &::before, &::after, &::selection
+        //&::slotted(*), & :where(*)
         {
             //
             --current-surface-color: color-mix(in oklch, var(--theme-highlight-color, black) calc(var(--highlight-coefficient, 0) * 1%), var(--theme-surface-color, white));
@@ -148,24 +155,17 @@
             --current-chroma-color: var(--theme-chroma-color, white);
 
             //
+            --accent-surface-color: #{cu.$baseColor}; // theme-accent-color
+            --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color));
+
+            //
             --theme-chroma-mod: oklch(from #{cu.$baseColor} l 0.99 h);
             --theme-black-mod: oklch(from #{cu.$baseColor} 0.01 0.01 h);
             --theme-white-mod: oklch(from #{cu.$baseColor} 0.99 0.01 h);
             --theme-accent-color: var(--theme-accent-base-color);
-            --theme-surface-color: oklch(from var(--theme-chroma-mixed) l c h / var(--theme-surface-alpha));
-
-            //
-            --theme-dark-down-mod: color-mix(in oklch, var(--theme-white-mod) 90%, #{cu.$baseColor});
-            --theme-dark-up-mod: color-mix(in oklch, var(--theme-black-mod) 98%, #{cu.$baseColor});
-
-            //
-            --theme-light-down-mod: color-mix(in oklch, var(--theme-black-mod) 90%, #{cu.$baseColor});
-            --theme-light-up-mod: color-mix(in oklch, var(--theme-white-mod) 98%, #{cu.$baseColor});
-
-            //
+            --theme-surface-color: oklch(from var(--theme-chroma-mixed, currentColor) l c h / var(--theme-surface-alpha));
             --theme-accent-dark : oklch(from var(--theme-base-color) min(min(calc(1.0 - l), l), 0.4) min(c, 0.8) h);
             --theme-accent-light: oklch(from var(--theme-base-color) max(max(calc(1.0 - l), l), 0.6) min(c, 0.8) h);
-            --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color));
 
             //
             --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
@@ -178,20 +178,19 @@
             //
             transition: var(--highlight-transition-property) var(--highlight-transition-duration) var(--highlight-transition-mode);
             background-color: var(--current-surface-color, currentColor);
-            accent-color: var(--current-glyph-color); //--theme-accent-base-color
-            color: var(--current-glyph-color);
-            stroke: var(--current-glyph-color);
+            accent-color: var(--current-glyph-color, currentColor); //--theme-accent-base-color
+            color: var(--current-glyph-color, currentColor);
+            stroke: var(--current-glyph-color, currentColor);
 
             // scrollbar styling
             scrollbar-color: var(--current-glyph-color);
             scrollbar-width: thin;
-
-            //
-            @include cm.highlight-color;
-            @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
-            @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
-            @include cm.bg-dep;
         }
+
+        //
+        @include cm.highlight-color;
+        @include cm.color-properties;
+        @include cm.bg-dep;
 
         //
         &[data-highlight-op="min"] {
@@ -201,17 +200,8 @@
         }
 
         //
-        &:where(a, span, svg, svg path, ui-shaped, ui-task),
-        & :where(a, span, svg, svg path, ui-shaped, ui-task) {
-            background-color: transparent;
-            stroke: var(--current-glyph-color, currentColor);
-            color: var(--current-glyph-color, currentColor);
-            @include cm.bg-dep;
-        }
-
-        //
-        &:where(ui-icon),
-        & :where(ui-icon)
+        &:where(a, span, svg, svg path) { background-color: transparent; }
+        &:where(ui-icon)
         {
             --mask-image: linear-gradient(#0000, #0000);
 
@@ -300,6 +290,7 @@
         & { --theme-is-dark: 1; color-scheme: dark; };
         @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
         @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
+        @include cu.theme-dependent-components;
     }
 
     // may be used for fixed theming, without dependency
@@ -308,6 +299,7 @@
         & { --theme-is-dark: 0; color-scheme: light; };
         @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
         @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
+        @include cu.theme-dependent-components;
     }
 
     // may be used for fixed theming, without dependency
@@ -322,6 +314,7 @@
         //
         @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
         @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
+        @include cu.theme-dependent-components;
     }
 
     //
@@ -346,7 +339,7 @@
     }
 
     //
-    :where(u-scrollbox, ui-scrollbox) {
+    :where(u2-scrollbox, ui-scrollbox) {
         --scrollbar-color: var(--current-glyph-color);
     }
 }

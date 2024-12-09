@@ -49,6 +49,24 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
 }
 
 //
+@mixin theme-dependent-components() {
+    & {
+        --theme-dark-down-mod: color-mix(in oklch, var(--theme-white-mod) 90%, #{$baseColor});
+        --theme-dark-up-mod: color-mix(in oklch, var(--theme-black-mod) 98%, #{$baseColor});
+
+        //
+        --theme-light-down-mod: color-mix(in oklch, var(--theme-black-mod) 90%, #{$baseColor});
+        --theme-light-up-mod: color-mix(in oklch, var(--theme-white-mod) 98%, #{$baseColor});
+    }
+
+    //
+    @include theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
+    @include theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
+}
+
+
+
+//
 @mixin accent-mod($effect: 1) {
     & {
         --effect: $effect;
@@ -82,12 +100,14 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
 ) {
     @property --#{$attr}-attr { initial-value: #{$default}; inherits: true; syntax: "<#{$type}>"; };
     @supports (#{$test}: attr(#{$attr} #{$type}, #{$default})) {
-        --#{$attr}-attr: attr(#{$attr} #{$type}, #{$default});
-    }
+        #{$selector} { --#{$attr}-attr: attr(#{$attr} #{$type}, #{$default}); };
+    };
 
     //
-    $value: var(--#{$attr}-attr, #{$default});
-    #{$selector} { #{$property}: #{ if($logic != null, meta.call($logic, $value), $value) }; };
+    #{$selector} {
+        $value: var(--#{$attr}-attr, #{$default});
+        #{$property}: #{ if($logic != null, meta.call($logic, $value), $value) };
+    };
 }
 
 //
@@ -95,14 +115,14 @@ $chromaColor: theme-mod-chroma(#{$baseColor}, 80%);
     //
     @media screen and ((hover: hover) or (pointer: fine)) {
         #{$selector}:hover {
-            @content;
+            & { @content; };
         }
     }
 
     //
     @media screen and ((hover: none) and (pointer: coarse)) {
         #{$selector}:action {
-            @content;
+            & { @content; };
         }
     }
 }
