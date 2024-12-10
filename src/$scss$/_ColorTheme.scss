@@ -106,9 +106,6 @@
         --accent-surface-color: #{cu.$baseColor}; //var(--theme-accent-color);
 
         //
-        @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
-        @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
-        @include cu.theme-dependent-components;
         @include cm.bg-dep;
     }
 
@@ -171,6 +168,7 @@
             --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color, currentColor) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color, currentColor));
 
             //
+            --theme-base-color: inherit;
             --theme-dynamic-mixed: inherit;
             --theme-highlight-color: inherit;
             --theme-solid-color: inherit;
@@ -302,6 +300,11 @@
 
 //
 @layer u2-color-theme {
+    :host, :root, :scope, body {
+        @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
+        @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
+        @include cu.theme-dependent-components;
+    }
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
@@ -325,7 +328,7 @@
     // unused in nested elements, currently
     *[data-theme="native"], :host([data-theme="native"]),
     *[data-theme="default"], :host([data-theme="default"]) {
-        //
+        // adaptive
         & { color-scheme: normal; };
         @media (prefers-color-scheme: light) { --theme-is-dark: 0; color-scheme: light; };
         @media (prefers-color-scheme: dark)  { --theme-is-dark: 1; color-scheme: dark; };

@@ -22,13 +22,13 @@
 //
 @mixin solid {
     @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-light)", "var(--theme-accent-dark)");
-    & { --theme-solid-color: #{cu.theme-mod-up(cu.$baseColor, 96%)}; }
+    & { --theme-solid-color: #{cu.theme-mod-up(var(--theme-base-color, currentColor), 96%)}; }
 }
 
 //
 @mixin inverse {
     @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-dark)", "var(--theme-accent-light)");
-    & { --theme-solid-color: #{cu.theme-mod-down(cu.$baseColor, 80%)}; }
+    & { --theme-solid-color: #{cu.theme-mod-down(var(--theme-base-color, currentColor), 80%)}; }
 }
 
 
