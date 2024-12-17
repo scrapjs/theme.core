@@ -278,11 +278,6 @@
             background-color: transparent !important;
         }
     }
-
-    //
-    :where(u2-scrollbox, ui-scrollbox, ui-longtext, ui-focustext) {
-        --scrollbar-color: var(--current-surface-color, #10101060);
-    }
 };
 
 //
