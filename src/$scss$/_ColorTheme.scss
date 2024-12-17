@@ -206,7 +206,7 @@
             stroke: var(--current-glyph-color, currentColor);
 
             // scrollbar styling
-            scrollbar-color: var(--current-glyph-color);
+            scrollbar-color: var(--current-glyph-color, currentColor);
             scrollbar-width: thin;
         }
 
@@ -280,8 +280,8 @@
     }
 
     //
-    :where(u2-scrollbox, ui-scrollbox) {
-        --scrollbar-color: var(--current-glyph-color);
+    :where(u2-scrollbox, ui-scrollbox, ui-longtext, ui-focustext) {
+        --scrollbar-color: var(--current-surface-color, #10101060);
     }
 };
 
