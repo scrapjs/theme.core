@@ -7,6 +7,22 @@
     & {
         @include cu.contrast-inverse("--theme-highlight-color", "var(--theme-surface-color, currentColor)", 1);
     }
+
+    //
+    & {
+        --highlight-transition-mode: linear;
+        --highlight-transition-duration: 0.2s;
+        --highlight-transition-property: --highlight-coefficient;
+        --highlight-coefficient-state: 0.0;
+        --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
+        --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+    }
+
+    //
+    &[data-highlight-op="min"],
+    & [data-highlight-op="min"] {
+        --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+    }
 }
 
 //

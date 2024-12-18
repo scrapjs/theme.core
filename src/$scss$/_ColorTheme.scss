@@ -74,7 +74,35 @@
 
 //
 @layer u2-colors {
-    @layer u2-color-base, u2-color-theme, u2-color-mod, u2-color-transparent, u2-color-hl, u2-color-attr;
+    @layer u2-color-normalize, u2-color-base, u2-color-theme, u2-color-mod, u2-color-transparent, u2-color-hl, u2-color-attr;
+}
+
+//
+@layer u2-color-normalize {
+    :host, :root, :scope, :where(*), ::slotted(*) {
+        --theme-surface-alpha: inherit;
+        --theme-accent-chroma: inherit;
+
+        --theme-base-color: inherit;
+        --theme-accent-base-color: inherit;
+        --theme-highlight-color: inherit;
+
+        --theme-solid-color: inherit;
+        --theme-dynamic-color: inherit;
+        --theme-dynamic-mixed: inherit;
+        --theme-surface-color: inherit;
+        --theme-glyph-color: inherit;
+        --theme-accent-color: inherit;
+        --theme-chroma-color: inherit;
+        --theme-glyph-mixed: inherit;
+
+        --current-surface-color: inherit;
+        --current-glyph-mixed: inherit;
+        --current-accent-color: inherit;
+        --current-chroma-color: inherit;
+        --contrast-glyph-color: inherit;
+        --accent-glyph-color: inherit;
+    }
 }
 
 //
@@ -96,16 +124,7 @@
 
     //
     :root, :scope, :host {
-        --theme-surface-alpha: 0;
-        --theme-accent-chroma: 0;
-
-        //
-        --highlight-coefficient-state: 0.0;
-        --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
-        --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-        --accent-surface-color: #{cu.$baseColor}; //var(--theme-accent-color);
-
-        //
+        --accent-surface-color: #{cu.$baseColor};
         @include cm.bg-dep;
     }
 
@@ -122,13 +141,6 @@
         };
 
         //
-        &[data-highlight-op="min"] {
-            //--highlight-coefficient-hover: 0.0;
-            //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
-            --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-        }
-
-        //
         &, :where(body) {
             @include cm.accent;
             @include cm.highlight-color;
@@ -143,21 +155,27 @@
     }
 
     //
-    :where([data-scheme]) *:not([data-scheme]),
-    :host([data-scheme]) *:not([data-scheme]) {
-        //@include cm.solid;
-        @include cm.transparent-mode;
-    }
-
-    //
-    :where(*[data-scheme]), :host([data-scheme]), :scope, :host, :host :where(*[data-scheme])
-    //:root, :host, :scope, :where(*)
+       :where(*[data-scheme]),
+        :host(*[data-scheme])
     {
-        //
+        *:not([data-scheme]),
+        ::slotted(*:not([data-scheme]))
+        {@include cm.transparent-mode;};
+
         &,
         &::before, &::after, &::selection,
         *::before, *::after, *::selection, :where(*), &::slotted(*)
         {
+            --theme-base-color: inherit;
+            --theme-dynamic-mixed: inherit;
+            --theme-highlight-color: inherit;
+            --theme-solid-color: inherit;
+            --theme-accent-base-color: inherit;
+            --accent-glyph-color: inherit;
+            --contrast-glyph-color: inherit;
+
+
+            //
             --current-surface-color: color-mix(in oklch, var(--theme-highlight-color, black) calc(var(--highlight-coefficient, 0) * 1%), var(--theme-surface-color, white));
             --current-glyph-color: var(--theme-glyph-color, black);
             --current-accent-color: var(--theme-accent-color, white);
@@ -168,15 +186,6 @@
             --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color, currentColor) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color, currentColor));
 
             //
-            --theme-base-color: inherit;
-            --theme-dynamic-mixed: inherit;
-            --theme-highlight-color: inherit;
-            --theme-solid-color: inherit;
-            --theme-accent-base-color: inherit;
-            --accent-glyph-color: inherit;
-            --contrast-glyph-color: inherit;
-
-            //
             --theme-chroma-mod: oklch(from #{cu.$baseColor} l 0.99 h);
             --theme-black-mod: oklch(from #{cu.$baseColor} 0.01 0.01 h);
             --theme-white-mod: oklch(from #{cu.$baseColor} 0.99 0.01 h);
@@ -184,14 +193,15 @@
             --theme-surface-color: oklch(from var(--theme-chroma-mixed, currentColor) l c h / var(--theme-surface-alpha));
             --theme-accent-dark : oklch(from var(--theme-base-color) min(min(calc(1.0 - l), l), 0.4) min(c, 0.8) h);
             --theme-accent-light: oklch(from var(--theme-base-color) max(max(calc(1.0 - l), l), 0.6) min(c, 0.8) h);
+        }
 
-            //
-            --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-            --highlight-coefficient-state: 0.0;
-            --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
-            --highlight-transition-duration: 0.2s;
-            --highlight-transition-mode: linear;
-            --highlight-transition-property: --highlight-coefficient;
+        //
+        &,
+        &::before, &::after, &::selection,
+        *::before, *::after, *::selection, :where(*), &::slotted(*)
+        {
+            @include cm.highlight-color;
+            @include cm.bg-dep;
         }
 
         //
@@ -208,23 +218,6 @@
             // scrollbar styling
             scrollbar-color: var(--current-glyph-color, currentColor);
             scrollbar-width: thin;
-        }
-
-        //
-        &,
-        &::before, &::after, &::selection,
-        *::before, *::after, *::selection, :where(*), &::slotted(*)
-        {
-            @include cm.highlight-color;
-            @include cm.bg-dep;
-        }
-
-        //
-        &[data-highlight-op="min"],
-        & [data-highlight-op="min"] {
-            //--highlight-coefficient-hover: 0.0;
-            //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
-            --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
         }
 
         //
@@ -340,20 +333,6 @@
     //
     :where([data-highlight-hover], [data-highlight]) *:not([data-highlight], [data-highlight-hover]) {
         @include cm.highlight-color;
-
-        //
-        & {
-            --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-            --highlight-coefficient-state: 0;
-            --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
-        }
-
-        //
-        &[data-highlight-op="min"] {
-            --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
-            //--highlight-coefficient-hover: 0.0;
-            //--highlight-coefficient-state: var(--highlight-coefficient-hover, 0.0);
-        }
     }
 }
 
