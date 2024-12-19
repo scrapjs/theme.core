@@ -1,77 +1,158 @@
+//
+@use "sass:string";
+@use "sass:meta";
 
 //
-@use "ColorUtils" as cu;
+@use "./LogicFb" as flg;
+@use "./LogicSign" as slg;
+
+//
+@function inv-mul($a, $b) {
+    @return "calc(1.0 - calc(1.0 - #{$a}) * #{$b})";
+}
+
+//
+@function tm-hi($base, $percent) {
+    @return color-mix(in oklch, $base calc(100% - $percent), var(--tm-hi, white));
+}
+
+//
+@function tm-lo($base, $percent) {
+    @return color-mix(in oklch, $base calc(100% - $percent), var(--tm-lo, black));
+}
+
+//
+@mixin theme-dependent($property, $light, $dark, $fb: var(--tm-scheme)) {
+    & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
+
+    //
+    @supports(color: light-dark(white, black)) {
+        #{$property}: light-dark(#{$light}, #{$dark});
+    }
+}
+
+//
+@mixin theme-dependent-components() {
+    & {
+        --tm-l-lo: color-mix(in oklch, var(--tm-ac-dark) 90%, var(--tm-cr, currentColor));
+        --tm-d-lo: color-mix(in oklch, var(--tm-ac-light) 90%, var(--tm-cr, currentColor));
+        --tm-l-hi: color-mix(in oklch, var(--tm-ac-light) 98%, var(--tm-cr, currentColor));
+        --tm-d-hi: color-mix(in oklch, var(--tm-ac-dark) 98%, var(--tm-cr, currentColor));
+    }
+
+    //
+    @include theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+    @include theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+}
+
+//
+@mixin contrast($name, $from, $alpha: 1) {
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
+}
+
+//
+@mixin contrast-inverse($name, $from, $alpha: 1) {
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 10000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
+}
+
+//
+@mixin attr-based(
+    $selector: "&",
+    $property,
+    $attr,
+    $type: "number",
+    $logic: null,
+    $default: 1,
+    $test: "opacity"
+) {
+    @property --#{$attr}-attr { initial-value: #{$default}; inherits: true; syntax: "<#{$type}>"; };
+    @supports (#{$test}: attr(#{$attr} #{$type}, #{$default})) {
+        #{$selector} { --#{$attr}-attr: attr(#{$attr} #{$type}, #{$default}); };
+    };
+
+    //
+    #{$selector} {
+        $value: var(--#{$attr}-attr, #{$default});
+        #{$property}: #{ if($logic != null, meta.call($logic, $value), $value) };
+    };
+}
+
+//
+@mixin hover ($selector: "&") {
+    //
+    @media screen and ((hover: hover) or (pointer: fine)) {
+        #{$selector}:hover {
+            & { @content; };
+        }
+    }
+
+    //
+    @media screen and ((hover: none) and (pointer: coarse)) {
+        #{$selector}:action {
+            & { @content; };
+        }
+    }
+}
 
 //
 @mixin highlight-color {
     & {
-        @include cu.contrast-inverse("--theme-highlight-color", "var(--theme-surface-color, currentColor)", 1);
+        @include contrast-inverse("--tm-shade", "var(--tm-bg-color, currentColor)", 1);
     }
 
     //
     & {
-        --highlight-transition-mode: linear;
-        --highlight-transition-duration: 0.2s;
-        --highlight-transition-property: --highlight-coefficient;
-        --highlight-coefficient-state: 0.0;
-        --highlight-coefficient-hover: var(--highlight-coefficient-state, 0.0);
-        --highlight-coefficient: max(max(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+        --hl-trans-mode: linear;
+        --hl-trans-duration: 0.2s;
+        --hl-trans-property: --hl-co;
+        --hl-co-state: 0.0;
+        --hl-co-hover: var(--hl-co-state, 0.0);
+        --hl-co: max(max(var(--hl-co-state, 0), var(--hl-co-hover, 0)), 0);
     }
 
     //
     &[data-highlight-op="min"],
     & [data-highlight-op="min"] {
-        --highlight-coefficient: max(min(var(--highlight-coefficient-state, 0), var(--highlight-coefficient-hover, 0)), 0);
+        --hl-co: max(min(var(--hl-co-state, 0), var(--hl-co-hover, 0)), 0);
     }
 }
 
 //
 @mixin bg-dep {
-    & {
-        @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
-        @include cu.contrast-inverse("--contrast-glyph-color", "var(--theme-surface-color, var(--current-surface-color, currentColor))");
-        & { --theme-glyph-color: var(--contrast-glyph-color); }
-    }
+    & { @include contrast-inverse("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))"); };
 }
-
 
 //
 @mixin solid {
-    @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-light)", "var(--theme-accent-dark)");
-    & { --theme-solid-color: #{cu.theme-mod-up(var(--theme-base-color, currentColor), 96%)}; }
+    @include theme-dependent("--tm-cr", "var(--tm-cr-light)", "var(--tm-cr-dark)");
+    & { --tm-ac: #{tm-hi(var(--tm-origin, currentColor), 96%)}; }
 }
 
 //
 @mixin inverse {
-    @include cu.theme-dependent("--theme-accent-base-color", "var(--theme-accent-dark)", "var(--theme-accent-light)");
-    & { --theme-solid-color: #{cu.theme-mod-down(var(--theme-base-color, currentColor), 80%)}; }
+    @include theme-dependent("--tm-cr", "var(--tm-cr-dark)", "var(--tm-cr-light)");
+    & { --tm-ac: #{tm-lo(var(--tm-origin, currentColor), 80%)}; }
 }
-
 
 //
 @mixin accent {
-    & { --theme-accent-base-color: var(--theme-base-color); };
-    & { --theme-solid-color: #{cu.$baseColor}; }
+    & { --tm-cr: var(--tm-origin, currentColor); };
+    & { --tm-ac: var(--tm-origin, currentColor); }
 }
 
 //
 @mixin accent-inverse {
     @include accent;
-    @include cu.contrast-inverse("--theme-chroma-mixed", cu.$baseColor, "var(--theme-surface-alpha, 0)");
+    @include contrast-inverse("--tm-ac", "var(--tm-origin, currentColor)", "var(--tm-bg-alpha, 0)");
 }
-
 
 //
 @mixin dynamic {
-    & { --theme-dynamic-color: #{cu.$baseColor}; };
+    & { --tm-adapt: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma)), var(--tm-ac)); };
     &, &::before, &::after, &::selection, & :where(*), &::slotted(*) {
-        --theme-chroma-mixed: var(--theme-dynamic-color, color-mix(in oklch, #{cu.$baseColor} calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color)));
+        --tm-bg-base: var(--tm-adapt, currentColor);
     }
 }
 
 //
-@mixin transparent-mode {
-    //$color: "oklch(from var(--theme-surface-color) l c h / var(--theme-surface-alpha))";
-    & { --theme-surface-alpha  : 0; };
-    //& { --current-surface-color: color-mix(in oklch, var(--theme-highlight-color) calc(var(--highlight-coefficient) * 1%), #{$color}); }
-}
+@mixin transparent-mode { & { --tm-bg-alpha: 0; }; };

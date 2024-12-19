@@ -29,20 +29,20 @@ export const setStyleRules = (classes: StyleTuple[]) => {
 };
 
 //
-export const updateThemeBase = ($baseColor: string|null = null, $cssIsDark: boolean|null = null)=>{
-    if ($baseColor != null && localStorage.getItem("--theme-base-color") != $baseColor) localStorage.setItem("--theme-base-color", $baseColor);
-    if ($cssIsDark != null && (!!localStorage.getItem("--theme-wallpaper-is-dark") != $cssIsDark)) localStorage.setItem("--theme-wallpaper-is-dark", $cssIsDark as unknown as string);
+export const updateThemeBase = (originColor: string|null = null, $cssIsDark: boolean|null = null)=>{
+    if (originColor != null && localStorage.getItem("--tm-origin") != originColor) localStorage.setItem("--tm-origin", originColor);
+    if ($cssIsDark != null && (!!localStorage.getItem("--tm-scheme") != $cssIsDark)) localStorage.setItem("--tm-scheme", $cssIsDark as unknown as string);
 
     //
     setStyleRule(":host, :root, :scope, :where(*)", {
-        "--theme-base-color"       : localStorage.getItem("--theme-base-color") || "oklch(0.46 0.14 310)",
-        "--theme-wallpaper-is-dark": (localStorage.getItem("--theme-wallpaper-is-dark") ? 1 : 0) || 0
+        "--tm-origin": localStorage.getItem("--tm-origin") || "oklch(0.46 0.14 310)",
+        "--tm-scheme": (localStorage.getItem("--tm-scheme") ? 1 : 0) || 0
     });
 }
 
 //
 addEventListener("storage", (event) => {
-    if (event.key == "--theme-base-color" || event.key == "--theme-wallpaper-is-dark") {
+    if (event.key == "--tm-origin" || event.key == "--tm-scheme") {
         updateThemeBase();
     }
 });

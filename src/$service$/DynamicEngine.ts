@@ -23,8 +23,8 @@ export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
     //
     if (opaque[0] && opaque[0] instanceof HTMLElement) {
         const color = getComputedStyle(opaque[0] as HTMLElement, "")?.backgroundColor || "transparent"; //|| baseColor;
-        if (holder && holder.style.getPropertyValue("--theme-dynamic-color") != color) {
-            holder.style.setProperty("--theme-dynamic-color", color, "");
+        if (holder && holder.style.getPropertyValue("--tm-adapt") != color) {
+            holder.style.setProperty("--tm-adapt", color, "");
         }
         return color;
     }
@@ -93,22 +93,6 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
     setInterval(()=>{
         switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
     }, 2000);
-
-    // vacuum issue
-    /*setInterval(()=>{
-        ROOT?.querySelectorAll?.("ui-icon").forEach((self: any)=>{
-            if ((self.dataset.scheme == "dynamic" || self.dataset.scheme == "dynamic-transparent") && !self?.closest?.("body")) {
-                const icon = self.shadowRoot?.querySelector?.("svg");
-                const computed = getComputedStyle(self);
-                const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "currentColor";
-                icon?.querySelectorAll?.("path, rect, line, circle, ellipse").forEach((p: any)=>{
-                    if (p.style.getPropertyValue("stroke") != color) p.style.setProperty("stroke", color, "");
-                    if (p.style.getPropertyValue("color") != color) p.style.setProperty("color", color, "");
-                    if (p.style.getPropertyValue("accent-color") != color) p.style.setProperty("accent-color", color, "");
-                });
-            }
-        });
-    }, 100);*/
 
     //
     ROOT.addEventListener("u2-theme-change", ()=>{

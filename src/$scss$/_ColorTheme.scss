@@ -7,7 +7,6 @@
 @use "sass:meta";
 
 //
-@use "ColorUtils" as cu;
 @use "ColorMixins" as cm;
 
 //
@@ -20,48 +19,47 @@
     }
 
     //
-    @property --theme-chroma-mixed { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-bg-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-bg-base { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-scheme { syntax: "<number>"; inherits: true; initial-value: 0; }
 
     //
-    @property --theme-black-mod { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-white-mod { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-is-dark { syntax: "<number>"; inherits: true; initial-value: 0; }
-    @property --theme-dark-up-mod   { syntax: "<color>"; inherits: true; initial-value: black; }
-    @property --theme-dark-down-mod { syntax: "<color>"; inherits: true; initial-value: white; }
-    @property --theme-light-up-mod   { syntax: "<color>"; inherits: true; initial-value: white; }
-    @property --theme-light-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
-    @property --theme-chroma-mod { syntax: "<color>"; inherits: true; initial-value: red; }
-    @property --theme-up-mod { syntax: "<color>"; inherits: true; initial-value: white; }
-    @property --theme-down-mod { syntax: "<color>"; inherits: true; initial-value: black; }
-    @property --theme-accent-dark { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-accent-light { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-ac-dark { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-ac-light { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-cr-dark { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-cr-light { syntax: "<color>"; initial-value: white; inherits: true; };
 
     //
-    @property --theme-highlight-color { syntax: "<color>"; inherits: true; initial-value: transparent; }
-    @property --theme-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-dynamic-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --theme-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --current-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --current-surface-color { syntax: "<color>"; initial-value: currentColor; inherits: true; };
-    @property --current-chroma-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --current-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --highlight-coefficient { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --highlight-coefficient-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --highlight-coefficient-state { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --accent-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --accent-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --contrast-glyph-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --contrast-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --adaptive-surface-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-base-accent-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-accent-base-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-d-hi   { syntax: "<color>"; inherits: true; initial-value: black; }
+    @property --tm-d-lo { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --tm-l-hi   { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --tm-l-lo { syntax: "<color>"; inherits: true; initial-value: black; }
 
     //
-    @property --theme-solid-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --theme-accent-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --theme-surface-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --tm-hi { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --tm-lo { syntax: "<color>"; inherits: true; initial-value: black; }
+
+    //
+    @property --rv-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --rv-bg-color { syntax: "<color>"; initial-value: currentColor; inherits: true; };
+
+    //
+    @property --hl-co { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --hl-co-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --hl-co-state { syntax: "<number>"; initial-value: 0; inherits: true; };
+
+    //
+    @property --tm-shade { syntax: "<color>"; inherits: true; initial-value: transparent; }
+    @property --tm-origin { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-adapt { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-cr { syntax: "<color>"; initial-value: white; inherits: true; };
+
+    //
+    @property --tm-ac { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-alpha { syntax: "<number>"; initial-value: 1; inherits: true; };
+    @property --tm-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --tm-bg-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
 
     //
     @property --icon-size {
@@ -80,28 +78,24 @@
 //
 @layer u2-color-normalize {
     :host, :root, :scope, :where(*), ::slotted(*) {
-        --theme-surface-alpha: inherit;
-        --theme-accent-chroma: inherit;
+        --tm-bg-alpha: inherit;
+        --tm-chroma: inherit;
 
-        --theme-base-color: inherit;
-        --theme-accent-base-color: inherit;
-        --theme-highlight-color: inherit;
+        //
+        --tm-origin: inherit;
+        --tm-shade: inherit;
+        --tm-adapt: inherit;
 
-        --theme-solid-color: inherit;
-        --theme-dynamic-color: inherit;
-        --theme-dynamic-mixed: inherit;
-        --theme-surface-color: inherit;
-        --theme-glyph-color: inherit;
-        --theme-accent-color: inherit;
-        --theme-chroma-color: inherit;
-        --theme-glyph-mixed: inherit;
+        //
+        --tm-cr: inherit;
+        --tm-ac: inherit;
 
-        --current-surface-color: inherit;
-        --current-glyph-mixed: inherit;
-        --current-accent-color: inherit;
-        --current-chroma-color: inherit;
-        --contrast-glyph-color: inherit;
-        --accent-glyph-color: inherit;
+        //
+        --tm-bg-color: inherit;
+        --tm-color: inherit;
+
+        --rv-bg-color: inherit;
+        --rv-color: inherit;
     }
 }
 
@@ -109,22 +103,7 @@
 @layer u2-color-base {
 
     //
-    :root, :where(html) {
-        --range-slider:          #{cu.theme-mod-up(cu.$baseColor, 90%)};; /* slider main background color */
-        --range-handle-inactive: #{cu.theme-mod-up(cu.$baseColor, 80%)};; /* inactive handle color */
-        --range-handle:          #{cu.theme-mod-up(cu.$baseColor, 20%)};; /* non-focussed handle color */
-        --range-handle-focus:    #{cu.theme-mod-up(cu.$baseColor, 10%)}; /* focussed handle color */
-        --range-handle-border:   var(--range-handle); /* handle border color */
-        --range-range-inactive:  var(--range-handle-inactive); /* inactive range bar background color */
-        --range-range:           var(--range-handle-focus); /* active range background color */
-        --range-float-inactive:  var(--range-handle-inactive); /* inactive floating label background color */
-        --range-float:           var(--range-handle-focus); /* floating label background color */
-        --range-float-text:      #{cu.theme-mod-up(cu.$baseColor, 100%)};; /* text color on floating label */
-    }
-
-    //
     :root, :scope, :host {
-        --accent-surface-color: #{cu.$baseColor};
         @include cm.bg-dep;
     }
 
@@ -132,26 +111,22 @@
     :root, :where(html) {
         //
         & {
-            --theme-is-dark: 0; color-scheme: light;
-            --theme-surface-alpha: 0;
-            --theme-accent-chroma: 0;
-            --theme-accent-color: var(--theme-accent-base-color);
-            --theme-chroma-color: var(--theme-accent-color);
-            --theme-dynamic-color: var(--adaptive-surface-color, var(--theme-base-color, currentColor));
+            --tm-scheme: 0; color-scheme: light;
+            --tm-chroma: 0;
+            --tm-bg-alpha: 0;
+            --tm-alpha: 1;
+            --tm-adapt: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma)), var(--tm-ac));
         };
 
         //
         &, :where(body) {
             @include cm.accent;
             @include cm.highlight-color;
-            @include cu.contrast-inverse("--accent-glyph-color", cu.$baseColor);
-            @include cu.contrast-inverse("--contrast-surface-color", "var(--theme-glyph-color, currentColor)");
-            @include cu.contrast-inverse("--contrast-glyph-color", "var(--theme-surface-color, currentColor)");
         }
 
         //
-        @media (prefers-color-scheme: light) { --theme-is-dark: 0; color-scheme: light; }
-        @media (prefers-color-scheme: dark)  { --theme-is-dark: 1; color-scheme: dark; }
+        @media (prefers-color-scheme: light) { --tm-scheme: 0; color-scheme: light; }
+        @media (prefers-color-scheme: dark)  { --tm-scheme: 1; color-scheme: dark; }
     }
 
     //
@@ -166,33 +141,26 @@
         &::before, &::after, &::selection,
         *::before, *::after, *::selection, :where(*), &::slotted(*)
         {
-            --theme-base-color: inherit;
-            --theme-dynamic-mixed: inherit;
-            --theme-highlight-color: inherit;
-            --theme-solid-color: inherit;
-            --theme-accent-base-color: inherit;
-            --accent-glyph-color: inherit;
-            --contrast-glyph-color: inherit;
-
+            --tm-origin: inherit;
+            --tm-shade: inherit;
+            --tm-ac: inherit;
+            --tm-cr: inherit;
 
             //
-            --current-surface-color: color-mix(in oklch, var(--theme-highlight-color, black) calc(var(--highlight-coefficient, 0) * 1%), var(--theme-surface-color, white));
-            --current-glyph-color: var(--theme-glyph-color, black);
-            --current-accent-color: var(--theme-accent-color, white);
-            --current-chroma-color: var(--theme-chroma-color, white);
+            --rv-bg-color: color-mix(in oklch, var(--tm-shade, black) calc(var(--hl-co, 0) * 1%), var(--tm-bg-color, white));
+            --rv-color: var(--tm-color, black);
+
+            // achromatic
+            --tm-ac-dark: oklch(from var(--tm-cr, currentColor) 0.01 0.01 h);
+            --tm-ac-light: oklch(from var(--tm-cr, currentColor) 0.99 0.01 h);
+
+            // colorful
+            --tm-cr-dark : oklch(from var(--tm-origin) min(min(calc(1.0 - l), l), 0.4) min(c, 0.8) h);
+            --tm-cr-light: oklch(from var(--tm-origin) max(max(calc(1.0 - l), l), 0.6) min(c, 0.8) h);
 
             //
-            --accent-surface-color: #{cu.$baseColor}; // theme-accent-color
-            --theme-chroma-mixed: color-mix(in oklch, var(--accent-surface-color, currentColor) calc(100% * var(--theme-accent-chroma)), var(--theme-solid-color, currentColor));
-
-            //
-            --theme-chroma-mod: oklch(from #{cu.$baseColor} l 0.99 h);
-            --theme-black-mod: oklch(from #{cu.$baseColor} 0.01 0.01 h);
-            --theme-white-mod: oklch(from #{cu.$baseColor} 0.99 0.01 h);
-            --theme-accent-color: var(--theme-accent-base-color);
-            --theme-surface-color: oklch(from var(--theme-chroma-mixed, currentColor) l c h / var(--theme-surface-alpha));
-            --theme-accent-dark : oklch(from var(--theme-base-color) min(min(calc(1.0 - l), l), 0.4) min(c, 0.8) h);
-            --theme-accent-light: oklch(from var(--theme-base-color) max(max(calc(1.0 - l), l), 0.6) min(c, 0.8) h);
+            --tm-bg-base: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma)), var(--tm-ac, currentColor));
+            --tm-bg-color: oklch(from var(--tm-bg-base, currentColor) l c h / var(--tm-bg-alpha));
         }
 
         //
@@ -209,14 +177,14 @@
         &::before, &::after, &::selection,
         *::before, *::after, *::selection, :where(*), &::slotted(*)
         {   //
-            transition: var(--highlight-transition-property) var(--highlight-transition-duration) var(--highlight-transition-mode);
-            background-color: var(--current-surface-color, currentColor);
-            accent-color: var(--current-glyph-color, currentColor); //--theme-accent-base-color
-            color: var(--current-glyph-color, currentColor);
-            stroke: var(--current-glyph-color, currentColor);
+            transition: var(--hl-trans-property) var(--hl-trans-duration) var(--hl-trans-mode);
+            background-color: var(--rv-bg-color, currentColor);
+            accent-color: var(--rv-color, currentColor); //--tm-cr
+            color: var(--rv-color, currentColor);
+            stroke: var(--rv-color, currentColor);
 
             // scrollbar styling
-            scrollbar-color: var(--current-glyph-color, currentColor);
+            scrollbar-color: var(--rv-color, currentColor);
             scrollbar-width: thin;
         }
 
@@ -237,7 +205,7 @@
             background-repeat: no-repeat;
             background-clip: content-box;
             background-origin: content-box;
-            background-color: var(--current-glyph-color, currentColor);
+            background-color: var(--rv-color, currentColor);
 
             //
             //mask-image: linear-gradient(#0000, #0000);
@@ -261,8 +229,8 @@
 
         //
         &::selection, ::selection {
-            background-color: var(--current-glyph-color, black);
-            color: oklch(from var(--current-glyph-color, black) calc(1 - l) c h / 1.0);
+            background-color: var(--rv-color, black);
+            color: oklch(from var(--rv-color, black) calc(1 - l) c h / 1.0);
         }
 
         //
@@ -289,27 +257,27 @@
 //
 @layer u2-color-theme {
     :host, :root, :scope, body {
-        @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
-        @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
-        @include cu.theme-dependent-components;
+        @include cm.theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+        @include cm.theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        @include cm.theme-dependent-components;
     }
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
     *[data-theme="dark"], :host([data-theme="dark"]) {
-        & { --theme-is-dark: 1; color-scheme: dark; };
-        @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
-        @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
-        @include cu.theme-dependent-components;
+        & { --tm-scheme: 1; color-scheme: dark; };
+        @include cm.theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+        @include cm.theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        @include cm.theme-dependent-components;
     }
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
     *[data-theme="light"], :host([data-theme="light"]) {
-        & { --theme-is-dark: 0; color-scheme: light; };
-        @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
-        @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
-        @include cu.theme-dependent-components;
+        & { --tm-scheme: 0; color-scheme: light; };
+        @include cm.theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+        @include cm.theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        @include cm.theme-dependent-components;
     }
 
     // may be used for fixed theming, without dependency
@@ -318,13 +286,13 @@
     *[data-theme="default"], :host([data-theme="default"]) {
         // adaptive
         & { color-scheme: normal; };
-        @media (prefers-color-scheme: light) { --theme-is-dark: 0; color-scheme: light; };
-        @media (prefers-color-scheme: dark)  { --theme-is-dark: 1; color-scheme: dark; };
+        @media (prefers-color-scheme: light) { --tm-scheme: 0; color-scheme: light; };
+        @media (prefers-color-scheme: dark)  { --tm-scheme: 1; color-scheme: dark; };
 
         //
-        @include cu.theme-dependent("--theme-up-mod", "var(--theme-light-up-mod)", "var(--theme-dark-up-mod)");
-        @include cu.theme-dependent("--theme-down-mod", "var(--theme-light-down-mod)", "var(--theme-dark-down-mod)");
-        @include cu.theme-dependent-components;
+        @include cm.theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+        @include cm.theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        @include cm.theme-dependent-components;
     }
 }
 
@@ -338,26 +306,26 @@
 
 //
 @layer u2-color-mod {
-    :host([data-scheme="dynamic"]), *[data-scheme="dynamic"]                            { @include cm.dynamic;        & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; }
-    :host([data-scheme="accent"]), *[data-scheme="accent"]                              { @include cm.accent;         & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; } // deprecated...
-    :host([data-scheme="solid"]), *[data-scheme="solid"]                                { @include cm.solid;          & { --theme-accent-chroma: 0; --theme-surface-alpha: 1; }; }
-    :host([data-scheme="inverse"]), *[data-scheme="inverse"]                            { @include cm.inverse;        & { --theme-accent-chroma: 0; --theme-surface-alpha: 1; }; }
-    :host([data-scheme="accent-inverse"]), *[data-scheme="accent-inverse"]              { @include cm.accent-inverse; & { --theme-accent-chroma: 1; --theme-surface-alpha: 1; }; }
-    :host([data-scheme="transparent"]), *[data-scheme="transparent"]                    { @include cm.accent;         & { --theme-accent-chroma: 1; --theme-surface-alpha: 0; }; }
-    :host([data-scheme="solid-transparent"]), *[data-scheme="solid-transparent"]        { @include cm.solid;          & { --theme-accent-chroma: 0; --theme-surface-alpha: 0; }; }
-    :host([data-scheme="dynamic-transparent"]), *[data-scheme="dynamic-transparent"]    { @include cm.dynamic;        & { --theme-accent-chroma: 1; --theme-surface-alpha: 0; }; }
+    :host([data-scheme="dynamic"]), *[data-scheme="dynamic"]                            { @include cm.dynamic;        & { --tm-chroma: 1; --tm-bg-alpha: 1; }; }
+    :host([data-scheme="accent"]), *[data-scheme="accent"]                              { @include cm.accent;         & { --tm-chroma: 1; --tm-bg-alpha: 1; }; } // deprecated...
+    :host([data-scheme="solid"]), *[data-scheme="solid"]                                { @include cm.solid;          & { --tm-chroma: 0; --tm-bg-alpha: 1; }; }
+    :host([data-scheme="inverse"]), *[data-scheme="inverse"]                            { @include cm.inverse;        & { --tm-chroma: 0; --tm-bg-alpha: 1; }; }
+    :host([data-scheme="accent-inverse"]), *[data-scheme="accent-inverse"]              { @include cm.accent-inverse; & { --tm-chroma: 1; --tm-bg-alpha: 1; }; }
+    :host([data-scheme="transparent"]), *[data-scheme="transparent"]                    { @include cm.accent;         & { --tm-chroma: 1; --tm-bg-alpha: 0; }; }
+    :host([data-scheme="solid-transparent"]), *[data-scheme="solid-transparent"]        { @include cm.solid;          & { --tm-chroma: 0; --tm-bg-alpha: 0; }; }
+    :host([data-scheme="dynamic-transparent"]), *[data-scheme="dynamic-transparent"]    { @include cm.dynamic;        & { --tm-chroma: 1; --tm-bg-alpha: 0; }; }
 };
 
 //
 @layer u2-color-attr {
     //
     @function hl-logic($value) { @return "calc(#{$value} * 3)"; };
-    @include cu.attr-based(":host([data-highlight]), *[data-highlight]", "--highlight-coefficient-state", "data-highlight", "number", meta.get-function("hl-logic"), 0);
-    @include cu.attr-based(":host([data-chroma]), *[data-chroma]", "--theme-accent-chroma", "data-chroma", "number", null, 0);
-    @include cu.attr-based(":host([data-alpha]), *[data-alpha]", "--theme-surface-alpha", "data-alpha", "number", null, 0);
+    @include cm.attr-based(":host([data-highlight]), *[data-highlight]", "--hl-co-state", "data-highlight", "number", meta.get-function("hl-logic"), 0);
+    @include cm.attr-based(":host([data-chroma]), *[data-chroma]", "--tm-chroma", "data-chroma", "number", null, 0);
+    @include cm.attr-based(":host([data-alpha]), *[data-alpha]", "--tm-bg-alpha", "data-alpha", "number", null, 0);
 
     // :host() unsupported
-    @include cu.hover("*[data-highlight-hover]") {
-        @include cu.attr-based("&", "--highlight-coefficient-hover", "data-highlight-hover", "number", meta.get-function("hl-logic"), 0);
+    @include cm.hover("*[data-highlight-hover]") {
+        @include cm.attr-based("&", "--hl-co-hover", "data-highlight-hover", "number", meta.get-function("hl-logic"), 0);
     }
 };
