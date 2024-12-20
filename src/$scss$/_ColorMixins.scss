@@ -26,12 +26,12 @@
 
 //
 @mixin contrast($name, $from, $alpha: 1) {
-    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.4 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
 };
 
 //
 @mixin in-contrast($name, $from, $alpha: 1) {
-    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 10000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 100000), 1) * 0.4 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
 };
 
 //
