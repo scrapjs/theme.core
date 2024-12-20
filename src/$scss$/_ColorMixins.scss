@@ -3,59 +3,6 @@
 @use "sass:meta";
 
 //
-@use "./LogicFb" as flg;
-@use "./LogicSign" as slg;
-
-//
-@function inv-mul($a, $b) {
-    @return "calc(1.0 - calc(1.0 - #{$a}) * #{$b})";
-}
-
-//
-@function tm-hi($base, $percent) {
-    @return color-mix(in oklch, $base calc(100% - $percent), var(--tm-hi, white));
-}
-
-//
-@function tm-lo($base, $percent) {
-    @return color-mix(in oklch, $base calc(100% - $percent), var(--tm-lo, black));
-}
-
-//
-@mixin theme-dependent($property, $light, $dark, $fb: var(--tm-scheme)) {
-    & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
-
-    //
-    @supports(color: light-dark(white, black)) {
-        #{$property}: light-dark(#{$light}, #{$dark});
-    }
-}
-
-//
-@mixin theme-dependent-components() {
-    & {
-        --tm-l-lo: color-mix(in oklch, var(--tm-ac-dark) 90%, var(--tm-cr, currentColor));
-        --tm-d-lo: color-mix(in oklch, var(--tm-ac-light) 90%, var(--tm-cr, currentColor));
-        --tm-l-hi: color-mix(in oklch, var(--tm-ac-light) 98%, var(--tm-cr, currentColor));
-        --tm-d-hi: color-mix(in oklch, var(--tm-ac-dark) 98%, var(--tm-cr, currentColor));
-    }
-
-    //
-    @include theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
-    @include theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
-}
-
-//
-@mixin contrast($name, $from, $alpha: 1) {
-    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
-}
-
-//
-@mixin contrast-inverse($name, $from, $alpha: 1) {
-    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 10000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
-}
-
-//
 @mixin attr-based(
     $selector: "&",
     $property,
@@ -75,30 +22,53 @@
         $value: var(--#{$attr}-attr, #{$default});
         #{$property}: #{ if($logic != null, meta.call($logic, $value), $value) };
     };
-}
+};
+
+//
+@mixin contrast($name, $from, $alpha: 1) {
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
+};
+
+//
+@mixin in-contrast($name, $from, $alpha: 1) {
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 10000), 1) * 0.9 * 0.5 + 0.5) calc(c * 0.4) h / #{$alpha})"); };
+};
 
 //
 @mixin hover ($selector: "&") {
-    //
-    @media screen and ((hover: hover) or (pointer: fine)) {
-        #{$selector}:hover {
-            & { @content; };
-        }
-    }
-
-    //
-    @media screen and ((hover: none) and (pointer: coarse)) {
-        #{$selector}:action {
-            & { @content; };
-        }
-    }
-}
+    @media screen and ((hover: hover) or (pointer: fine)) { #{$selector}:hover { @content; }; };
+    @media screen and ((hover: none) and (pointer: coarse)) { #{$selector}:action { @content; }; };
+};
 
 //
-@mixin highlight-color {
+@mixin tm-dep-comp() {
     & {
-        @include contrast-inverse("--tm-shade", "var(--tm-bg-color, currentColor)", 1);
+        --tm-l-lo: color-mix(in oklch, var(--tm-ac-dark) 90%, var(--tm-cr, currentColor));
+        --tm-d-lo: color-mix(in oklch, var(--tm-ac-light) 90%, var(--tm-cr, currentColor));
+        --tm-l-hi: color-mix(in oklch, var(--tm-ac-light) 98%, var(--tm-cr, currentColor));
+        --tm-d-hi: color-mix(in oklch, var(--tm-ac-dark) 98%, var(--tm-cr, currentColor));
     }
+
+    //
+    @include tm-dep("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+    @include tm-dep("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+};
+
+//
+@mixin transp { & { --tm-bg-alpha: 0; }; };
+@mixin bg-dep { @include in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))"); };
+@mixin tm-dep($property, $light, $dark, $fb: var(--tm-scheme)) {
+    & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
+
+    //
+    @supports(color: light-dark(white, black)) {
+        #{$property}: light-dark(#{$light}, #{$dark});
+    }
+};
+
+//
+@mixin hl-col {
+    @include in-contrast("--tm-shade", "var(--tm-bg-color, currentColor)", 1);
 
     //
     & {
@@ -108,51 +78,55 @@
         --hl-co-state: 0.0;
         --hl-co-hover: var(--hl-co-state, 0.0);
         --hl-co: max(max(var(--hl-co-state, 0), var(--hl-co-hover, 0)), 0);
-    }
+    };
 
     //
     &[data-highlight-op="min"],
     & [data-highlight-op="min"] {
         --hl-co: max(min(var(--hl-co-state, 0), var(--hl-co-hover, 0)), 0);
-    }
-}
+    };
+};
+
+
 
 //
-@mixin bg-dep {
-    & { @include contrast-inverse("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))"); };
-}
+@function tm-hi($base, $percent) {
+    @return color-mix(in oklch, #{$base} calc(100% - #{$percent}), var(--tm-hi, white));
+};
+
+//
+@function tm-lo($base, $percent) {
+    @return color-mix(in oklch, #{$base} calc(100% - #{$percent}), var(--tm-lo, black));
+};
 
 //
 @mixin solid {
-    @include theme-dependent("--tm-cr", "var(--tm-cr-light)", "var(--tm-cr-dark)");
+    // origin color is base, but with theme tone
+    @include tm-dep("--tm-cr", "var(--tm-cr-light)", "var(--tm-cr-dark)");
+
+    // high-up version of origin color
     & { --tm-ac: #{tm-hi(var(--tm-origin, currentColor), 96%)}; }
-}
+};
 
 //
 @mixin inverse {
-    @include theme-dependent("--tm-cr", "var(--tm-cr-dark)", "var(--tm-cr-light)");
-    & { --tm-ac: #{tm-lo(var(--tm-origin, currentColor), 80%)}; }
-}
+    // origin color is base, but with theme tone
+    @include tm-dep("--tm-cr", "var(--tm-cr-dark)", "var(--tm-cr-light)");
 
-//
+    // low-up version of origin color
+    & { --tm-ac: #{tm-lo(var(--tm-origin, currentColor), 80%)}; }
+};
+
+// use practically same values by origin color
+// achromatic value is tone version of origin color
 @mixin accent {
     & { --tm-cr: var(--tm-origin, currentColor); };
-    & { --tm-ac: var(--tm-origin, currentColor); }
-}
+    @include tm-dep("--tm-ac", "var(--tm-cr-light)", "var(--tm-cr-dark)");
+};
 
-//
+// dynamic now deprecated, now works through JS, initial value is native
+@mixin dynamic { --tm-bg-base: var(--tm-adapt, color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma, 0)), var(--tm-ac, currentColor))); };
 @mixin accent-inverse {
     @include accent;
-    @include contrast-inverse("--tm-ac", "var(--tm-origin, currentColor)", "var(--tm-bg-alpha, 0)");
-}
-
-//
-@mixin dynamic {
-    & { --tm-adapt: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma)), var(--tm-ac)); };
-    &, &::before, &::after, &::selection, & :where(*), &::slotted(*) {
-        --tm-bg-base: var(--tm-adapt, currentColor);
-    }
-}
-
-//
-@mixin transparent-mode { & { --tm-bg-alpha: 0; }; };
+    @include in-contrast("--tm-ac", "var(--tm-origin, currentColor)", "var(--tm-bg-alpha, 0)");
+};

@@ -3,31 +3,18 @@
  */
 
 //
-@use "sass:string";
 @use "sass:meta";
-
-//
 @use "ColorMixins" as cm;
 
 //
 @scope(:root, :host, :scope)
 {
-
-    //
-    @property --theme-wallpaper-is-dark {
-        syntax: "<number>"; initial-value: 0; inherits: true;
-    }
-
-    //
-    @property --tm-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --tm-bg-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --tm-bg-base { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --tm-scheme { syntax: "<number>"; inherits: true; initial-value: 0; }
+    @property --wp-mode { syntax: "<number>"; initial-value: 0; inherits: true; }
 
     //
     @property --tm-ac-dark { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --tm-ac-light { syntax: "<color>"; initial-value: black; inherits: true; };
     @property --tm-cr-dark { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-ac-light { syntax: "<color>"; initial-value: black; inherits: true; };
     @property --tm-cr-light { syntax: "<color>"; initial-value: white; inherits: true; };
 
     //
@@ -35,31 +22,31 @@
     @property --tm-d-lo { syntax: "<color>"; inherits: true; initial-value: white; }
     @property --tm-l-hi   { syntax: "<color>"; inherits: true; initial-value: white; }
     @property --tm-l-lo { syntax: "<color>"; inherits: true; initial-value: black; }
-
-    //
     @property --tm-hi { syntax: "<color>"; inherits: true; initial-value: white; }
     @property --tm-lo { syntax: "<color>"; inherits: true; initial-value: black; }
 
     //
+    @property --tm-scheme { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --tm-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
     @property --rv-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --rv-bg-color { syntax: "<color>"; initial-value: currentColor; inherits: true; };
+    @property --tm-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-alpha { syntax: "<number>"; initial-value: 1; inherits: true; };
+    @property --tm-bg-base { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --rv-bg-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-bg-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-bg-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
 
     //
+    @property --tm-cr { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-ac { syntax: "<color>"; initial-value: white; inherits: true; };
     @property --hl-co { syntax: "<number>"; initial-value: 0; inherits: true; };
     @property --hl-co-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
     @property --hl-co-state { syntax: "<number>"; initial-value: 0; inherits: true; };
 
     //
+    @property --tm-adapt { syntax: "<color>"; initial-value: black; inherits: true; };
     @property --tm-shade { syntax: "<color>"; inherits: true; initial-value: transparent; }
     @property --tm-origin { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --tm-adapt { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --tm-cr { syntax: "<color>"; initial-value: white; inherits: true; };
-
-    //
-    @property --tm-ac { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --tm-alpha { syntax: "<number>"; initial-value: 1; inherits: true; };
-    @property --tm-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --tm-bg-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
 
     //
     @property --icon-size {
@@ -101,13 +88,7 @@
 
 //
 @layer u2-color-base {
-
-    //
-    :root, :scope, :host {
-        @include cm.bg-dep;
-    }
-
-    //
+    :root, :scope, :host { @include cm.bg-dep; };
     :root, :where(html) {
         //
         & {
@@ -115,13 +96,13 @@
             --tm-chroma: 0;
             --tm-bg-alpha: 0;
             --tm-alpha: 1;
-            --tm-adapt: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma)), var(--tm-ac));
+            --tm-adapt: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma, 0)), var(--tm-ac, currentColor));
         };
 
         //
         &, :where(body) {
             @include cm.accent;
-            @include cm.highlight-color;
+            @include cm.hl-col;
         }
 
         //
@@ -135,7 +116,7 @@
     {
         *:not([data-scheme]),
         ::slotted(*:not([data-scheme]))
-        {@include cm.transparent-mode;};
+        {@include cm.transp;};
 
         &,
         &::before, &::after, &::selection,
@@ -159,7 +140,8 @@
             --tm-cr-light: oklch(from var(--tm-origin) max(max(calc(1.0 - l), l), 0.6) min(c, 0.8) h);
 
             //
-            --tm-bg-base: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma)), var(--tm-ac, currentColor));
+            --tm-adapt: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma, 0)), var(--tm-ac, currentColor));
+            --tm-bg-base: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma, 0)), var(--tm-ac, currentColor));//var(--tm-adapt, currentColor);
             --tm-bg-color: oklch(from var(--tm-bg-base, currentColor) l c h / var(--tm-bg-alpha));
         }
 
@@ -168,7 +150,7 @@
         &::before, &::after, &::selection,
         *::before, *::after, *::selection, :where(*), &::slotted(*)
         {
-            @include cm.highlight-color;
+            @include cm.hl-col;
             @include cm.bg-dep;
         }
 
@@ -243,66 +225,61 @@
 
 //
 @layer u2-color-transparent {
-    //
-    :host([data-transparent]:not([data-transparent="false"])) {
-        @include cm.transparent-mode;
-    }
+    :host([data-transparent]:not([data-transparent="false"])),
+    *[data-transparent]:not([data-transparent="false"])
+    { @include cm.transp; };
+};
 
-    //
-    *[data-transparent]:not([data-transparent="false"]) {
-        @include cm.transparent-mode;
-    }
-}
+//
+@layer u2-color-hl {
+    :where([data-highlight-hover], [data-highlight]) *:not([data-highlight], [data-highlight-hover])
+    { @include cm.hl-col; };
+};
 
 //
 @layer u2-color-theme {
-    :host, :root, :scope, body {
-        @include cm.theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
-        @include cm.theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
-        @include cm.theme-dependent-components;
+    :host, :root, :scope, body
+    {
+        @include cm.tm-dep("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+        @include cm.tm-dep("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        @include cm.tm-dep-comp;
     }
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
-    *[data-theme="dark"], :host([data-theme="dark"]) {
+    *[data-theme="dark"], :host([data-theme="dark"])
+    {
         & { --tm-scheme: 1; color-scheme: dark; };
-        @include cm.theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
-        @include cm.theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
-        @include cm.theme-dependent-components;
+        @include cm.tm-dep("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+        @include cm.tm-dep("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        @include cm.tm-dep-comp;
     }
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
-    *[data-theme="light"], :host([data-theme="light"]) {
+    *[data-theme="light"], :host([data-theme="light"])
+    {
         & { --tm-scheme: 0; color-scheme: light; };
-        @include cm.theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
-        @include cm.theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
-        @include cm.theme-dependent-components;
+        @include cm.tm-dep("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+        @include cm.tm-dep("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        @include cm.tm-dep-comp;
     }
 
     // may be used for fixed theming, without dependency
     // unused in nested elements, currently
     *[data-theme="native"], :host([data-theme="native"]),
-    *[data-theme="default"], :host([data-theme="default"]) {
-        // adaptive
+    *[data-theme="default"], :host([data-theme="default"])
+    {   // adaptive
         & { color-scheme: normal; };
         @media (prefers-color-scheme: light) { --tm-scheme: 0; color-scheme: light; };
         @media (prefers-color-scheme: dark)  { --tm-scheme: 1; color-scheme: dark; };
 
         //
-        @include cm.theme-dependent("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
-        @include cm.theme-dependent("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
-        @include cm.theme-dependent-components;
+        @include cm.tm-dep("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+        @include cm.tm-dep("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        @include cm.tm-dep-comp;
     }
-}
-
-//
-@layer u2-color-hl {
-    //
-    :where([data-highlight-hover], [data-highlight]) *:not([data-highlight], [data-highlight-hover]) {
-        @include cm.highlight-color;
-    }
-}
+};
 
 //
 @layer u2-color-mod {
@@ -318,8 +295,9 @@
 
 //
 @layer u2-color-attr {
-    //
     @function hl-logic($value) { @return "calc(#{$value} * 3)"; };
+
+    //
     @include cm.attr-based(":host([data-highlight]), *[data-highlight]", "--hl-co-state", "data-highlight", "number", meta.get-function("hl-logic"), 0);
     @include cm.attr-based(":host([data-chroma]), *[data-chroma]", "--tm-chroma", "data-chroma", "number", null, 0);
     @include cm.attr-based(":host([data-alpha]), *[data-alpha]", "--tm-bg-alpha", "data-alpha", "number", null, 0);
