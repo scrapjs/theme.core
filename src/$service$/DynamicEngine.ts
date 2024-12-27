@@ -1,9 +1,7 @@
 // @ts-ignore
-import {formatCss, formatHex, interpolate, oklch, parse } from "culori";
+import { formatCss, formatHex, oklch, parse } from "culori";
 import { fixedClientZoom } from "../$core$/Zoom";
-
-//
-const electronAPI = "electronBridge";
+import { electronAPI } from "./Config.js";
 
 //
 export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{

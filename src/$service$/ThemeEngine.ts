@@ -101,9 +101,6 @@ const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const integrity = hash(styles);
 
 //
-export const styleCode = {preInit, integrity, styles};
-
-//
 const loadBlobStyle = (inline: string, integrity?: string|Promise<string>)=>{
     const style = document.createElement("link");
     style.rel = "stylesheet";
