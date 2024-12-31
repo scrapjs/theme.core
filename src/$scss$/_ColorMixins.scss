@@ -26,12 +26,12 @@
 
 //
 @mixin contrast($name, $from, $alpha: 1, $chromaReduce: 0.4) {
-    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.4 + 0.5) clamp(0, calc(c * #{$chromaReduce}), 1) h / #{$alpha})"); };
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.4 + 0.5) clamp(0.01, calc(c * #{$chromaReduce}), 0.9) h / #{$alpha})"); };
 };
 
 //
 @mixin in-contrast($name, $from, $alpha: 1, $chromaReduce: 0.4) {
-    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 100000), 1) * 0.4 + 0.5) clamp(0, calc(c * #{$chromaReduce}), 1) h / #{$alpha})"); };
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 100000), 1) * 0.4 + 0.5) clamp(0.01, calc(c * #{$chromaReduce}), 0.9) h / #{$alpha})"); };
 };
 
 //
@@ -56,7 +56,7 @@
 
 //
 @mixin transp { & { --tm-bg-alpha: 0; }; };
-@mixin bg-dep { @include in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))", "1", "calc((1 - var(--tm-bg-alpha, 0)) * 0.8)"); };
+@mixin bg-dep { @include in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 1.2)"); };
 @mixin tm-dep($property, $light, $dark, $fb: var(--tm-scheme)) {
     & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
 
@@ -68,7 +68,7 @@
 
 //
 @mixin hl-col {
-    @include in-contrast("--tm-shade", "var(--tm-bg-color, currentColor)", "1", "calc((1 - var(--tm-bg-alpha, 0)) * 2)");
+    @include in-contrast("--tm-shade", "var(--tm-bg-color, currentColor)", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 4)");
 
     //
     & {
@@ -128,5 +128,5 @@
 @mixin dynamic { --tm-bg-base: var(--tm-adapt, color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma, 0)), var(--tm-ac, currentColor))); };
 @mixin accent-inverse {
     @include accent;
-    @include in-contrast("--tm-ac", "var(--tm-origin, currentColor)", "var(--tm-bg-alpha, 0)", "calc((1 - var(--tm-bg-alpha, 0)) * 1)");
+    @include in-contrast("--tm-ac", "var(--tm-origin, currentColor)", "var(--tm-bg-alpha, 0)", "0.4");
 };
