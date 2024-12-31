@@ -205,6 +205,7 @@
 
 //
 @layer u2-color-mod {
+    :host([data-scheme="base"]), *[data-scheme="base"]                                  { @include cm.base;           & { --tm-chroma: 1; --tm-bg-alpha: 1; }; } // deprecated...
     :host([data-scheme="dynamic"]), *[data-scheme="dynamic"]                            { @include cm.dynamic;        & { --tm-chroma: 1; --tm-bg-alpha: 1; }; }
     :host([data-scheme="accent"]), *[data-scheme="accent"]                              { @include cm.accent;         & { --tm-chroma: 1; --tm-bg-alpha: 1; }; } // deprecated...
     :host([data-scheme="solid"]), *[data-scheme="solid"]                                { @include cm.solid;          & { --tm-chroma: 0; --tm-bg-alpha: 1; }; }

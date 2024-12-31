@@ -130,3 +130,9 @@
     @include accent;
     @include in-contrast("--tm-ac", "var(--tm-origin, currentColor)", "var(--tm-bg-alpha, 0)", "0.4");
 };
+
+// background-based
+@mixin base {
+    & { --tm-cr: var(--tm-origin, currentColor); };
+    & { --tm-ac: var(--tm-origin, currentColor); };
+};
