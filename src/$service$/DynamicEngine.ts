@@ -1,7 +1,9 @@
 // @ts-ignore
 import { formatCss, formatHex, oklch, parse } from "culori";
-import { fixedClientZoom } from "../$core$/Zoom";
 import { electronAPI } from "./Config.js";
+
+// @ts-ignore
+import { getBoundingOrientBox, fixedClientZoom } from "/externals/core/agate.js";
 
 //
 export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
@@ -41,9 +43,11 @@ export const makeContrast = (color)=>{
 
 //
 export const pickFromCenter = (holder)=>{
-    const box = holder?.getBoundingClientRect?.(); //* zoomOf()
+    // not able to using some mechanics
+    const box = holder?.getBoundingClientRect();//getBoundingOrientBox(holder);
     if (box) {
-        const xy: [number, number] = [(box.left + box.right) / 2 * fixedClientZoom(), (box.top + box.bottom) / 2 * fixedClientZoom()];
+        const Z = 0.5 * (fixedClientZoom?.() || 1);
+        const xy: [number, number] = [(box.left + box.right) * Z, (box.top + box.bottom) * Z];
         return pickBgColor(...xy, holder);
     }
 }
