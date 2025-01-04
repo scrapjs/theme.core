@@ -65,7 +65,8 @@
 //
 @layer u2-color-normalize {
     :host, :root, :scope, :where(*), ::slotted(*) {
-        --tm-bg-alpha: inherit;
+        --tm-bg-alpha: 0;
+        --tm-alpha: inherit;
         --tm-chroma: inherit;
 
         //
