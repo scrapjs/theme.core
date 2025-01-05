@@ -36,8 +36,8 @@
 
 //
 @mixin hover ($selector: "&") {
-    @media screen and ((hover: hover) or (pointer: fine)) { #{$selector}:hover { @content; }; };
-    @media screen and ((hover: none) and (pointer: coarse)) { #{$selector}:action { @content; }; };
+    @media screen and ((hover: hover) or (pointer: fine))  { #{$selector}:hover  { @content; }; };
+    @media screen and ((hover: none) or (pointer: coarse)) { #{$selector}:active { @content; }; };
 };
 
 //

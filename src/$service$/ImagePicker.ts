@@ -9,7 +9,7 @@ import { argbFromRgb, Hct, hexFromArgb, QuantizerCelebi } from "@material/materi
 import { interpolate, oklch, parse, formatCss } from "culori";
 
 //
-export const sourceColorFromImage = async (bitmap) => {
+export const sourceColorFromImage = async (bitmap): Promise<any> => {
 
     // Convert Image data to Pixel Array
     const Q = qualityMode["fast"];
@@ -71,23 +71,21 @@ export const sourceColorFromImage = async (bitmap) => {
     const colors: [number, number][] = Array.from(result.entries());
 
     //
-    const mostCount  = colors.toSorted((a: [number, number], b: [number, number]) => { return Math.sign(b[1] - a[1]); });
-    const mostChroma = mostCount.toSorted((a, b) => {
+    const mostChroma = colors.toSorted((a, b) => {
         const hct_a = Hct.fromInt(a[0] as number);
         const hct_b = Hct.fromInt(b[0] as number);
         return Math.sign(hct_b.chroma - hct_a.chroma);
     });
+    const mostCount  = mostChroma.toSorted((a: [number, number], b: [number, number]) => { return Math.sign(b[1] - a[1]); });
 
     //
-    document.body.style.setProperty("--mx-common-bg-color", hexFromArgb(mostCount[0][0]));
-    document.body.style.setProperty("--mx-common-bg-chroma-color", hexFromArgb(mostChroma[0][0]));
-    return [mostChroma[0][0], mostCount[0][0]];
+    return [mostChroma[0], mostCount[0]];
 };
 
 //
 export const colorScheme = async (blob) => {
     const image = await createImageBitmap(blob);
-    const [chroma, common] = await sourceColorFromImage(image);
+    const [[chroma, cr_cnt], [common, cm_cnt]] = await sourceColorFromImage(image);
 
     //
     const chromaOkLch: any = oklch(parse(hexFromArgb(chroma)));
@@ -96,9 +94,9 @@ export const colorScheme = async (blob) => {
     //
     const baseColorI = interpolate([commonOkLch, chromaOkLch], "oklch", {
         // spline instead of linear interpolation:
-    })(0.8); baseColorI.h ||= 0;
+    })(Math.min(Math.max(cr_cnt / cm_cnt, 0) / (commonOkLch.c || 0.01), 0.8)); baseColorI.h ||= 0;
 
     //
-    updateThemeBase(formatCss(baseColorI), !!(Math.sign(0.65 - commonOkLch.l) * 0.5 + 0.5));
+    updateThemeBase(formatCss(baseColorI), !!(Math.sign(0.6 - baseColorI.l) * 0.5 + 0.5));
     switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
 };
