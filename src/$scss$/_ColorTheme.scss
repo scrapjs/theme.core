@@ -31,9 +31,9 @@
     @property --rv-color { syntax: "<color>"; initial-value: black; inherits: true; };
     @property --tm-color { syntax: "<color>"; initial-value: black; inherits: true; };
     @property --tm-alpha { syntax: "<number>"; initial-value: 1; inherits: true; };
-    @property --tm-bg-base { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --rv-bg-color { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --tm-bg-color { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-bg-base { syntax: "<color>"; initial-value: transparent; inherits: true; };
+    @property --rv-bg-color { syntax: "<color>"; initial-value: transparent; inherits: true; };
+    @property --tm-bg-color { syntax: "<color>"; initial-value: transparent; inherits: true; };
     @property --tm-bg-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
 
     //
@@ -118,7 +118,7 @@
     {
         --tm-adapt: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma, 0)), var(--tm-ac, currentColor));
         --tm-bg-base: color-mix(in oklch, var(--tm-cr, currentColor) calc(100% * var(--tm-chroma, 0)), var(--tm-ac, currentColor));//var(--tm-adapt, currentColor);
-        --tm-bg-color: oklch(from var(--tm-bg-base, currentColor) l c h / var(--tm-bg-alpha, 0));
+        --tm-bg-color: oklch(from var(--tm-bg-base, transparent) l c h / var(--tm-bg-alpha, 0));
     }
 
     //
@@ -244,7 +244,7 @@
         *::before, *::after, *::selection, :where(*), &::slotted(*)
         {   //
             transition: var(--hl-trans-property) var(--hl-trans-duration) var(--hl-trans-mode);
-            background-color: var(--rv-bg-color, currentColor);
+            background-color: var(--rv-bg-color, transparent);
             accent-color: var(--rv-color, currentColor); //--tm-cr
             color: var(--rv-color, currentColor);
             stroke: var(--rv-color, currentColor);

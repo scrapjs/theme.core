@@ -56,7 +56,7 @@
 
 //
 @mixin transp { & { --tm-bg-alpha: 0; }; };
-@mixin bg-dep { @include in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 1.2)"); };
+@mixin bg-dep { @include in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, transparent))", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 1.2)"); };
 @mixin tm-dep($property, $light, $dark, $fb: var(--tm-scheme)) {
     & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
 
@@ -68,7 +68,7 @@
 
 //
 @mixin hl-col {
-    @include in-contrast("--tm-shade", "var(--tm-bg-color, currentColor)", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 4)");
+    @include in-contrast("--tm-shade", "var(--tm-bg-color, transparent)", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 4)");
 
     //
     & {
