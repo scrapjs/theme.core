@@ -13,8 +13,10 @@
     $test: "opacity"
 ) {
     @property --#{$attr}-attr { initial-value: #{$default}; inherits: true; syntax: "<#{$type}>"; };
-    @supports (#{$test}: attr(#{$attr} #{$type}, #{$default})) {
-        #{$selector} { --#{$attr}-attr: attr(#{$attr} #{$type}, #{$default}); };
+
+    //
+    @supports (#{$test}: attr(#{$attr}, #{$default})) {
+        #{$selector} { --#{$attr}-attr: attr(#{$attr} #{"type(<#{$type}>)"}, #{$default}); };
     };
 
     //
