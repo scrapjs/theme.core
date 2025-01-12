@@ -10,7 +10,9 @@ const integrity = hash(styles);
 export const makeAttrSupport = (selector, attr, type = "number", def = "0", rootElement = document.documentElement)=>{
     if (!CSS.supports("opacity", `attr(${attr} type(<${type}>), 1)`)) {
         observeAttributeBySelector(rootElement, selector, attr, (mutation)=>{
-            mutation?.target?.style?.setProperty?.(`--${attr}-attr`, mutation.target.getAttribute(attr) ?? def, "");
+            const newValue = mutation.target.getAttribute(attr) ?? def;
+            const oldValue = mutation?.target?.style?.getPropertyValue?.(`--${attr}-attr`);
+            if (oldValue != newValue) { mutation?.target?.style?.setProperty?.(`--${attr}-attr`, newValue, ""); };
         });
     }
 }
