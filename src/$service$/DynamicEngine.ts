@@ -7,7 +7,12 @@ import { getBoundingOrientBox, fixedClientZoom } from "/externals/core/agate.js"
 
 //
 export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
-    const source = Array.from(document.elementsFromPoint(x, y));
+    // exclude any non-reasonable
+    const source = Array.from(document.elementsFromPoint(x, y))?.filter?.((el: any)=>{
+        return el?.dataset?.hidden == null && (el?.dataset?.alpha != null ? parseFloat(el?.dataset?.alpha) > 0.01 : true) && el?.style?.getPropertyValue("display") != "none";
+    });
+
+    //
     const opaque = source.sort((na, nb)=>{
         const zIndexA = parseInt(getComputedStyle(na as HTMLElement, "").zIndex || "0") || 0;
         const zIndexB = parseInt(getComputedStyle(nb as HTMLElement, "").zIndex || "0") || 0;
