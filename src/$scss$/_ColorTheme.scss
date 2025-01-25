@@ -305,11 +305,6 @@
         :host(ui-icon),
         :where(ui-icon)
         {
-            background-size: contain;
-            background-clip: content-box;
-            background-attachment: local;
-            background-repeat: no-repeat;
-            background-origin: content-box;
             background-color: var(--rv-color, currentColor);
             color: var(--rv-color, currentColor);
 
@@ -321,6 +316,7 @@
             mask-mode: alpha;
             mask-size: contain;
             mask-position: center;
+            isolation: isolate;
         }
     };
 };
