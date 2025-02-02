@@ -1,5 +1,5 @@
 import { qualityMode } from "./Config.js";
-import { switchTheme } from "./DynamicEngine";
+import { dynamicNativeFrame, dynamicBgColors } from "./DynamicEngine";
 import { updateThemeBase } from "./StyleRules";
 
 // @ts-ignore
@@ -98,5 +98,6 @@ export const colorScheme = async (blob) => {
 
     //
     updateThemeBase(formatCss(baseColorI), !!(Math.sign(0.6 - baseColorI.l) * 0.5 + 0.5));
-    switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    dynamicNativeFrame();
+    dynamicBgColors();
 };

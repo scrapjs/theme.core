@@ -12,6 +12,17 @@ const tacp = (color: string)=>{
 };
 
 //
+const setIdleInterval = (cb, timeout, ...args)=>{
+    requestIdleCallback(async ()=>{
+        while (true) {
+            cb?.(...args);
+            await new Promise((r)=>setTimeout(r, timeout));
+            await new Promise((r)=>requestIdleCallback(r));
+        }
+    }, {timeout: 1000});
+}
+
+//
 export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
     // exclude any non-reasonable
     const opaque = Array.from(document.elementsFromPoint(x, y))?.filter?.((el: any)=>(
@@ -63,24 +74,19 @@ export const pickFromCenter = (holder)=>{
 }
 
 //
-export const switchTheme = (isDark = false, root = document.documentElement) => {
+export const dynamicNativeFrame = (root = document.documentElement)=>{
     const media = root?.querySelector?.('meta[data-theme-color]');
-    if (media) {
-        const color = pickBgColor(window.innerWidth - 64, 30);
-        media.setAttribute("content", color);
-    }
-
-    //
-    if (window?.[electronAPI] && root == document.documentElement) {
-        const color = pickBgColor(window.innerWidth - 64, 30);
+    const color = pickBgColor(window.innerWidth - 64, 30);
+    if ((media || window?.[electronAPI]) && root == document.documentElement) {
+        media?.setAttribute?.("content", color);
         window?.[electronAPI]?.setThemeColor?.(formatHex(color), formatHex(makeContrast(color)));
     }
+}
 
-    //
+//
+export const dynamicBgColors = (root = document.documentElement) => {
     root.querySelectorAll("[data-scheme=\"dynamic-transparent\"], [data-scheme=\"dynamic\"]").forEach((target)=>{
-        if (target) {
-            pickFromCenter(target);
-        }
+        if (target) { pickFromCenter(target); }
     });
 };
 
@@ -89,27 +95,35 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
     //
     window
         .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", ({matches}) => { switchTheme(matches, ROOT); });
+        .addEventListener("change", ({}) => { dynamicBgColors(ROOT); });
 
     //
     ROOT.addEventListener("u2-appear", ()=>{
-        switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
+        requestIdleCallback(()=>{
+            dynamicNativeFrame(ROOT);
+            dynamicBgColors(ROOT);
+        });
     });
 
     //
     ROOT.addEventListener("u2-hidden", ()=>{
-        switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
+        requestIdleCallback(()=>{
+            dynamicNativeFrame(ROOT);
+            dynamicBgColors(ROOT);
+        });
     });
-
-    //
-    setInterval(()=>{
-        switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
-    }, 2000);
 
     //
     ROOT.addEventListener("u2-theme-change", ()=>{
-        switchTheme(window.matchMedia("(prefers-color-scheme: dark)").matches, ROOT);
+        dynamicNativeFrame(ROOT);
+        dynamicBgColors(ROOT);
     });
+
+    //
+    setIdleInterval(()=>{
+        dynamicNativeFrame(ROOT);
+        dynamicBgColors(ROOT);
+    }, 2000);
 }
 
 //
