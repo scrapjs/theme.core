@@ -15,17 +15,16 @@ export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
     ));
 
     //
-    const opaque = source.sort((na, nb)=>{
-        const zIndexA = parseInt(getComputedStyle(na as HTMLElement, "").zIndex || "0") || 0;
-        const zIndexB = parseInt(getComputedStyle(nb as HTMLElement, "").zIndex || "0") || 0;
-        return Math.sign(zIndexB - zIndexA);
-    }).filter((node)=>{
-        if (!(node instanceof HTMLElement)) return false;
-        const computed = getComputedStyle(node as HTMLElement, "");
-        const value  = computed.backgroundColor || "transparent";
-        const parsed = parse(value);
-        return ((parsed.alpha == null || parsed.alpha > 0.1) && value != "transparent") && node != holder;
-    });
+    const opaque = source.filter((e)=>((e instanceof HTMLElement) && e != holder)).map((element) => {
+        const computed = getComputedStyle?.(element);
+        return {
+            element,
+            zIndex: parseInt(computed?.zIndex || "0", 10) || 0,
+            color: parse(computed?.backgroundColor || "transparent")
+        }})
+    .sort((a, b) => Math.sign(b.zIndex - a.zIndex)).filter(({ color })=>{
+        return ((color.alpha == null || color.alpha > 0.1) && color != "transparent");
+    }).map(({ element }) => element);
 
     //
     if (opaque[0] && opaque[0] instanceof HTMLElement) {
