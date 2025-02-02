@@ -6,31 +6,35 @@ import { electronAPI } from "./Config.js";
 import { fixedClientZoom } from "/externals/core/agate.js";
 
 //
+const tacp = (color: string)=>{
+    const p = parse?.(color);
+    return (p?.alpha == null || p?.alpha > 0.1);
+};
+
+//
 export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
     // exclude any non-reasonable
-    const source = Array.from(document.elementsFromPoint(x, y))?.filter?.((el: any)=>(
+    const opaque = Array.from(document.elementsFromPoint(x, y))?.filter?.((el: any)=>(
+        ((el instanceof HTMLElement) && el != holder) &&
          el?.matches?.("[data-scheme]:not([data-hidden])") &&
         (el?.dataset?.alpha != null ? parseFloat(el?.dataset?.alpha) > 0.01 : true) &&
         (el?.style?.getPropertyValue("display") != "none")
-    ));
-
-    //
-    const opaque = source.filter((e)=>((e instanceof HTMLElement) && e != holder)).map((element) => {
+    ))
+    .map((element) => {
         const computed = getComputedStyle?.(element);
         return {
             element,
             zIndex: parseInt(computed?.zIndex || "0", 10) || 0,
-            color: parse(computed?.backgroundColor || "transparent")
+            color: (computed?.backgroundColor || "transparent")
         }})
-    .sort((a, b) => Math.sign(b.zIndex - a.zIndex)).filter(({ color })=>{
-        return ((color.alpha == null || color.alpha > 0.1) && color != "transparent");
-    }).map(({ element }) => element);
+    .sort((a, b) => Math.sign(b.zIndex - a.zIndex))
+    .filter(({ color })=>(color != "transparent" && tacp(color)));
 
     //
-    if (opaque[0] && opaque[0] instanceof HTMLElement) {
-        const color = getComputedStyle(opaque[0] as HTMLElement, "")?.backgroundColor || "transparent"; //|| baseColor;
-        if (holder && holder.style.getPropertyValue("--tm-adapt") != color) {
-            holder.style.setProperty("--tm-adapt", color, "");
+    if (opaque?.[0]?.element instanceof HTMLElement) {
+        const color: string = formatCss(opaque?.[0]?.color) || "transparent"; //|| baseColor;
+        if (holder?.style?.getPropertyValue?.("--tm-adapt") != color) {
+            holder?.style?.setProperty?.("--tm-adapt", color, "");
         }
         return color;
     }
