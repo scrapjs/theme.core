@@ -3,14 +3,16 @@ import { formatCss, formatHex, oklch, parse } from "culori";
 import { electronAPI } from "./Config.js";
 
 // @ts-ignore
-import { getBoundingOrientBox, fixedClientZoom } from "/externals/core/agate.js";
+import { fixedClientZoom } from "/externals/core/agate.js";
 
 //
 export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
     // exclude any non-reasonable
-    const source = Array.from(document.elementsFromPoint(x, y))?.filter?.((el: any)=>{
-        return el?.dataset?.hidden == null && (el?.dataset?.alpha != null ? parseFloat(el?.dataset?.alpha) > 0.01 : true) && el?.style?.getPropertyValue("display") != "none";
-    });
+    const source = Array.from(document.elementsFromPoint(x, y))?.filter?.((el: any)=>(
+         el?.matches?.("[data-scheme]:not([data-hidden])") &&
+        (el?.dataset?.alpha != null ? parseFloat(el?.dataset?.alpha) > 0.01 : true) &&
+        (el?.style?.getPropertyValue("display") != "none")
+    ));
 
     //
     const opaque = source.sort((na, nb)=>{
