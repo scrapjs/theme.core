@@ -68,7 +68,7 @@ const preBlurPixels = async (imgURL)=>{
     const bitmap = await createImageBitmap(blob);
     
     //
-    const offset = new OffscreenCanvas(bitmap.width * 0.125, bitmap.height * 0.125);
+    const offset = new OffscreenCanvas(bitmap.width, bitmap.height);
     const ctx: any = offset.getContext("2d"); ctx.filter = "blur(16px)"; ctx?.drawImage?.(bitmap, 0, 0, offset.width, offset.height);
     return offset;
 }
