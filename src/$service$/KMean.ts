@@ -54,18 +54,42 @@ const computeMean = (points: [number, number, number][])=>{
 // General means per K-clusters
 const kMeans = (data, k) => {
     let centroids: [number, number, number][] = initializeCentroids(data, k);
-    for (let iteration = 0; iteration < 10; iteration++) {
+    
+    const maxIterations = 10;
+    /*for (let iteration = 0; iteration < maxIterations; iteration++) {
         let clusters = makeClusters(data, centroids);
         centroids = clusters.map((cluster, i) => {
             if (cluster.points.length < 1) { return centroids[i]; };
             return computeMean(cluster.points);
         }) as [number, number, number][];
     }
+    */
+    
+    for (let iteration = 0; iteration < maxIterations; iteration++) {
+        let clusters = makeClusters(data, centroids);
+        const newCentroids = clusters.map((cluster) =>
+            cluster.points.length > 0 ? computeMean(cluster.points) : null
+        );
+
+        // Проверяем изменение центроидов
+        if (
+            newCentroids.every((newCentroid, index) =>
+                newCentroid &&
+                euclideanDistance(newCentroid as [number, number, number], centroids[index]) < 0.001
+            )
+        ) {
+            break; // Алгоритм сошёлся
+        }
+    
+        centroids = newCentroids as [number, number, number][];
+    }
+    
+    //
     return centroids;
 }
 
 // uniform colors with random ranging
-const initializeCentroids = (data: [number, number, number][], k): [number, number, number][] => {
+/*const initializeCentroids = (data: [number, number, number][], k): [number, number, number][] => {
     const centroids: [number, number, number][] = [];
     const usedIndices = new Set();
     while (centroids.length < k) {
@@ -76,7 +100,33 @@ const initializeCentroids = (data: [number, number, number][], k): [number, numb
         }
     }
     return centroids;
-}
+}*/
+
+const initializeCentroids = (data: [number, number, number][], k): [number, number, number][] => {
+    const centroids: [number, number, number][] = [];
+    centroids.push(data[Math.floor(Math.random() * data.length)]); // Первый центр выбирается случайно
+
+    while (centroids.length < k) {
+        const distances = data.map(point => 
+            Math.min(...centroids.map(centroid => euclideanDistance(point, centroid)))
+        );
+
+        const totalDistance = distances.reduce((sum, d) => sum + d, 0);
+        const probabilities = distances.map(d => d / totalDistance);
+
+        let cumulativeProbability = 0;
+        const randomValue = Math.random();
+        for (let i = 0; i < probabilities.length; i++) {
+            cumulativeProbability += probabilities[i];
+            if (randomValue < cumulativeProbability) {
+                centroids.push(data[i]);
+                break;
+            }
+        }
+    }
+
+    return centroids;
+};
 
 // deprecated
 const preBlurPixels = async (imgURL)=>{
@@ -125,7 +175,7 @@ const getClusterImageData = async (imgURL)=>{
     }
 
     //
-    return sortColors(fp32);
+    return fp32;//sortColors(fp32);
 }
 
 // STEP-2 - get K-means by required counts
