@@ -77,29 +77,33 @@
 //
 @layer u2-color-normalize {
     @media screen {
-        :host, :root, :scope, :where(*), ::slotted(*) {
-            --tm-bg-alpha: 0;
-
-            --tm-alpha: inherit;
-            --tm-chroma: inherit;
-
-            //
-            --tm-origin: inherit;
-            --tm-shade: inherit;
-            --tm-adapt: inherit;
-
-            //
-            --tm-cr: inherit;
-            --tm-ac: inherit;
-
-            //
-            --tm-bg-color: inherit;
-            --tm-color: inherit;
-
-            //
-            --rv-bg-color: inherit;
-            --rv-color: inherit;
-        }
+        :host, :root, :scope {
+            & > :where(*), 
+            &::slotted(*) {
+                --tm-bg-alpha: 0;
+    
+                //
+                --tm-alpha: inherit;
+                --tm-chroma: inherit;
+    
+                //
+                --tm-origin: inherit;
+                --tm-shade: inherit;
+                --tm-adapt: inherit;
+    
+                //
+                --tm-cr: inherit;
+                --tm-ac: inherit;
+    
+                //
+                --tm-bg-color: inherit;
+                --tm-color: inherit;
+    
+                //
+                --rv-bg-color: inherit;
+                --rv-color: inherit;
+            };
+        };
     };
 };
 
