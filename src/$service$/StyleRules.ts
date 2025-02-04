@@ -9,7 +9,7 @@ export const updateThemeBase = (originColor: string|null = null, $cssIsDark: boo
 
     //
     setStyleRule(":host, :root, :scope, :where(*)", {
-        "--tm-origin": localStorage.getItem("--tm-origin") || "oklch(0.46 0.14 310)",
+        "--tm-origin": localStorage.getItem("--tm-origin") || "oklch(90% 0.04 75)",
         "--tm-scheme": (localStorage.getItem("--tm-scheme") ? 1 : 0) || 0
     });
 }
