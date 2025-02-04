@@ -64,7 +64,7 @@ export const terserOptions = {
         hoist_vars: true,
         properties: true,
         // don't use in debug mode
-        drop_console: true
+        //drop_console: true
     },
     format: {
         braces: false,

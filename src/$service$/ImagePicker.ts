@@ -1,15 +1,19 @@
-import { qualityMode } from "./Config.js";
+//import { qualityMode } from "./Config.js";
 import { dynamicNativeFrame, dynamicBgColors } from "./DynamicEngine";
+import { getDominantColors } from "./KMean.js";
 import { updateThemeBase } from "./StyleRules";
 
 // @ts-ignore
-import { argbFromRgb, Hct, hexFromArgb, QuantizerCelebi } from "@material/material-color-utilities";
+//import { argbFromRgb, Hct, hexFromArgb, QuantizerCelebi } from "@material/material-color-utilities";
 
 // @ts-ignore
-import { interpolate, oklch, parse, formatCss } from "culori";
+//import { interpolate, oklch, parse, formatCss } from "culori";
 
 //
-export const sourceColorFromImage = async (bitmap): Promise<any> => {
+import { oklch, formatCss } from "culori";
+
+//
+/*export const sourceColorFromImage = async (bitmap): Promise<any> => {
 
     // Convert Image data to Pixel Array
     const Q = qualityMode["fast"];
@@ -81,23 +85,27 @@ export const sourceColorFromImage = async (bitmap): Promise<any> => {
     //
     return [mostChroma[0], mostCount[0]];
 };
+*/
 
 //
 export const colorScheme = async (blob) => {
-    const image = await createImageBitmap(blob);
-    const [[chroma, cr_cnt], [common, cm_cnt]] = await sourceColorFromImage(image);
+    const cols = await getDominantColors(blob);
+    const c = cols?.[0]?.mean || [0,0,0];
+
+/*
+    //const chromaOkLch: any = oklch(  );
+    //const commonOkLch: any = oklch(  );
 
     //
-    const chromaOkLch: any = oklch(parse(hexFromArgb(chroma)));
-    const commonOkLch: any = oklch(parse(hexFromArgb(common)));
-
-    //
-    const baseColorI = interpolate([commonOkLch, chromaOkLch], "oklch", {
+    /*const baseColorI = interpolate([commonOkLch, chromaOkLch], "oklch", {
         // spline instead of linear interpolation:
     })(Math.min(Math.max(cr_cnt / cm_cnt, 0) / (commonOkLch.c || 0.01), 0.8)); baseColorI.h ||= 0;
-
+*/
     //
+    const baseColorI = oklch(`color(srgb ${c[0]} ${c[1]} ${c[2]})`);
     updateThemeBase(formatCss(baseColorI), !!(Math.sign(0.6 - baseColorI.l) * 0.5 + 0.5));
+    
+    //
     dynamicNativeFrame();
     dynamicBgColors();
 };
