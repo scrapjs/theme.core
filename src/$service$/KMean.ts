@@ -4,7 +4,7 @@ const kMeans = (data, k) => {
     let clusters;
 
     //
-    for (let iteration = 0; iteration < 1; iteration++) { // Ограничиваем число итераций
+    for (let iteration = 0; iteration < 10; iteration++) { // Ограничиваем число итераций
         clusters = Array.from({ length: k }, () => ({ points: [], mean: null }));
 
         // Распределяем точки по ближайшим центроидам
@@ -63,13 +63,24 @@ const initializeCentroids = (data: [], k) => {
 }
 
 //
-const getImageData = async (imgURL)=>{
+const preBlurPixels = async (imgURL)=>{
     const blob   = (imgURL instanceof Blob || imgURL instanceof File) ? imgURL : (await fetch(imgURL)?.then?.((r)=>r?.blob?.()));
     const bitmap = await createImageBitmap(blob);
     
     //
     const offset = new OffscreenCanvas(bitmap.width * 0.125, bitmap.height * 0.125);
     const ctx: any = offset.getContext("2d"); ctx.filter = "blur(16px)"; ctx?.drawImage?.(bitmap, 0, 0, offset.width, offset.height);
+    return offset;
+}
+
+//
+const getClusterImageData = async (imgURL)=>{
+    const bitmap = await preBlurPixels(imgURL);
+    const offset = new OffscreenCanvas(bitmap.width * 0.125, bitmap.height * 0.125);
+    const ctx: any = offset.getContext("2d");
+    ctx?.drawImage?.(bitmap, 0, 0, offset.width, offset.height);
+    
+    //
     const img = ctx?.getImageData?.(0, 0, offset.width, offset.height, {
         storageFormat: "float32",
         colorSpace: "srgb"
@@ -99,7 +110,6 @@ const getImageData = async (imgURL)=>{
 
 //
 export const getDominantColors = async (imgURL: any)=>{
-    const data = await getImageData(imgURL);
-    const dom = kMeans(data, 16);
-    return dom;
+    const data = await getClusterImageData(imgURL);
+    return kMeans(data, 1);
 }
