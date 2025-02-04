@@ -90,7 +90,7 @@ import { oklch, formatCss } from "culori";
 //
 export const colorScheme = async (blob) => {
     const cols = await getDominantColors(blob);
-    const c = cols?.[0]?.mean || [0,0,0];
+    const c = cols?.[0] || [0,0,0];
 
 /*
     //const chromaOkLch: any = oklch(  );
