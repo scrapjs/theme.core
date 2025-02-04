@@ -2,11 +2,11 @@
 import { oklch, formatCss } from "culori";
 
 //
-const sortColors = (list)=>{
+const sortColors = (list, criteria = "l")=>{
     return list.sort((a, b)=>{
-        const ac = oklch({r: a[0], g: a[1], b: a[2]});
-        const bc = oklch({r: b[0], g: b[1], b: b[2]});
-        return (Math.sign(ac?.l - bc?.l)||0);
+        const ac = oklch({mode: 'rgb', r: a[0], g: a[1], b: a[2]});
+        const bc = oklch({mode: 'rgb', r: b[0], g: b[1], b: b[2]});
+        return (Math.sign(ac?.[criteria] - bc?.[criteria])||0);
     });
 }
 
@@ -53,7 +53,7 @@ const computeMean = (points: [number, number, number][])=>{
 
 // General means per K-clusters
 const kMeans = (data, k) => {
-    let centroids: [number, number, number][] = initializeCentroids(data, k);
+    let centroids: [number, number, number][] = sortColors(initializeCentroids(data, k));
     
     const maxIterations = 10;
     /*for (let iteration = 0; iteration < maxIterations; iteration++) {
@@ -181,5 +181,5 @@ const getClusterImageData = async (imgURL)=>{
 // STEP-2 - get K-means by required counts
 export const getDominantColors = async (imgURL: any)=>{
     const data = await getClusterImageData(imgURL);
-    return kMeans(data, 1);
+    return sortColors(kMeans(data, 4), "h");
 }
