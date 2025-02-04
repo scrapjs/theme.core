@@ -14,11 +14,12 @@ const tacp = (color: string)=>{
 //
 const setIdleInterval = (cb, timeout = 1000, ...args)=>{
     requestIdleCallback(async ()=>{
-        if (!cb || typeof cb != "function") return;
+        if (!cb || (typeof cb != "function")) return;
         while (true) {
             await Promise.try(cb, ...args);
             await new Promise((r)=>setTimeout(r, timeout));
-            await new Promise((r)=>requestIdleCallback(r));
+            await new Promise((r)=>requestIdleCallback(r, {timeout: 100}));
+            await new Promise((r)=>requestAnimationFrame(r));
         }
     }, {timeout: 1000});
 }
@@ -94,16 +95,16 @@ export const dynamicBgColors = (root = document.documentElement) => {
 //
 export const dynamicTheme = (ROOT = document.documentElement)=>{
     //
-    window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", ({}) => { dynamicBgColors(ROOT); });
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({}) => { 
+        dynamicBgColors(ROOT); 
+    });
 
     //
     ROOT.addEventListener("u2-appear", ()=>{
         requestIdleCallback(()=>{
             dynamicNativeFrame(ROOT);
             dynamicBgColors(ROOT);
-        });
+        }, {timeout: 100});
     });
 
     //
@@ -111,20 +112,30 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
         requestIdleCallback(()=>{
             dynamicNativeFrame(ROOT);
             dynamicBgColors(ROOT);
-        });
+        }, {timeout: 100});
     });
 
     //
     ROOT.addEventListener("u2-theme-change", ()=>{
-        dynamicNativeFrame(ROOT);
-        dynamicBgColors(ROOT);
+        requestIdleCallback(()=>{
+            dynamicNativeFrame(ROOT);
+            dynamicBgColors(ROOT);
+        }, {timeout: 100});
     });
 
     //
     setIdleInterval(()=>{
         dynamicNativeFrame(ROOT);
         dynamicBgColors(ROOT);
-    }, 2000);
+    }, 500);
+    
+    //
+    addEventListener("load", ()=>{
+        requestIdleCallback(()=>{
+            dynamicNativeFrame(ROOT);
+            dynamicBgColors(ROOT);
+        }, {timeout: 100});
+    });
 }
 
 //
