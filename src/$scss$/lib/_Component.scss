@@ -1,0 +1,9 @@
+//
+@function tm-hi($base, $percent) {
+    @return color-mix(in oklch, #{$base} calc(100% - #{$percent}), var(--tm-hi, white));
+};
+
+//
+@function tm-lo($base, $percent) {
+    @return color-mix(in oklch, #{$base} calc(100% - #{$percent}), var(--tm-lo, black));
+};

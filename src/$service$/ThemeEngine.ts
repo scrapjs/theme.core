@@ -2,7 +2,7 @@
 import { observeAttributeBySelector, hash, loadInlineStyle } from "/externals/lib/dom.js";
 
 // @ts-ignore
-import styles from "../$scss$/_ColorTheme.scss?inline&compress";
+import styles from "../$scss$/Main.scss?inline&compress";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const integrity = hash(styles);
 

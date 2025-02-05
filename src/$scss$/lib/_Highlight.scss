@@ -1,0 +1,22 @@
+@use "./Contrast" as c;
+
+//
+@mixin hl-col {
+    @include c.in-contrast("--tm-shade", "var(--tm-bg-color, transparent)", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 4)");
+
+    //
+    & {
+        --hl-trans-mode: linear;
+        --hl-trans-duration: 0.2s;
+        --hl-trans-property: --hl-co;
+        --hl-co-state: 0.0;
+        --hl-co-hover: var(--hl-co-state, 0.0);
+        --hl-co: max(max(var(--hl-co-state, 0), var(--hl-co-hover, 0)), 0);
+    };
+
+    //
+    &[data-highlight-op="min"],
+    & [data-highlight-op="min"] {
+        --hl-co: max(min(var(--hl-co-state, 0), var(--hl-co-hover, 0)), 0);
+    };
+};

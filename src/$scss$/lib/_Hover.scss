@@ -1,0 +1,15 @@
+//
+@mixin hover ($selector: "&") {
+    @media screen and ((hover: hover) or (pointer: fine))  {
+        :not([data-dragging])                #{$selector}:not([data-dragging]):hover,
+        :host(:not([data-dragging]))         #{$selector}:not([data-dragging]):hover,
+        :host-context(:not([data-dragging])) #{$selector}:not([data-dragging]):hover
+            { @content; };
+    };
+    @media screen and ((hover: none) or (pointer: coarse)) {
+        :not([data-dragging])                #{$selector}:not([data-dragging]):active,
+        :host(:not([data-dragging]))         #{$selector}:not([data-dragging]):active,
+        :host-context(:not([data-dragging])) #{$selector}:not([data-dragging]):active
+            { @content; };
+    };
+};

@@ -1,0 +1,53 @@
+//
+@use "../lib/Scheme" as cm;
+
+//
+@layer u2-style-apply {
+    @media screen {
+        :where(a, span, svg) { --hl-co-state: 0; --hl-co-hover: 0; --tm-bg-alpha: 0; background-color: transparent; }
+        :where(slot) { background-color: transparent !important; }
+        :where(*[data-scheme]),
+        :host(*[data-scheme])
+        {   //& { --tm-bg-alpha: 1; };
+            //
+            :where(*, *::before, *::after, *::selection):not([data-scheme]), &::slotted(*:not([data-scheme])) {
+                &:not([data-highlight]) { --hl-co-state: 0; };
+                &:not([data-highlight-hover]) { --hl-co-hover: 0; };
+                &:not([data-alpha]) { --tm-bg-alpha: 0; background-color: transparent; };
+            }
+
+            //
+            :where(&, &::before, &::after, &::selection):not([data-alpha]) {
+                --tm-bg-alpha: 1;
+            }
+
+            //
+            :where(*, *::before, *::after, *::selection),
+            :where(&, &::before, &::after, &::selection),
+            &::slotted(*)
+            {   //
+                //
+                &:not([data-dragging]) {
+                    transition: var(--hl-trans-property) var(--hl-trans-duration) var(--hl-trans-mode);
+                }
+
+                & {
+                    background-color: var(--rv-bg-color, transparent);
+                    accent-color: var(--rv-color, currentColor); //--tm-cr
+                    color: var(--rv-color, currentColor);
+                    stroke: var(--rv-color, currentColor);
+
+                    // scrollbar styling
+                    scrollbar-color: var(--rv-color, currentColor) var(--rv-bg-color, transparent);
+                    scrollbar-width: thin;
+                }
+            }
+
+            //
+            &::selection, ::selection {
+                background-color: var(--rv-color, black);
+                color: oklch(from var(--rv-color, black) calc(1 - l) c h / 1.0);
+            }
+        }
+    };
+};

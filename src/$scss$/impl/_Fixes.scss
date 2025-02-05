@@ -1,0 +1,21 @@
+//
+@layer u2-icon-style-fix {
+    @media screen {
+        ui-icon:not([icon]),
+        ui-icon[icon=""]
+        {
+            visibility: hidden !important;
+            content-visibility: hidden !important;
+            opacity: 0 !important;
+        }
+
+        //
+        :host(ui-icon),
+        :where(ui-icon)
+        {
+            content-visibility: auto;
+            background-color: transparent;
+            color: transparent;
+        }
+    };
+};

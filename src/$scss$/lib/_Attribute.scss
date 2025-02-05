@@ -1,0 +1,27 @@
+@use "sass:meta";
+
+//
+@mixin attr-based(
+    $selector: "&",
+    $property,
+    $attr,
+    $type: "number",
+    $logic: null,
+    $default: 1,
+    $test: "opacity"
+) {
+    @at-root {
+        @property --#{$attr}-attr { initial-value: #{$default}; inherits: true; syntax: "<#{$type}>"; };
+    };
+
+    //
+    @supports (#{$test}: attr(#{$attr}, #{$default})) {
+        #{$selector} { --#{$attr}-attr: attr(#{$attr} #{"type(<#{$type}>)"}, #{$default}); };
+    };
+
+    //
+    #{$selector} {
+        $value: var(--#{$attr}-attr, #{$default});
+        #{$property}: #{ if($logic != null, meta.call($logic, $value), $value) };
+    };
+};

@@ -1,0 +1,40 @@
+@use "../lib/Scheme" as cm;
+@use "../lib/Theme"  as tm;
+
+//
+@layer u2-color-mod {
+    :root, :where(html) {
+        //
+        & {
+            --tm-chroma: 0;
+            --tm-bg-alpha: 0;
+            --tm-alpha: 1;
+        };
+
+        //
+        &, :where(body) {
+            & { --tm-bg-alpha: 0; };
+            @include cm.accent;
+        };
+
+        //
+        &:not([data-theme]) {
+            & { --tm-scheme: 0; color-scheme: light; };
+            @include tm.tm-dep("--tm-scheme", "0", "1");
+            @include tm.tm-dep("color-scheme", "light", "dark");
+        };
+    };
+
+    //
+    @media screen {
+        :host([data-scheme="base"]), *[data-scheme="base"]                                  { @include cm.base;           & { --tm-chroma: 1; --tm-bg-alpha: 1; }; } // deprecated...
+        :host([data-scheme="dynamic"]), *[data-scheme="dynamic"]                            { @include cm.dynamic;        & { --tm-chroma: 1; --tm-bg-alpha: 1; }; }
+        :host([data-scheme="accent"]), *[data-scheme="accent"]                              { @include cm.accent;         & { --tm-chroma: 1; --tm-bg-alpha: 1; }; } // deprecated...
+        :host([data-scheme="solid"]), *[data-scheme="solid"]                                { @include cm.solid;          & { --tm-chroma: 0; --tm-bg-alpha: 1; }; }
+        :host([data-scheme="inverse"]), *[data-scheme="inverse"]                            { @include cm.inverse;        & { --tm-chroma: 0; --tm-bg-alpha: 1; }; }
+        :host([data-scheme="accent-inverse"]), *[data-scheme="accent-inverse"]              { @include cm.accent-inverse; & { --tm-chroma: 1; --tm-bg-alpha: 1; }; }
+        :host([data-scheme="transparent"]), *[data-scheme="transparent"]                    { @include cm.accent;         & { --tm-chroma: 1; --tm-bg-alpha: 0; }; }
+        :host([data-scheme="solid-transparent"]), *[data-scheme="solid-transparent"]        { @include cm.solid;          & { --tm-chroma: 0; --tm-bg-alpha: 0; }; }
+        :host([data-scheme="dynamic-transparent"]), *[data-scheme="dynamic-transparent"]    { @include cm.dynamic;        & { --tm-chroma: 1; --tm-bg-alpha: 0; }; }
+    };
+};

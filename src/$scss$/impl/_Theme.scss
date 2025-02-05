@@ -1,0 +1,27 @@
+@use "../lib/Theme" as tm;
+
+//
+@layer u2-color-theme {
+    @media screen {
+        // may be used for fixed theming, without dependency
+        // unused in nested elements, currently
+        *[data-theme="dark"] , :host([data-theme="dark"] ) { --tm-scheme: 1; color-scheme: dark; };
+        *[data-theme="light"], :host([data-theme="light"]) { --tm-scheme: 0; color-scheme: light; };
+
+        // may be used for fixed theming, without dependency
+        // unused in nested elements, currently
+        *[data-theme="native"] , :host([data-theme="native"] ),
+        *[data-theme="default"], :host([data-theme="default"])
+        {   // adaptive
+            & { color-scheme: normal; };
+            @include tm.tm-dep("--tm-scheme", "0", "1");
+            @include tm.tm-dep("color-scheme", "light", "dark");
+        }
+
+        //
+        :host, :root, :scope, body, *[data-theme], :host([data-theme]) {
+            @include tm.tm-col-dep("--tm-hi", "var(--tm-l-hi)", "var(--tm-d-hi)");
+            @include tm.tm-col-dep("--tm-lo", "var(--tm-l-lo)", "var(--tm-d-lo)");
+        }
+    };
+};

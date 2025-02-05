@@ -1,0 +1,14 @@
+@mixin tm-col-dep($property, $light, $dark, $fb: var(--tm-scheme)) {
+    & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
+
+    //
+    @supports(color: light-dark(white, black)) {
+        #{$property}: light-dark(#{$light}, #{$dark});
+    }
+};
+
+//
+@mixin tm-dep($property, $light: 0, $dark: 1) {
+    @media (prefers-color-scheme: light) { #{$property}: #{$light}; };
+    @media (prefers-color-scheme: dark)  { #{$property}: #{$dark}; };
+};

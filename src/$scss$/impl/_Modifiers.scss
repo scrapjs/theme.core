@@ -1,0 +1,9 @@
+@use "../lib/Attribute" as attr;
+
+//
+@layer u2-color-attr {
+    @media screen {
+        @include attr.attr-based(":host([data-chroma]), *[data-chroma]", "--tm-chroma"  , "data-chroma", "number", null, 0);
+        @include attr.attr-based(":host([data-alpha]),  *[data-alpha]" , "--tm-bg-alpha", "data-alpha" , "number", null, 0);
+    };
+};
