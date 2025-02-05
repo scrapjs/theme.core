@@ -1,13 +1,13 @@
 @use "../lib/Attribute" as attr;
 @use "../lib/Hover" as hov;
+
+//
 @use "sass:meta";
 
 //
 @layer u2-color-hl {
     @function hl-logic($value) { @return "calc(#{$value} * 3)"; };
     @media screen {
-        //:where([data-highlight-hover], [data-highlight]) *:not([data-highlight], [data-highlight-hover]) { @include hl.hl-col; };
-
         // :host() unsupported
         @include attr.attr-based(":host([data-highlight]), *[data-highlight]", "--hl-co-state", "data-highlight", "number", meta.get-function("hl-logic"), 0);
         @include hov.hover("*[data-highlight-hover]") {

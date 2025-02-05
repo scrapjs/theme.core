@@ -26,11 +26,6 @@
             :where(&, &::before, &::after, &::selection),
             &::slotted(*)
             {   //
-                //
-                &:not([data-dragging]) {
-                    transition: var(--hl-trans-property) var(--hl-trans-duration) var(--hl-trans-mode);
-                }
-
                 & {
                     background-color: var(--rv-bg-color, transparent);
                     accent-color: var(--rv-color, currentColor); //--tm-cr
@@ -48,6 +43,13 @@
                 background-color: var(--rv-color, black);
                 color: oklch(from var(--rv-color, black) calc(1 - l) c h / 1.0);
             }
+            
+            //
+            &:where([data-highlight-hover], [data-highlight]),
+            *:where([data-highlight-hover], [data-highlight])
+            {
+                transition: --hl-co var(--hl-trans-duration, 0.1s) var(--hl-trans-mode, linear);
+            };
         }
     };
 };

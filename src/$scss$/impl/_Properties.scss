@@ -1,62 +1,59 @@
+
 //
-@media screen {
+@scope(:root, :host, :scope)
+{
+    @property --wp-mode { syntax: "<number>"; initial-value: 0; inherits: true; }
 
     //
-    @scope(:root, :host, :scope)
-    {
-        @property --wp-mode { syntax: "<number>"; initial-value: 0; inherits: true; }
+    @property --tm-ac-dark { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-cr-dark { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-ac-light { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-cr-light { syntax: "<color>"; initial-value: white; inherits: true; };
 
-        //
-        @property --tm-ac-dark { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --tm-cr-dark { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --tm-ac-light { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --tm-cr-light { syntax: "<color>"; initial-value: white; inherits: true; };
+    //
+    @property --tm-d-hi   { syntax: "<color>"; inherits: true; initial-value: black; }
+    @property --tm-d-lo { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --tm-l-hi   { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --tm-l-lo { syntax: "<color>"; inherits: true; initial-value: black; }
+    @property --tm-hi { syntax: "<color>"; inherits: true; initial-value: white; }
+    @property --tm-lo { syntax: "<color>"; inherits: true; initial-value: black; }
 
-        //
-        @property --tm-d-hi   { syntax: "<color>"; inherits: true; initial-value: black; }
-        @property --tm-d-lo { syntax: "<color>"; inherits: true; initial-value: white; }
-        @property --tm-l-hi   { syntax: "<color>"; inherits: true; initial-value: white; }
-        @property --tm-l-lo { syntax: "<color>"; inherits: true; initial-value: black; }
-        @property --tm-hi { syntax: "<color>"; inherits: true; initial-value: white; }
-        @property --tm-lo { syntax: "<color>"; inherits: true; initial-value: black; }
+    //
+    @property --tm-scheme { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --tm-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --rv-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-color { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-alpha { syntax: "<number>"; initial-value: 1; inherits: true; };
+    @property --tm-bg-base { syntax: "<color>"; initial-value: transparent; inherits: true; };
+    @property --rv-bg-color { syntax: "<color>"; initial-value: transparent; inherits: true; };
+    @property --tm-bg-color { syntax: "<color>"; initial-value: transparent; inherits: true; };
+    @property --tm-bg-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
 
-        //
-        @property --tm-scheme { syntax: "<number>"; initial-value: 0; inherits: true; };
-        @property --tm-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
-        @property --rv-color { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --tm-color { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --tm-alpha { syntax: "<number>"; initial-value: 1; inherits: true; };
-        @property --tm-bg-base { syntax: "<color>"; initial-value: transparent; inherits: true; };
-        @property --rv-bg-color { syntax: "<color>"; initial-value: transparent; inherits: true; };
-        @property --tm-bg-color { syntax: "<color>"; initial-value: transparent; inherits: true; };
-        @property --tm-bg-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
+    //
+    @property --tm-cr { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --tm-ac { syntax: "<color>"; initial-value: white; inherits: true; };
+    @property --hl-co { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --hl-co-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --hl-co-state { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --hl-trans-property { syntax: "<number>"; initial-value: 0; inherits: true; };
 
-        //
-        @property --tm-cr { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --tm-ac { syntax: "<color>"; initial-value: white; inherits: true; };
-        @property --hl-co { syntax: "<number>"; initial-value: 0; inherits: true; };
-        @property --hl-co-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
-        @property --hl-co-state { syntax: "<number>"; initial-value: 0; inherits: true; };
+    //
+    @property --tm-adapt { syntax: "<color>"; initial-value: black; inherits: true; };
+    @property --tm-shade { syntax: "<color>"; inherits: true; initial-value: transparent; }
+    @property --tm-origin { syntax: "<color>"; initial-value: white; inherits: true; };
 
-        //
-        @property --tm-adapt { syntax: "<color>"; initial-value: black; inherits: true; };
-        @property --tm-shade { syntax: "<color>"; inherits: true; initial-value: transparent; }
-        @property --tm-origin { syntax: "<color>"; initial-value: white; inherits: true; };
+    //
+    @property --icon-size {
+        syntax: "<length-percentage>";
+        initial-value: 100%;
+        inherits: true;
+    };
 
-        //
-        @property --icon-size {
-            syntax: "<length-percentage>";
-            initial-value: 100%;
-            inherits: true;
-        };
-
-        //
-        @property --mask-image {
-            syntax: "<image> | <url>";
-            initial-value: none;
-            inherits: true;
-        };
-
+    //
+    @property --mask-image {
+        syntax: "<image> | <url>";
+        initial-value: none;
+        inherits: true;
     };
 
 };
