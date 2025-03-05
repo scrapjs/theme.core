@@ -1,10 +1,10 @@
 @mixin tm-col-dep($property, $light, $dark, $fb: var(--tm-scheme)) {
-    & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
+    //& { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
 
     //
-    @supports(color: light-dark(white, black)) {
+    //@supports(color: light-dark(white, black)) {
         #{$property}: light-dark(#{$light}, #{$dark});
-    }
+    //}
 };
 
 //
