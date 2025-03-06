@@ -8,6 +8,7 @@
     "scripts": {
         "dev": "vite",
         "worker": "vite build",
+        "watch": "vite build --watch",
         "build": "vite build --config vite.config.js",
         "build-wp": "webpack build --mode=production",
         "preview": "vite preview"
@@ -28,7 +29,7 @@
         "autoprefixer": "^10.4.20",
         "cssnano": "^7.0.6",
         "cssnano-preset-advanced": "^7.0.6",
-        "esbuild": "^0.24.0",
+        "esbuild": "^0.25.0",
         "eslint": "^9.17.0",
         "eslint-config-prettier": "^9.1.0",
         "postcss-discard-duplicates": "^7.0.1",
