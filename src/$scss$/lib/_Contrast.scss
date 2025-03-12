@@ -1,11 +1,11 @@
 @use "sass:string";
 
 //
-@mixin contrast($name, $from, $alpha: 1, $chromaReduce: 0.4) {
-    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.4 + 0.5) clamp(0.01, calc(c * #{$chromaReduce}), 0.9) h / #{$alpha})"); };
+@mixin contrast($name, $from, $alpha: 1, $chromaReduce: 0.4, $importance: "") {
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((l - 0.6) * 100000), 1) * 0.4 + 0.5) clamp(0.01, calc(c * #{$chromaReduce}), 0.9) h / #{$alpha})") #{$importance}; };
 };
 
 //
-@mixin in-contrast($name, $from, $alpha: 1, $chromaReduce: 0.4) {
-    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 100000), 1) * 0.4 + 0.5) clamp(0.01, calc(c * #{$chromaReduce}), 0.9) h / #{$alpha})"); };
+@mixin in-contrast($name, $from, $alpha: 1, $chromaReduce: 0.4, $importance: "") {
+    & { #{$name}: string.unquote("oklch(from #{$from} calc( clamp(-1, calc((0.6 - l) * 100000), 1) * 0.4 + 0.5) clamp(0.01, calc(c * #{$chromaReduce}), 0.9) h / #{$alpha})") #{$importance}; };
 };
