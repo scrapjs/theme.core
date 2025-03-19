@@ -3,7 +3,7 @@
 
     //
     //@supports(color: light-dark(white, black)) {
-        #{$property}: light-dark(#{$light}, #{$dark});
+    & { #{$property}: light-dark(#{$light}, #{$dark}); };
     //}
 };
 
