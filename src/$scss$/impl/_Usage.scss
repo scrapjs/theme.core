@@ -10,20 +10,20 @@
         :host(*[data-scheme])
         {   //& { --tm-bg-alpha: 1; };
             //
-            :where(*, *::before, *::after, *::selection):not([data-scheme]), &::slotted(*:not([data-scheme])) {
+            :where(*, *::before, *::after, input::selection):not([data-scheme]), &::slotted(*:not([data-scheme])) {
                 &:not([data-highlight]) { --hl-co-state: 0; };
                 &:not([data-highlight-hover]) { --hl-co-hover: 0; };
                 &:not([data-alpha]) { --tm-bg-alpha: 0; background-color: transparent; };
             }
 
             //
-            :where(&, &::before, &::after, &::selection):not([data-alpha]) {
+            :where(&, &::before, &::after, &:is(input)::selection):not([data-alpha]) {
                 --tm-bg-alpha: 1;
             }
 
             //
-            :where(*, *::before, *::after, *::selection),
-            :where(&, &::before, &::after, &::selection),
+            :where(*, *::before, *::after, input::selection),
+            :where(&, &::before, &::after, :is(input)::selection),
             &::slotted(*)
             {   //
                 & {
@@ -40,7 +40,7 @@
             }
 
             //
-            &::selection, ::selection {
+            &:is(input)::selection, input::selection {
                 background-color: var(--rv-color, black);
                 color: oklch(from var(--rv-color, black) calc(1 - l) c h / 1.0);
             }
