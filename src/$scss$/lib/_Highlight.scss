@@ -2,7 +2,7 @@
 
 //
 @mixin hl-col {
-    @include c.in-contrast("--tm-shade", "var(--tm-bg-color, transparent)", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 4)");
+    @include c.in-contrast("--tm-shade", "var(--tm-bg-color, currentColor)", "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 4)");
 
     //
     & {

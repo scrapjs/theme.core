@@ -1,5 +1,6 @@
 //
 @use "../lib/Scheme" as cm;
+@use "../lib/Contrast" as c;
 
 //
 @layer u2-style-apply {
@@ -35,8 +36,12 @@
                     // scrollbar styling
                     scrollbar-color: var(--rv-color, currentColor) var(--rv-bg-color, transparent);
                     scrollbar-width: thin;
-                    --scrollbar-color: var(--rv-color, currentColor);
+
+                    //
+                    --scrollbar-color: color-mix(in oklch, var(--rv-color, currentColor) 20%, var(--sb-shade, var(--tm-shade, #0004))) !important;
                 }
+
+                @include c.in-contrast("--sb-shade", currentColor, "1", "calc((1 - var(--tm-bg-alpha, 0)) * l * 4)");
             }
 
             //
