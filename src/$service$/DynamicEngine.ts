@@ -2,8 +2,12 @@
 import { formatCss, formatHex, oklch, parse } from "culori";
 import { electronAPI } from "./Config.js";
 
+// @ts-ignore /* @vite-ignore */
+import {importCdn} from "/externals/modules/cdnImport.mjs";
+export {importCdn};
+
 // @ts-ignore
-import { fixedClientZoom } from "/externals/core/agate.js";
+const { fixedClientZoom } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
 
 //
 const tacp = (color: string)=>{
@@ -28,8 +32,7 @@ const setIdleInterval = (cb, timeout = 1000, ...args)=>{
 export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
     // exclude any non-reasonable
     const opaque = Array.from(document.elementsFromPoint(x, y))?.filter?.((el: any)=>(
-        ((el instanceof HTMLElement) && el != holder) &&
-         el?.matches?.("[data-scheme]:not([data-hidden])") &&
+        ((el instanceof HTMLElement) && el != holder) && el?.matches?.("[data-scheme]:not([data-hidden])") &&
         (el?.dataset?.alpha != null ? parseFloat(el?.dataset?.alpha) > 0.01 : true) &&
         (el?.style?.getPropertyValue("display") != "none")
     ))
@@ -95,8 +98,8 @@ export const dynamicBgColors = (root = document.documentElement) => {
 //
 export const dynamicTheme = (ROOT = document.documentElement)=>{
     //
-    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({}) => { 
-        dynamicBgColors(ROOT); 
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({}) => {
+        dynamicBgColors(ROOT);
     });
 
     //
@@ -128,7 +131,7 @@ export const dynamicTheme = (ROOT = document.documentElement)=>{
         dynamicNativeFrame(ROOT);
         dynamicBgColors(ROOT);
     }, 500);
-    
+
     //
     addEventListener("load", ()=>{
         requestIdleCallback(()=>{

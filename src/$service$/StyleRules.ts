@@ -1,13 +1,15 @@
-// @ts-ignore
-import { setStyleRule } from "/externals/lib/dom.js";
+// @ts-ignore /* @vite-ignore */
+import {importCdn} from "/externals/modules/cdnImport.mjs";
+export {importCdn};
 
 //
 export type StyleTuple = [selector: string, sheet: object];
-export const updateThemeBase = (originColor: string|null = null, $cssIsDark: boolean|null = null)=>{
+export const updateThemeBase = async (originColor: string|null = null, $cssIsDark: boolean|null = null)=>{
     if (originColor != null && localStorage.getItem("--tm-origin") != originColor) localStorage.setItem("--tm-origin", originColor);
     if ($cssIsDark != null && (!!localStorage.getItem("--tm-scheme") != $cssIsDark)) localStorage.setItem("--tm-scheme", $cssIsDark as unknown as string);
 
-    //
+    // @ts-ignore
+    const { setStyleRule } = await Promise.try(importCdn, ["/externals/lib/dom.js"]);
     setStyleRule(":host, :root, :scope, :where(*)", {
         "--tm-origin": localStorage.getItem("--tm-origin") || "oklch(90% 0.04 75)",
         "--tm-scheme": (localStorage.getItem("--tm-scheme") ? 1 : 0) || 0
