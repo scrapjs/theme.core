@@ -11,7 +11,7 @@ export const updateThemeBase = async (originColor: string|null = null, $cssIsDar
     // @ts-ignore
     const { setStyleRule } = await Promise.try(importCdn, ["/externals/lib/dom.js"]);
     setStyleRule(":host, :root, :scope, :where(*)", {
-        "--tm-origin": localStorage.getItem("--tm-origin") || "oklch(90% 0.04 75)",
+        "--tm-origin": localStorage.getItem("--tm-origin") || "oklch(0.2 0.01 180%)",
         "--tm-scheme": (localStorage.getItem("--tm-scheme") ? 1 : 0) || 0
     });
 }

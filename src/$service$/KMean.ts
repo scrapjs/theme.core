@@ -13,15 +13,15 @@ const sortColors = (list, criteria = "l")=>{
 //
 const euclideanDistance = (color1, color2) => {
     return Math.hypot(
-        color1[0] - color2[0], 
-        color1[1] - color2[1], 
+        color1[0] - color2[0],
+        color1[1] - color2[1],
         color1[2] - color2[2]
     );
 }
 
 //euclideanDistance
 const makeClusters = (data: [number, number, number][], centroids: [number, number, number][])=>{
-    let clusters  = Array.from({ length: centroids.length }, () => ({ 
+    let clusters  = Array.from({ length: centroids.length }, () => ({
         points: [] as [number, number, number][],
         mean: null as ([number, number, number]|null)
     }));
@@ -54,7 +54,7 @@ const computeMean = (points: [number, number, number][])=>{
 // General means per K-clusters
 const kMeans = (data, k) => {
     let centroids: [number, number, number][] = sortColors(initializeCentroids(data, k));
-    
+
     const maxIterations = 10;
     /*for (let iteration = 0; iteration < maxIterations; iteration++) {
         let clusters = makeClusters(data, centroids);
@@ -64,7 +64,7 @@ const kMeans = (data, k) => {
         }) as [number, number, number][];
     }
     */
-    
+
     for (let iteration = 0; iteration < maxIterations; iteration++) {
         let clusters = makeClusters(data, centroids);
         const newCentroids = clusters.map((cluster) =>
@@ -80,10 +80,10 @@ const kMeans = (data, k) => {
         ) {
             break; // Алгоритм сошёлся
         }
-    
+
         centroids = newCentroids as [number, number, number][];
     }
-    
+
     //
     return centroids;
 }
@@ -107,7 +107,7 @@ const initializeCentroids = (data: [number, number, number][], k): [number, numb
     centroids.push(data[Math.floor(Math.random() * data.length)]); // Первый центр выбирается случайно
 
     while (centroids.length < k) {
-        const distances = data.map(point => 
+        const distances = data.map(point =>
             Math.min(...centroids.map(centroid => euclideanDistance(point, centroid)))
         );
 
@@ -168,8 +168,8 @@ const getClusterImageData = async (imgURL)=>{
             (data?.[i4+1]||0),
             (data?.[i4+2]||0)
         ] : [
-            (data?.[i4+0]||0) * dv, 
-            (data?.[i4+1]||0) * dv, 
+            (data?.[i4+0]||0) * dv,
+            (data?.[i4+1]||0) * dv,
             (data?.[i4+2]||0) * dv
         ]);
     }
