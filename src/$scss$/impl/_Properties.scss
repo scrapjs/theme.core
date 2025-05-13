@@ -23,11 +23,11 @@
     @property --tm-chroma { syntax: "<number>"; initial-value: 0; inherits: true; };
     @property --rv-color { syntax: "<color>"; initial-value: black; inherits: true; };
     @property --tm-color { syntax: "<color>"; initial-value: black; inherits: true; };
-    @property --tm-alpha { syntax: "<number>"; initial-value: 1; inherits: true; };
+    @property --tm-alpha { syntax: "<number>"; initial-value: 0; inherits: false; };
     @property --tm-bg-base { syntax: "<color>"; initial-value: transparent; inherits: true; };
     @property --rv-bg-color { syntax: "<color>"; initial-value: transparent; inherits: true; };
     @property --tm-bg-color { syntax: "<color>"; initial-value: transparent; inherits: true; };
-    @property --tm-bg-alpha { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --tm-bg-alpha { syntax: "<number>"; initial-value: 0; inherits: false; };
 
     //
     @property --tm-cr { syntax: "<color>"; initial-value: white; inherits: true; };
