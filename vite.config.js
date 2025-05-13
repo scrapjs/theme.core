@@ -61,6 +61,8 @@ export default {
             plugins: [autoprefixer(), deduplicate(), cssnano({
                 preset: ['advanced', {
                     calc: false,
+                    layer: false,
+                    scope: false,
                     discardComments: {
                         removeAll: true
                     }
