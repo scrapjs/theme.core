@@ -32,10 +32,10 @@
     //
     @property --tm-cr { syntax: "<color>"; initial-value: white; inherits: true; };
     @property --tm-ac { syntax: "<color>"; initial-value: white; inherits: true; };
-    @property --hl-co { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --hl-co-hover { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --hl-co-state { syntax: "<number>"; initial-value: 0; inherits: true; };
-    @property --hl-trans-property { syntax: "<number>"; initial-value: 0; inherits: true; };
+    @property --hl-co { syntax: "<number>"; initial-value: 0; inherits: false; };
+    @property --hl-co-hover { syntax: "<number>"; initial-value: 0; inherits: false; };
+    @property --hl-co-state { syntax: "<number>"; initial-value: 0; inherits: false; };
+    @property --hl-trans-property { syntax: "<number>"; initial-value: 0; inherits: false; };
 
     //
     @property --tm-adapt { syntax: "<color>"; initial-value: black; inherits: true; };
