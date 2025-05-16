@@ -10,7 +10,7 @@ export {importCdn};
 //
 export const makeAttrSupport = async (selector, attr, type = "number", def = "0", rootElement = document.documentElement)=>{
     // @ts-ignore
-    const { observeAttributeBySelector } = await Promise.try(importCdn, ["/externals/lib/dom.js"]);
+    const { observeAttributeBySelector } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
     if (!CSS.supports("opacity", `attr(${attr} type(<${type}>), 1)`)) {
         observeAttributeBySelector(rootElement, selector, attr, (mutation)=>{
             const newValue = mutation.target.getAttribute(attr) ?? def;

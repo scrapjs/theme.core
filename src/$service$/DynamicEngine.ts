@@ -7,7 +7,7 @@ import {importCdn} from "/externals/modules/cdnImport.mjs";
 export {importCdn};
 
 // @ts-ignore
-const { fixedClientZoom } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
+const { fixedClientZoom } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
 //
 const tacp = (color: string)=>{
