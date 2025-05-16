@@ -23,7 +23,7 @@ export const makeAttrSupport = async (selector, attr, type = "number", def = "0"
 //
 export const initialize = async (rootElement = document.documentElement, injectCSS = true)=>{
     // @ts-ignore
-    const { loadInlineStyle, hash } = await Promise.try(importCdn, ["/externals/lib/dom.js"]);
+    const { loadInlineStyle, hash } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
     makeAttrSupport("*[data-highlight-hover]", "data-highlight-hover", "number", "0", rootElement);
     makeAttrSupport("*[data-highlight]", "data-highlight", "number", "0", rootElement);
     makeAttrSupport("*[data-chroma]", "data-chroma", "number", "0", rootElement);
