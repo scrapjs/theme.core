@@ -32,8 +32,10 @@ const setIdleInterval = (cb, timeout = 1000, ...args)=>{
 export const pickBgColor = (x, y, holder: HTMLElement | null = null)=>{
     // exclude any non-reasonable
     const opaque = Array.from(document.elementsFromPoint(x, y))?.filter?.((el: any)=>(
-        ((el instanceof HTMLElement) && el != holder) && el?.matches?.("[data-scheme]:not([data-hidden])") &&
+        ((el instanceof HTMLElement) && el != holder) &&
         (el?.dataset?.alpha != null ? parseFloat(el?.dataset?.alpha) > 0.01 : true) &&
+         el?.checkVisibility?.({ contentVisibilityAuto: true, opacityProperty: true, visibilityProperty: true }) &&
+         el?.matches?.("[data-scheme]:not([data-hidden])") &&
         (el?.style?.getPropertyValue("display") != "none")
     ))
     .map((element) => {
