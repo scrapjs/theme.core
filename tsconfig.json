@@ -1,11 +1,10 @@
 {
     "include": ["./src/**/*"],
-    "exclude": ["./test/**/*", "./dist/**/*", "./u2re/**/*", "./src/$polyfill$/*"],
+    "exclude": ["./test/**/*", "./dist/**/*", "./externals/**/*"],
     "compilerOptions": {
         "paths": {
             "u2re/*": ["./externals/modules/*"],
             "u2re-src/*": ["../*"],
-            "@node_modules/*": ["./node_modules/*"],
         },
         "target": "ESNext",
         "module": "ESNext",
@@ -25,9 +24,6 @@
         "inlineSources": true,
         "inlineSourceMap": true,
         "sourceMap": false,
-        //"allowImportingTsExtensions": true,
-        //"emitDeclarationOnly": true,
-        //"noEmit": true,
         "typeRoots": ["plugins/global.d.ts"]
     },
 }
