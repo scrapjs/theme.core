@@ -1,7 +1,12 @@
 {
     "include": ["./src/**/*"],
-    "exclude": ["./test/**/*", "./dist/**/*", "./externals/**/*", "./src/$polyfill$/*"],
+    "exclude": ["./test/**/*", "./dist/**/*", "./u2re/**/*", "./src/$polyfill$/*"],
     "compilerOptions": {
+        "paths": {
+            "u2re/*": ["./externals/modules/*"],
+            "u2re-src/*": ["../*"],
+            "@node_modules/*": ["./node_modules/*"],
+        },
         "target": "ESNext",
         "module": "ESNext",
         "lib": ["ESNext", "DOM", "WebWorker"],
@@ -23,11 +28,6 @@
         //"allowImportingTsExtensions": true,
         //"emitDeclarationOnly": true,
         //"noEmit": true,
-        "typeRoots": ["plugins/global.d.ts"],
-        "paths": {
-            "@node_modules/*": ["./node_modules/*"],
-            //"@culori/*": ["./node_modules/culori"],
-            //"@material/*": ["./node_modules/@material"]
-        },
+        "typeRoots": ["plugins/global.d.ts"]
     },
 }

@@ -12,6 +12,19 @@
     <link rel="icon" type="image/png" href="./favicon.png">
 
     <!-- -->
+    <script type="importmap">{
+        "imports": {
+            "u2re/": "u2re-src/",
+            "u2re/cdnImport": "u2re/cdnImport.mjs",
+            "u2re/dom": "u2re-src/dom.ts/src/index.ts",
+            "u2re/lure": "u2re-src/BLU.E/src/index.ts",
+            "u2re/object": "u2re-src/object.ts/src/index.ts",
+            "u2re/uniform": "u2re-src/uniform.ts/src/index.ts",
+            "u2re/theme": "u2re-src/theme.core/src/index.ts"
+        }
+    }</script>
+
+    <!-- -->
     <script data-owner="runtime" data-type="interact">
         // avoid any dragging when no-needed...
         document.documentElement.addEventListener("dragstart", (ev) => {

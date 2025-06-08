@@ -3,11 +3,11 @@ import { formatCss, formatHex, oklch, parse } from "culori";
 import { electronAPI } from "./Config.js";
 
 // @ts-ignore /* @vite-ignore */
-import {importCdn} from "/externals/modules/cdnImport.mjs";
+import {importCdn} from "u2re/cdnImport";
 export {importCdn};
 
 // @ts-ignore
-const { fixedClientZoom } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
+const { fixedClientZoom } = await Promise.try(importCdn, ["u2re/dom"]);
 
 //
 const tacp = (color: string)=>{

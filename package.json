@@ -6,7 +6,8 @@
     "type": "module",
     "index": "./dist/theme.js",
     "scripts": {
-        "dev": "vite",
+        "test": "vite --host 0.0.0.0",
+        "dev": "vite --host 0.0.0.0",
         "worker": "vite build",
         "watch": "vite build --watch",
         "build": "vite build --config vite.config.js",

@@ -1,5 +1,5 @@
 // @ts-ignore /* @vite-ignore */
-import {importCdn} from "/externals/modules/cdnImport.mjs";
+import {importCdn} from "u2re/cdnImport";
 export {importCdn};
 
 //
@@ -9,7 +9,7 @@ export const updateThemeBase = async (originColor: string|null = null, $cssIsDar
     if ($cssIsDark != null && (!!localStorage.getItem("--tm-scheme") != $cssIsDark)) localStorage.setItem("--tm-scheme", $cssIsDark as unknown as string);
 
     // @ts-ignore
-    const { setStyleRule } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
+    const { setStyleRule } = await Promise.try(importCdn, ["u2re/dom"]);
     setStyleRule(":host, :root, :scope, :where(*)", {
         "--tm-origin": localStorage.getItem("--tm-origin") || "oklch(20% 0.01 180deg)",
         "--tm-scheme": (localStorage.getItem("--tm-scheme") ? 1 : 0) || 0
