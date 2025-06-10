@@ -2,7 +2,6 @@
 import { formatCss, formatHex, oklch, parse } from "culori";
 import { electronAPI } from "./Config.js";
 
-// @ts-ignore /* @vite-ignore */
 import {importCdn} from "u2re/cdnImport";
 export {importCdn};
 

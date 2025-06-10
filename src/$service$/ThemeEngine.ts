@@ -3,7 +3,6 @@
 import styles from "../$scss$/Main.scss?inline&compress";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 
-// @ts-ignore /* @vite-ignore */
 import {importCdn} from "u2re/cdnImport";
 export {importCdn};
 

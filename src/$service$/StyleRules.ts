@@ -1,4 +1,4 @@
-// @ts-ignore /* @vite-ignore */
+
 import {importCdn} from "u2re/cdnImport";
 export {importCdn};
 
