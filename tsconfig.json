@@ -24,6 +24,7 @@
         "inlineSources": true,
         "inlineSourceMap": true,
         "sourceMap": false,
-        "typeRoots": ["plugins/global.d.ts"]
+        "typeRoots": ["plugins/global.d.ts"],
+        "experimentalDecorators": true,
     },
 }
