@@ -3,13 +3,13 @@
 import styles from "../$scss$/Main.scss?inline&compress";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 
-import {importCdn} from "u2re/cdnImport";
+import {importCdn} from "fest/cdnImport";
 export {importCdn};
 
 //
 export const makeAttrSupport = async (selector, attr, type = "number", def = "0", rootElement = document.documentElement)=>{
     // @ts-ignore
-    const { observeAttributeBySelector } = await Promise.try(importCdn, ["u2re/dom"]);
+    const { observeAttributeBySelector } = await Promise.try(importCdn, ["fest/dom"]);
     if (!CSS.supports("opacity", `attr(${attr} type(<${type}>), 1)`)) {
         observeAttributeBySelector(rootElement, selector, attr, (mutation)=>{
             const newValue = mutation.target.getAttribute(attr) ?? def;
@@ -22,7 +22,7 @@ export const makeAttrSupport = async (selector, attr, type = "number", def = "0"
 //
 export const initialize = async (rootElement = document.documentElement, injectCSS = true)=>{
     // @ts-ignore
-    const { loadInlineStyle, hash } = await Promise.try(importCdn, ["u2re/dom"]);
+    const { loadInlineStyle, hash } = await Promise.try(importCdn, ["fest/dom"]);
     makeAttrSupport("*[data-highlight-hover]", "data-highlight-hover", "number", "0", rootElement);
     makeAttrSupport("*[data-highlight]", "data-highlight", "number", "0", rootElement);
     makeAttrSupport("*[data-chroma]", "data-chroma", "number", "0", rootElement);
