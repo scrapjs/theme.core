@@ -1,5 +1,3 @@
-
-//
 @scope(:root, :host, :scope)
 {
     @property --wp-mode { syntax: "<number>"; initial-value: 0; inherits: true; }
