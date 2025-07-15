@@ -4,7 +4,7 @@
     "compilerOptions": {
         "outDir": "./dist/",
         "paths": {
-            "fest-src/*":     ["../*"],
+            "fest/*": ["../shared/fest/*"],
             "fest/cdnImport": ["../cdnImport.mjs"],
             "fest/dom":       ["../dom.ts/src/index.ts"],
             "fest/lure":      ["../lur.e/src/index.ts"],
