@@ -35,7 +35,7 @@ export const __dirname = resolve(import.meta.dirname, "./");
 export default objectAssign(
     await importConfig(resolve(__dirname, "../shared/vite.config.js"),
         NAME,
-        await readFile(resolve(__dirname, "./tsconfig.json"), {encoding: "utf8"}),
+        JSON.parse(await readFile(resolve(__dirname, "./tsconfig.json"), {encoding: "utf8"})),
         __dirname
     ),
     {}
