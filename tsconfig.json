@@ -1,5 +1,5 @@
 {
-    "include": ["./src/**/*", "./test/**/*"],
+    "include": ["./src/**/*.ts", "./test/**/*.ts"],
     "exclude": ["./dist/**/*", "./externals/**/*"],
     "compilerOptions": {
         "outDir": "./dist/",
