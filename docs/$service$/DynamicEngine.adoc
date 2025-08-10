@@ -1,0 +1,7 @@
+= DynamicEngine.ts
+:source_path: modules/theme.core/src/$service$/DynamicEngine.ts
+
+Auto-generated documentation.
+
+== Exports
+- consts: pickBgColor, makeContrast, pickFromCenter, dynamicNativeFrame, dynamicBgColors, dynamicTheme

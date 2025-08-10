@@ -1,0 +1,8 @@
+= StyleRules.ts
+:source_path: modules/theme.core/src/$service$/StyleRules.ts
+
+Auto-generated documentation.
+
+== Exports
+- consts: updateThemeBase
+- types: StyleTuple

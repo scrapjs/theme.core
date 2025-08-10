@@ -1,0 +1,7 @@
+= KMean.ts
+:source_path: modules/theme.core/src/$service$/KMean.ts
+
+Auto-generated documentation.
+
+== Exports
+- consts: getDominantColors

@@ -1,0 +1,7 @@
+= ImagePicker.ts
+:source_path: modules/theme.core/src/$service$/ImagePicker.ts
+
+Auto-generated documentation.
+
+== Exports
+- consts: sourceColorFromImage, colorScheme

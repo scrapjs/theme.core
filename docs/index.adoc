@@ -1,0 +1,7 @@
+= index.ts
+:source_path: modules/theme.core/src/index.ts
+
+Auto-generated documentation.
+
+== Exports
+- star reexports from: ./$service$/StyleRules, ./$service$/DynamicEngine, ./$service$/ThemeEngine, ./$service$/ImagePicker

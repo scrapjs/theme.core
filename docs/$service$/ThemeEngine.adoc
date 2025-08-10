@@ -1,0 +1,7 @@
+= ThemeEngine.ts
+:source_path: modules/theme.core/src/$service$/ThemeEngine.ts
+
+Auto-generated documentation.
+
+== Exports
+- consts: makeAttrSupport, initialize

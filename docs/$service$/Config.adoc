@@ -1,0 +1,7 @@
+= Config.ts
+:source_path: modules/theme.core/src/$service$/Config.ts
+
+Auto-generated documentation.
+
+== Exports
+- consts: electronAPI, qualityMode
