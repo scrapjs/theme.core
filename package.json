@@ -43,7 +43,6 @@
         "vite-plugin-dynamic-import": "^1.6.0",
         "vite-plugin-external": "^4.3.1",
         "vite-plugin-minify": "^2.0.0",
-        "vite-plugin-optimizer": "^1.4.3",
-        "vite-plugin-singlefile": "^2.0.2"
+        "vite-plugin-optimizer": "^1.4.3"
     }
 }
